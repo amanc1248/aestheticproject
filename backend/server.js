@@ -1,13 +1,15 @@
 const express = require("express");
+const path = require("path");
 // const { db } = require("../database/db.js");
 // const { testDb } = require("./controllers/employee.js");
 const app = express();
 const PORT = process.env.PORT || 3001;
 // app.get("/test", testDb);
+const __dirname = path.resolve();
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../public_html")));
+  app.use(express.static(path.join(__dirname, "/frontend/build")));
   app.get("*", (req, res) =>
-    res.sendFile(path.resolve(__dirname, "../public_html", "index.html"))
+    res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"))
   );
 } else {
   app.get("/", (req, res) => {

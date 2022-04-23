@@ -23,7 +23,8 @@
   "dependencies": {
     "express": "^4.17.3",
     "express-async-handler": "^1.2.0",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "concurrently": "^7.1.0"
