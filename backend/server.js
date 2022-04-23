@@ -1,8 +1,8 @@
 const express = require("express");
-const { db } = require("../database/db.js");
-const { testDb } = require("./controllers/employee.js");
+// const { db } = require("../database/db.js");
+// const { testDb } = require("./controllers/employee.js");
 const app = express();
-app.get("/test", testDb);
+// app.get("/test", testDb);
 app.get("/", (req, res) => {
   res.send("API is running");
 });
