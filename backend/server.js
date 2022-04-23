@@ -4,7 +4,7 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3001;
 // app.get("/test", testDb);
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
   res.send("API is running");
 });
 
