@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon backend/server",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -18,6 +21,10 @@
   "homepage": "https://github.com/amanc1248/aestheticproject#readme",
   "dependencies": {
     "express": "^4.17.3",
+    "express-async-handler": "^1.2.0",
     "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "concurrently": "^7.1.0"
   }
 }
