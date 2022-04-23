@@ -5,6 +5,10 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3001;
 // app.get("/test", testDb);
+
+app.get("/api", (req, res) => {
+  res.send("Api is running");
+});
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/build")));
   app.get("*", (req, res) =>
@@ -15,7 +19,5 @@ if (process.env.NODE_ENV === "production") {
     res.send("Api is running");
   });
 }
-app.get("/api", (req, res) => {
-  res.send("Api is running");
-});
+
 app.listen(PORT, console.log("server is running"));
