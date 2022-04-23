@@ -15,5 +15,7 @@ if (process.env.NODE_ENV === "production") {
     res.send("Api is running");
   });
 }
-
+app.get("/api", (req, res) => {
+  res.send("Api is running");
+});
 app.listen(PORT, console.log("server is running"));
