@@ -1,0 +1,23 @@
+.navbar__brand{
+  margin-right: 50%;
+}
+.hamburger__icon {
+    color: black;
+  }
+  .login__admin__button{
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 8px 10px ;
+    font-weight: 600;
+  }
+  
+.login__employee__button{
+  background-color: #01081E;
+  color: white;
+  border-radius: 4px;
+  padding: 8px 10px ;
+  font-weight: 600;
+  border: none;
+
+}
