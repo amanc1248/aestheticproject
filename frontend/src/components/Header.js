@@ -4,48 +4,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 import "../styles/components/Header.css";
 function Header() {
   return (
-    <div>
-      {/* <Navbar>
+    <div className="apply__home__margin">
+      <Navbar expand="lg" bg="white" className="the__navbar">
         <Navbar.Brand href="/" className={"navbar__brand"}>
-          AESTHETIC
-        </Navbar.Brand>
-        <Navbar.Collapse
-          id="basic-navbar-nav"
-          className="text-md-end order-last"
-        >
-          <Nav className="nav__links">
-            <Nav.Link>
-              {" "}
-              <span className="nav__link">hi</span>
-            </Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-        <Navbar.Toggle
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="">
-            menu
-            <MenuIcon className="hamburger__icon"></MenuIcon>
-          </span>
-        </Navbar.Toggle>
-      </Navbar> */}
-
-      <Navbar
-        // onClick={() => {
-        //   setNavbarColor(true);
-        // }}
-        expand="lg"
-        bg="white"
-        className="the__navbar"
-      >
-        <Navbar.Brand href="/" className={"navbar__brand"}>
-          AESTHETIC
+          Aesthetic
         </Navbar.Brand>
         {/* INside the navbar.collapse will be everything which will be collapsed */}
         <Navbar.Collapse

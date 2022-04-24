@@ -1,6 +1,9 @@
 .navbar__brand{
   margin-right: 50%;
+  font-size: 27px;
+  font-weight: 700;
 }
+
 .hamburger__icon {
     color: black;
   }
@@ -9,7 +12,8 @@
     border: 1px solid black;
     border-radius: 4px;
     padding: 8px 10px ;
-    font-weight: 600;
+    font-weight: 700;
+    font-size: 18px;
   }
   
 .login__employee__button{
@@ -17,7 +21,9 @@
   color: white;
   border-radius: 4px;
   padding: 8px 10px ;
-  font-weight: 600;
-  border: none;
+  font-weight: 700;
+  font-size: 18px;
+  border: 1.2px solid white;
+
 
 }
