@@ -1,6 +1,6 @@
 const express = require("express");
 const mysql = require("mysql");
-const db = mysql.createConnection({
+const db = mysql.createPool({
   host: "us-cdbr-east-05.cleardb.net",
   user: "b0d62e1c262749",
   password: "fe61b116",
@@ -8,10 +8,4 @@ const db = mysql.createConnection({
   multipleStatements: true,
 });
 // Connect
-db.connect((err) => {
-  if (err) {
-    throw err;
-  }
-  console.log("MySql Connected...");
-});
 module.exports = { db };
