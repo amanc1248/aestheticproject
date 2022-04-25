@@ -1,16 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
+import PopularNFTs from "./PopularNFTs";
+import RecentlySold from "./RecentlySold";
 
 function EmployeeUsers() {
+  const [popularNFTs, setPopularNFTs] = useState(false);
+  const [recentlySold, setRecentlySold] = useState(false);
+  const showPopularNFTs = () => {
+    setPopularNFTs(true);
+  };
+  const showRecentlySold = () => {
+    setRecentlySold(true);
+  };
   return (
     <div>
       {" "}
       <div className="admin__employee__container">
-        {/* {editEmployee && (
-          <EditEmployee setEditEmployee={setEditEmployee}></EditEmployee>
+        {popularNFTs && (
+          <PopularNFTs setPopularNFTs={setPopularNFTs}></PopularNFTs>
         )}
-        {freeEmployee && (
-          <FreeEmployee setFreeEmployee={setFreeEmployee}></FreeEmployee>
-        )} */}
+        {recentlySold && (
+          <RecentlySold setRecentlySold={setRecentlySold}></RecentlySold>
+        )}
         <div className="employee__container">
           <div className="employee_details">
             <div className="employee__name__post">
@@ -18,20 +28,23 @@ function EmployeeUsers() {
             </div>
           </div>
           <div className="">
-            <button
-              className="edit_employee__button"
-              //   onClick={showEditEmployee}
-            >
-              Send Most Popular NFTs of this week.
-            </button>
-          </div>
-          <div>
-            <button
-              className="delete__employee__button"
-              //   onClick={showFreeEmployee}
-            >
-              Send recently sold NFTs of this week.
-            </button>
+            <div>
+              <button
+                className="edit_employee__button"
+                onClick={showPopularNFTs}
+              >
+                Send Most Popular NFTs of this week.
+              </button>{" "}
+            </div>
+            <br />
+            <div>
+              <button
+                className="delete__employee__button"
+                onClick={showRecentlySold}
+              >
+                Send recently sold NFTs of this week.
+              </button>
+            </div>
           </div>
         </div>
       </div>
