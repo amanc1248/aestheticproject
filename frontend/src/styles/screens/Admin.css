@@ -61,3 +61,46 @@
       padding: 10px 30px;
       font-weight: 700;
   }
+  .admin__employee__container{
+      border: 1px solid #3627dd59 ;
+      border-radius: 4px;
+  }
+  .admin__employee__container:hover{
+    background-color:#F7F9FD ;
+
+  }
+  .employee__container{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding:10px 20px ;
+  }
+  .employee_details{
+      display: flex;
+      align-items: center;
+      text-align: left;
+  }
+  .employee__image{
+      border-radius: 50%;
+      border: 1px solid black;
+  }
+  .employee__name{
+      font-size: small;
+      font-weight: 600;
+      color: #000;
+  }
+  .employee__post{
+      font-size: smaller;
+  }
+  .edit_employee__button{
+      border: none;
+      background-color: transparent;
+      font-weight: bold;
+      color: #237CCE;
+  }
+  .delete__employee__button{
+    border: none;
+    background-color: transparent;
+    font-weight: bold;
+    color:red;
+  }
