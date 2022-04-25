@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import AddEmployee from "./AddEmployee";
 import EditEmployee from "./EditEmployee";
+import FreeEmployee from "./FreeEmployee";
 
 function AdminHome() {
   const [addEmployee, setAddEmployee] = useState(false);
@@ -43,10 +44,19 @@ function AdminEmployees() {
   const showEditEmployee = () => {
     setEditEmployee(true);
   };
+
+  // for free employee
+  const [freeEmployee, setFreeEmployee] = useState(false);
+  const showFreeEmployee = () => {
+    setFreeEmployee(true);
+  };
   return (
     <div className="admin__employee__container">
       {editEmployee && (
         <EditEmployee setEditEmployee={setEditEmployee}></EditEmployee>
+      )}
+      {freeEmployee && (
+        <FreeEmployee setFreeEmployee={setFreeEmployee}></FreeEmployee>
       )}
       <div className="employee__container">
         <div className="employee_details">
@@ -69,7 +79,12 @@ function AdminEmployees() {
           </button>
         </div>
         <div>
-          <button className="delete__employee__button">Free Employee</button>
+          <button
+            className="delete__employee__button"
+            onClick={showFreeEmployee}
+          >
+            Free Employee
+          </button>
         </div>
       </div>
     </div>
