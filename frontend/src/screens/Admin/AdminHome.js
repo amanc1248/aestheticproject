@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import AddEmployee from "./AddEmployee";
+import EditEmployee from "./EditEmployee";
 
 function AdminHome() {
   const [addEmployee, setAddEmployee] = useState(false);
   const showAddEmployee = () => {
     setAddEmployee(true);
   };
+
   return (
     <div className="admin__home apply__home__margin">
       {addEmployee && (
         <AddEmployee setAddEmployee={setAddEmployee}></AddEmployee>
       )}
+
       <div className="row">
         <div className="add__employee__container col-lg-6 col-md-12 col-sm-12 ">
           <img
@@ -35,8 +38,16 @@ function AdminHome() {
 export default AdminHome;
 
 function AdminEmployees() {
+  // for edit
+  const [editEmployee, setEditEmployee] = useState(false);
+  const showEditEmployee = () => {
+    setEditEmployee(true);
+  };
   return (
     <div className="admin__employee__container">
+      {editEmployee && (
+        <EditEmployee setEditEmployee={setEditEmployee}></EditEmployee>
+      )}
       <div className="employee__container">
         <div className="employee_details">
           <div className="employee__details__inner">
@@ -53,7 +64,9 @@ function AdminEmployees() {
           </div>
         </div>
         <div className="">
-          <button className="edit_employee__button">Edit Details</button>
+          <button className="edit_employee__button" onClick={showEditEmployee}>
+            Edit Details
+          </button>
         </div>
         <div>
           <button className="delete__employee__button">Free Employee</button>
