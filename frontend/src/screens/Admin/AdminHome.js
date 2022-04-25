@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
+import AddEmployee from "./AddEmployee";
 
 function AdminHome() {
+  const [addEmployee, setAddEmployee] = useState(false);
+  const showAddEmployee = () => {
+    setAddEmployee(true);
+  };
   return (
     <div className="admin__home apply__home__margin">
+      {addEmployee && (
+        <AddEmployee setAddEmployee={setAddEmployee}></AddEmployee>
+      )}
       <div className="row">
         <div className="add__employee__container col-lg-6 col-md-12 col-sm-12 ">
           <img
@@ -12,7 +20,9 @@ function AdminHome() {
           />
           <h3>Add employee to the portal</h3>
           <h6>Employee can send NFTs update from the portal</h6>
-          <button className="add__employee__button">Add Employee</button>
+          <button className="add__employee__button" onClick={showAddEmployee}>
+            Add Employee
+          </button>
         </div>
         <div className="users__container col-lg-6 col-md-12 col-sm-12">
           <AdminEmployees></AdminEmployees>

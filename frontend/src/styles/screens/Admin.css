@@ -104,3 +104,17 @@
     font-weight: bold;
     color:red;
   }
+
+
+  /* adding employee */
+  .employee__add__container{
+    background-color: white;
+    height: max-content;
+    width: 400px;
+    margin-top: 10%;
+    text-align: left;
+    padding: 20px ;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
