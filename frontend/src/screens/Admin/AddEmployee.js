@@ -28,7 +28,7 @@ function AddEmployee({ setAddEmployee }) {
               Email<span style={{ color: "red" }}>*</span>
             </label>
             <br />
-            <input type="text" id="email" required />
+            <input type="email" id="email" required />
           </div>
           <div>
             <label htmlFor="username" className="admin__login__label">
