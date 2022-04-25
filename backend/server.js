@@ -2,6 +2,9 @@ const express = require("express");
 const path = require("path");
 const { db } = require("../database/db.js");
 const { testDb } = require("./controllers/employee.js");
+const dotenv = require("dotenv");
+
+dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 app.get("/test", testDb);

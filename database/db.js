@@ -1,11 +1,14 @@
 const express = require("express");
+const dotenv = require("dotenv");
+dotenv.config();
 const mysql = require("mysql");
 const db = mysql.createPool({
-  host: "us-cdbr-east-05.cleardb.net",
-  user: "b0d62e1c262749",
-  password: "fe61b116",
-  database: "heroku_e9cbc65fb336414",
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
   multipleStatements: true,
 });
+
 // Connect
 module.exports = { db };
