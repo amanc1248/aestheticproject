@@ -6,6 +6,8 @@ import Home from "./screens/Home/Home";
 import Header from "./components/Header";
 import AdminHome from "./screens/Admin/AdminHome";
 import AdminHeader from "./screens/Admin/AdminHeader";
+import EmployeeHome from "./screens/Employee/EmployeeHome";
+import EmployeeHeader from "./screens/Employee/EmployeeHeader";
 function App() {
   return (
     <div className="App">
@@ -16,6 +18,15 @@ function App() {
             <>
               <AdminHeader></AdminHeader>
               <AdminHome></AdminHome>
+            </>
+          }
+        ></Route>
+        <Route
+          path="/employee"
+          element={
+            <>
+              <EmployeeHeader></EmployeeHeader>
+              <EmployeeHome></EmployeeHome>
             </>
           }
         ></Route>

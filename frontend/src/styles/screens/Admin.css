@@ -28,6 +28,7 @@
 .admin__header__icons{
     color: black;
     font-weight: 700;
+    border-bottom: 4px solid blue;
 }
 .first__header__link{
     margin-left: 40%;
