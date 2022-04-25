@@ -17,39 +17,39 @@ function AddEmployee({ setAddEmployee }) {
           </div>
 
           <div>
-            <label htmlFor="admin__login" className="admin__login__label">
+            <label htmlFor="name" className="admin__login__label">
               Name<span style={{ color: "red" }}>*</span>
             </label>
             <br />
-            <input type="text" id="admin__login" required />
+            <input type="text" id="name" required />
           </div>
           <div>
-            <label htmlFor="admin__login" className="admin__login__label">
+            <label htmlFor="email" className="admin__login__label">
               Email<span style={{ color: "red" }}>*</span>
             </label>
             <br />
-            <input type="text" id="admin__login" required />
+            <input type="text" id="email" required />
           </div>
           <div>
-            <label htmlFor="admin__login" className="admin__login__label">
+            <label htmlFor="username" className="admin__login__label">
               username<span style={{ color: "red" }}>*</span>
             </label>
             <br />
-            <input type="text" id="admin__login" required />
+            <input type="text" id="username" required />
           </div>
           <div>
-            <label htmlFor="admin__login" className="admin__login__label">
+            <label htmlFor="password" className="admin__login__label">
               password<span style={{ color: "red" }}>*</span>
             </label>
             <br />
-            <input type="password" id="admin__login" required />
+            <input type="password" id="password" required />
           </div>
           <div>
-            <label htmlFor="admin__login" className="admin__login__label">
+            <label htmlFor="designation" className="admin__login__label">
               designation<span style={{ color: "red" }}>*</span>
             </label>
             <br />
-            <input type="text" id="admin__login" required />
+            <input type="text" id="designation" required />
           </div>
           <div>
             <button className="login__employee__button">Add Employee</button>
