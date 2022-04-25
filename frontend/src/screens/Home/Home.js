@@ -37,6 +37,7 @@ function Home() {
           Login as employee
         </button>
       </div>
+      <a href="/admin">Go to admin</a>
     </div>
   );
 }
