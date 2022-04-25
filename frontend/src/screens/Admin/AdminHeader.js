@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Nav, Navbar } from "react-bootstrap";
 import MenuIcon from "@mui/icons-material/Menu";
 import "../../styles/screens/Admin.css";
+import AdminProfile from "./AdminProfile";
 function AdminHeader() {
+  const [adminProfile, setAdminProfile] = useState(false);
+  const showAdminProfile = () => {
+    setAdminProfile(true);
+  };
   return (
     <div>
+      {adminProfile && (
+        <AdminProfile setAdminProfile={setAdminProfile}></AdminProfile>
+      )}
       <Navbar expand="lg" bg="white" className="the__navbar">
         <div>
           <Navbar.Brand href="/">
@@ -19,18 +27,17 @@ function AdminHeader() {
           id="basic-navbar-nav"
           className="order-lg-0 order-last"
         >
-          <Nav.Link className="admin__header__icons first__header__link">
+          <Nav.Link className="admin__header__icons first__header__link second__header__link">
             {/* <WorkIcon></WorkIcon> */}
             👷‍♀️👷‍♂️ Employees
           </Nav.Link>
-          <Nav.Link className="admin__header__icons second__header__link">
-            🥰 Users
-          </Nav.Link>
+
           <Nav.Link>
             <img
               src="https://res.cloudinary.com/proudposhak-com/image/upload/v1650865920/aestheticproject/profile_image_3_c1jhqc.jpg"
               alt="profile"
               className="profile__image"
+              onClick={showAdminProfile}
             />
           </Nav.Link>
         </Navbar.Collapse>
