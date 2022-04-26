@@ -38,4 +38,21 @@ const adminAddEmployeeController = asyncHandler(async (req, res) => {
   );
 });
 
-module.exports = { adminLoginController, adminAddEmployeeController };
+const adminFetchEmployeeController = asyncHandler(async (req, res) => {
+  console.log("adminFetchEmployeeController ran");
+  let sql = "select * from employee";
+
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+    else {
+      res.send(result);
+      console.log(result);
+    }
+  });
+});
+
+module.exports = {
+  adminLoginController,
+  adminAddEmployeeController,
+  adminFetchEmployeeController,
+};
