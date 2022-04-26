@@ -38,20 +38,7 @@ function EditEmployee({ setEditEmployee }) {
               <br />
               <input type="text" id="username" required />
             </div>
-            <div>
-              <label htmlFor="oldpassword" className="admin__login__label">
-                old password<span style={{ color: "red" }}>*</span>
-              </label>
-              <br />
-              <input type="password" id="oldpassword" required />
-            </div>
-            <div>
-              <label htmlFor="newpassword" className="admin__login__label">
-                new password<span style={{ color: "red" }}>*</span>
-              </label>
-              <br />
-              <input type="password" id="newpassword" required />
-            </div>
+
             <div>
               <label htmlFor="designation" className="admin__login__label">
                 designation<span style={{ color: "red" }}>*</span>
