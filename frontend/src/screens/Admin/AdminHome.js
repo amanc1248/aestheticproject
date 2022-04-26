@@ -5,6 +5,7 @@ import EditEmployee from "./EditEmployee";
 import FreeEmployee from "./FreeEmployee";
 import Loader from "../../components/Loader";
 import { adminFetchEmployeeAction } from "../../actions/adminActions";
+import ChangeEmployeePassword from "./ChangeEmployeePassword";
 
 function AdminHome() {
   const [addEmployee, setAddEmployee] = useState(false);
@@ -43,17 +44,6 @@ export default AdminHome;
 
 function AdminEmployees() {
   const dispatch = useDispatch();
-  // for edit
-  const [editEmployee, setEditEmployee] = useState(false);
-  const showEditEmployee = () => {
-    setEditEmployee(true);
-  };
-
-  // for free employee
-  const [freeEmployee, setFreeEmployee] = useState(false);
-  const showFreeEmployee = () => {
-    setFreeEmployee(true);
-  };
 
   // fetching employees
   const { adminEmployees, loading } = useSelector(
@@ -74,49 +64,81 @@ function AdminEmployees() {
           {adminEmployees &&
             adminEmployees.map((employee) => {
               return (
-                <div className="admin__employee__container">
-                  {editEmployee && (
-                    <EditEmployee
-                      setEditEmployee={setEditEmployee}
-                    ></EditEmployee>
-                  )}
-                  {freeEmployee && (
-                    <FreeEmployee
-                      setFreeEmployee={setFreeEmployee}
-                    ></FreeEmployee>
-                  )}
-                  <div className="employee__container">
-                    <div className="employee_details">
-                      <div className="employee__details__inner"></div>
-                      <div className="employee__name__post">
-                        <div className="employee__name">{employee.name}</div>
-                        <div className="employee__post">
-                          {employee.designation}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="">
-                      <button
-                        className="edit_employee__button"
-                        onClick={showEditEmployee}
-                      >
-                        Edit Details
-                      </button>
-                    </div>
-                    <div>
-                      <button
-                        className="delete__employee__button"
-                        onClick={showFreeEmployee}
-                      >
-                        Free Employee
-                      </button>
-                    </div>
-                  </div>
+                <div className="admin__employee__container" key={employee.id}>
+                  <AdminSingleEmployee
+                    employee={employee}
+                  ></AdminSingleEmployee>
                 </div>
               );
             })}
         </>
       )}
     </>
+  );
+}
+
+function AdminSingleEmployee({ employee }) {
+  // for edit
+  const [editEmployee, setEditEmployee] = useState(false);
+  const showEditEmployee = () => {
+    setEditEmployee(true);
+  };
+
+  // for change password
+  const [changePassword, setChangePassword] = useState(false);
+  const showChangePassword = () => {
+    setChangePassword(true);
+  };
+
+  // for free employee
+  const [freeEmployee, setFreeEmployee] = useState(false);
+  const showFreeEmployee = () => {
+    setFreeEmployee(true);
+  };
+
+  return (
+    <div>
+      {editEmployee && (
+        <EditEmployee setEditEmployee={setEditEmployee}></EditEmployee>
+      )}
+      {changePassword && (
+        <ChangeEmployeePassword
+          setChangePassword={setChangePassword}
+        ></ChangeEmployeePassword>
+      )}
+      {freeEmployee && (
+        <FreeEmployee setFreeEmployee={setFreeEmployee}></FreeEmployee>
+      )}
+      <div className="employee__container">
+        <div className="employee_details">
+          <div className="employee__details__inner"></div>
+          <div className="employee__name__post">
+            <div className="employee__name">{employee.name}</div>
+            <div className="employee__post">{employee.designation}</div>
+          </div>
+        </div>
+        <div className="">
+          <button className="edit_employee__button" onClick={showEditEmployee}>
+            Edit Details
+          </button>
+        </div>
+        <div className="">
+          <button
+            className="edit_employee__button"
+            onClick={showChangePassword}
+          >
+            Change Password
+          </button>
+        </div>
+        <div>
+          <button
+            className="delete__employee__button"
+            onClick={showFreeEmployee}
+          >
+            Free Employee
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
