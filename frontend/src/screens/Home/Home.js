@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "../../styles/screens/Home.css";
-import CloseIcon from "@mui/icons-material/Close";
 import HomeAdminLogin from "./HomeAdminLogin";
 import HomeEmployeeLogin from "./HomeEmployeeLogin";
 function Home() {
