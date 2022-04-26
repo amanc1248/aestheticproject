@@ -47,3 +47,16 @@ export const adminFetchEmployeeReducer = (state = {}, action) => {
       return state;
   }
 };
+
+export const adminEditEmployeeReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ADMIN_FETCH_EMPLOYEES:
+      return { loading: true };
+    case ADMIN_FETCH_EMPLOYEES_SUCCESS:
+      return { loading: false, editedEmployee: action.payload };
+    case ADMIN_ADD_EMPLOYEE_FAILURE:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};

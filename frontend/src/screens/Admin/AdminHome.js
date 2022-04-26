@@ -99,15 +99,22 @@ function AdminSingleEmployee({ employee }) {
   return (
     <div>
       {editEmployee && (
-        <EditEmployee setEditEmployee={setEditEmployee}></EditEmployee>
+        <EditEmployee
+          setEditEmployee={setEditEmployee}
+          employee={employee}
+        ></EditEmployee>
       )}
       {changePassword && (
         <ChangeEmployeePassword
           setChangePassword={setChangePassword}
+          employee={employee}
         ></ChangeEmployeePassword>
       )}
       {freeEmployee && (
-        <FreeEmployee setFreeEmployee={setFreeEmployee}></FreeEmployee>
+        <FreeEmployee
+          setFreeEmployee={setFreeEmployee}
+          employee={employee}
+        ></FreeEmployee>
       )}
       <div className="employee__container">
         <div className="employee_details">

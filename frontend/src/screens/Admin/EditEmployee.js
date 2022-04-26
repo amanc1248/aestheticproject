@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 
-function EditEmployee({ setEditEmployee }) {
+function EditEmployee({ setEditEmployee, employee }) {
   const closeEditEmployee = () => {
     setEditEmployee(false);
   };
+
+  // employee details states
+  const [name, setName] = useState(employee.name);
+  const [email, setEmail] = useState(employee.email);
+  const [username, setUsername] = useState(employee.username);
+  const [designation, setDesignation] = useState(employee.designation);
   return (
     <div>
       <div>
@@ -22,21 +28,45 @@ function EditEmployee({ setEditEmployee }) {
                 Name<span style={{ color: "red" }}>*</span>
               </label>
               <br />
-              <input type="text" id="name" required />
+              <input
+                type="text"
+                id="name"
+                required
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
+              />
             </div>
             <div>
               <label htmlFor="email" className="admin__login__label">
                 Email<span style={{ color: "red" }}>*</span>
               </label>
               <br />
-              <input type="email" id="email" required />
+              <input
+                type="email"
+                id="email"
+                required
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
             </div>
             <div>
               <label htmlFor="username" className="admin__login__label">
                 username<span style={{ color: "red" }}>*</span>
               </label>
               <br />
-              <input type="text" id="username" required />
+              <input
+                type="text"
+                id="username"
+                required
+                value={username}
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                }}
+              />
             </div>
 
             <div>
@@ -44,7 +74,15 @@ function EditEmployee({ setEditEmployee }) {
                 designation<span style={{ color: "red" }}>*</span>
               </label>
               <br />
-              <input type="text" id="designation" required />
+              <input
+                type="text"
+                id="designation"
+                required
+                value={designation}
+                onChange={(e) => {
+                  setDesignation(e.target.value);
+                }}
+              />
             </div>
             <div>
               <button className="login__employee__button">Save Changes</button>
