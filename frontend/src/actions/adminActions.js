@@ -2,6 +2,9 @@ import {
   ADMIN_ADD_EMPLOYEE,
   ADMIN_ADD_EMPLOYEE_FAILURE,
   ADMIN_ADD_EMPLOYEE_SUCCESS,
+  ADMIN_EDIT_EMPLOYEE,
+  ADMIN_EDIT_EMPLOYEE_FAILURE,
+  ADMIN_EDIT_EMPLOYEE_SUCCESS,
   ADMIN_FETCH_EMPLOYEES,
   ADMIN_FETCH_EMPLOYEES_FAILURE,
   ADMIN_FETCH_EMPLOYEES_SUCCESS,
@@ -96,6 +99,38 @@ export const adminFetchEmployeeAction = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ADMIN_FETCH_EMPLOYEES_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// admin EDIT EMPLOYEE
+export const adminEditEmployeeAction = (employee) => async (dispatch) => {
+  console.log("adminFetchEmployeeAction Ran...");
+  try {
+    dispatch({
+      type: ADMIN_EDIT_EMPLOYEE,
+    });
+    const config = {
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    const { data } = await axios.put(
+      `/api/admin/editEmployee`,
+      employee,
+      config
+    );
+    dispatch({
+      type: ADMIN_EDIT_EMPLOYEE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_EDIT_EMPLOYEE_FAILURE,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
