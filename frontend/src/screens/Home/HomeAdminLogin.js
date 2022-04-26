@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/screens/Home.css";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import CloseIcon from "@mui/icons-material/Close";
 import { adminLoginAction } from "../../actions/adminActions";
 function HomeAdminLogin({ setAdminLogin }) {
+  const navigate = useNavigate();
   const closeLogin = () => {
     setAdminLogin(false);
   };
@@ -20,8 +22,23 @@ function HomeAdminLogin({ setAdminLogin }) {
   const dispatch = useDispatch();
   const adminLoginHandler = (e) => {
     e.preventDefault();
-    dispatch(adminLoginAction(adminPass));
+    if (adminPass) {
+      dispatch(adminLoginAction(adminPass));
+    }
   };
+
+  // store state
+  const { adminLogin } = useSelector((state) => state.adminLoginReducer);
+
+  // useeffect
+  useEffect(() => {
+    if (adminLogin === "success") {
+      navigate("/admin");
+    } else {
+      console.log(adminLogin);
+    }
+  }, [adminLogin]);
+
   return (
     <div className="home__admin__login">
       <form action="">
