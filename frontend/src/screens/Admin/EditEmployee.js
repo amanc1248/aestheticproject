@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-
+import { useDispatch } from "react-redux";
+import { adminEditEmployeeAction } from "../../actions/adminActions";
 function EditEmployee({ setEditEmployee, employee }) {
+  const dispatch = useDispatch();
   const closeEditEmployee = () => {
     setEditEmployee(false);
   };
@@ -11,6 +13,22 @@ function EditEmployee({ setEditEmployee, employee }) {
   const [email, setEmail] = useState(employee.email);
   const [username, setUsername] = useState(employee.username);
   const [designation, setDesignation] = useState(employee.designation);
+
+  // edit employee handler
+  const editEmployeeHandler = (e) => {
+    e.preventDefault();
+    if (name && email && username && designation) {
+      dispatch(
+        adminEditEmployeeAction({
+          id: employee.id,
+          name,
+          email,
+          username,
+          designation,
+        })
+      );
+    }
+  };
   return (
     <div>
       <div>
@@ -85,7 +103,12 @@ function EditEmployee({ setEditEmployee, employee }) {
               />
             </div>
             <div>
-              <button className="login__employee__button">Save Changes</button>
+              <button
+                className="login__employee__button"
+                onClick={editEmployeeHandler}
+              >
+                Save Changes
+              </button>
             </div>
           </div>
         </div>

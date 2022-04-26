@@ -3,6 +3,7 @@ const {
   adminLoginController,
   adminAddEmployeeController,
   adminFetchEmployeeController,
+  adminEditEmployeeController,
 } = require("../controllers/adminControllers.js");
 const router = express.Router();
 
