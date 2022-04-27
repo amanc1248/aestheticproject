@@ -2,6 +2,9 @@ import {
   ADMIN_ADD_EMPLOYEE,
   ADMIN_ADD_EMPLOYEE_FAILURE,
   ADMIN_ADD_EMPLOYEE_SUCCESS,
+  ADMIN_CHANGE_EMPLOYEE_PASSWORD,
+  ADMIN_CHANGE_EMPLOYEE_PASSWORD_FAILURE,
+  ADMIN_CHANGE_EMPLOYEE_PASSWORD_SUCCESS,
   ADMIN_EDIT_EMPLOYEE,
   ADMIN_EDIT_EMPLOYEE_FAILURE,
   ADMIN_EDIT_EMPLOYEE_SUCCESS,
@@ -138,3 +141,36 @@ export const adminEditEmployeeAction = (employee) => async (dispatch) => {
     });
   }
 };
+
+// admin CHANGE EMPLOYEE PASSWORD
+export const adminChangeEmployeePasswordAction =
+  (oldPassword, newPassword) => async (dispatch) => {
+    console.log("adminFetchEmployeeAction Ran...");
+    try {
+      dispatch({
+        type: ADMIN_CHANGE_EMPLOYEE_PASSWORD,
+      });
+      const config = {
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axios.put(
+        `/api/admin/changeEmployeePassword`,
+        { oldPassword, newPassword },
+        config
+      );
+      dispatch({
+        type: ADMIN_CHANGE_EMPLOYEE_PASSWORD_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ADMIN_CHANGE_EMPLOYEE_PASSWORD_FAILURE,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
