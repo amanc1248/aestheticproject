@@ -12,8 +12,7 @@ app.use(express.json());
 
 app.get("/test", testDb);
 app.use("/api/admin", adminRoutes);
-// app.use(notFound);
-// app.use(errorHandler);
+
 app.get("/api", (req, res) => {
   res.send("Api is running");
 });
