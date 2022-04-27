@@ -73,7 +73,7 @@ const adminChangeEmployeePasswordController = asyncHandler(async (req, res) => {
   const { employeeId, oldPassword, newPassword } = req.body;
   let sqlSelect = `SELECT password from employee WHERE id=?`;
 
-  db.query(sql, [employeeId], (err, result) => {
+  db.query(sqlSelect, [employeeId], (err, result) => {
     if (err) throw err;
     else {
       res.send(result);
