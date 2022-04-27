@@ -14,7 +14,7 @@ const adminLoginController = asyncHandler(async (req, res) => {
     res.send("success");
     console.log("success");
   } else {
-    res.send("failure");
+    res.status(401).send({ message: "failure" });
     console.log("failure");
   }
 });
