@@ -8,6 +8,7 @@ import {
   ADMIN_CHANGE_EMPLOYEE_PASSWORD_SUCCESS,
   ADMIN_DELETE_EMPLOYEE,
   ADMIN_DELETE_EMPLOYEE_FAILURE,
+  ADMIN_DELETE_EMPLOYEE_SUCCESS,
   ADMIN_EDIT_EMPLOYEE,
   ADMIN_EDIT_EMPLOYEE_FAILURE,
   ADMIN_EDIT_EMPLOYEE_SUCCESS,
@@ -200,12 +201,11 @@ export const adminDeleteEmployeeAction = (employeeId) => async (dispatch) => {
       },
     };
     const { data } = await axios.delete(
-      `/api/admin/deleteEmployee`,
-      employeeId,
+      `/api/admin/deleteEmployee/${employeeId}`,
       config
     );
     dispatch({
-      type: ADMIN_ADD_EMPLOYEE_SUCCESS,
+      type: ADMIN_DELETE_EMPLOYEE_SUCCESS,
       payload: data,
     });
   } catch (error) {

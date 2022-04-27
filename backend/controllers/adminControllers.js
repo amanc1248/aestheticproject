@@ -102,14 +102,19 @@ const adminChangeEmployeePasswordController = asyncHandler(async (req, res) => {
 });
 
 const adminDeleteEmployeeController = asyncHandler(async (req, res) => {
-  const { employeeId } = req.body;
+  const employeeId = req.params.employeeId;
   console.log(req.body);
   let deleteSql = `DELETE FROM employee WHERE id=?;`;
   db.query(deleteSql, [employeeId], (err, result) => {
     if (err) throw err;
     else {
-      res.send("success");
-      console.log(result);
+      if (result.affectedRows === 0) {
+        res.status(401).send({ message: "No employee with that id" });
+      } else {
+        res.send("success");
+        console.log("deleted success");
+        console.log(result);
+      }
     }
   });
 });

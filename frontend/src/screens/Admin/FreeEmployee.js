@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CloseIcon from "@mui/icons-material/Close";
-import { adminLoginAction } from "../../actions/adminActions";
+import Loader from "../../components/Loader";
 
-function FreeEmployee({ setFreeEmployee }) {
+import {
+  adminLoginAction,
+  adminDeleteEmployeeAction,
+  adminEditEmployeeAction,
+} from "../../actions/adminActions";
+import Message from "../../components/Message";
+
+function FreeEmployee({ setFreeEmployee, employee }) {
   const dispatch = useDispatch();
   const closeDeleteEmployee = () => {
     setFreeEmployee(false);
@@ -14,17 +21,30 @@ function FreeEmployee({ setFreeEmployee }) {
   const [passConfirm, setPassConfirm] = useState();
   const [message, setMessage] = useState();
 
-  // const passConfirmHandler
+  // const [name, setName] = useState(employee.name);
+  // const [email, setEmail] = useState(employee.email);
+  // const [username, setUsername] = useState(employee.username);
+  // const [designation, setDesignation] = useState(employee.designation);
+
+  // const handlers
   const passConfirmHandler = () => {
     if (adminPass) {
       dispatch(adminLoginAction(adminPass));
     }
+  };
+  const freeEmployeeHandler = () => {
+    dispatch(adminDeleteEmployeeAction(employee.id));
   };
 
   // use selector
   const { loading, adminLogin, error } = useSelector(
     (state) => state.adminLoginReducer
   );
+  const {
+    loading: deleteLoading,
+    deletedEmployee,
+    error: deleteEmployeeError,
+  } = useSelector((state) => state.adminDeleteEmployeeReducer);
 
   // useEffect
   useEffect(() => {
@@ -35,7 +55,10 @@ function FreeEmployee({ setFreeEmployee }) {
         setPassConfirm(false);
       }
     }
-  }, [adminLogin, error]);
+    if (deletedEmployee === "success") {
+      setMessage("Deleted Successfully");
+    }
+  }, [adminLogin, error, deletedEmployee]);
 
   return (
     <div>
@@ -51,26 +74,26 @@ function FreeEmployee({ setFreeEmployee }) {
 
             <div>
               <label htmlFor="name" className="admin__login__label">
-                Name:
+                <b>NAME</b>: {employee.name}
               </label>
               <br />
             </div>
             <div>
               <label htmlFor="email" className="admin__login__label">
-                Email:
+                <b>EMAIL</b>: {employee.email}
               </label>
               <br />
             </div>
             <div>
               <label htmlFor="username" className="admin__login__label">
-                username:
+                <b>USERNAME</b>: {employee.username}
               </label>
               <br />
             </div>
 
             <div>
               <label htmlFor="designation" className="admin__login__label">
-                designation:
+                <b>DESIGNATION</b> : {employee.designation}
               </label>
               <br />
             </div>
@@ -96,9 +119,17 @@ function FreeEmployee({ setFreeEmployee }) {
             </button>
             <div>
               {passConfirm && (
-                <button className="login__employee__button">
+                <button
+                  className="login__employee__button"
+                  onClick={freeEmployeeHandler}
+                >
                   Delete Employee
                 </button>
+              )}
+              {deleteLoading && <Loader></Loader>}
+              {message && <Message>{message}</Message>}
+              {deleteEmployeeError && (
+                <Message variant="danger">{deleteEmployeeError}</Message>
               )}
             </div>
           </div>
