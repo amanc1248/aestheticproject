@@ -79,8 +79,7 @@ const adminChangeEmployeePasswordController = asyncHandler(async (req, res) => {
       console.log(result);
       if (result.length === 0) {
         console.log("I ran here");
-        res.status(404);
-        throw new Error("Old Password did not match");
+        res.status(401).send({ message: "Old Password did not match" });
       } else {
         console.log(result[0].password);
       }
