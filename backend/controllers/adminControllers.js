@@ -69,6 +69,7 @@ const adminEditEmployeeController = asyncHandler(async (req, res) => {
     }
   });
 });
+
 const adminChangeEmployeePasswordController = asyncHandler(async (req, res) => {
   const { employeeId, oldPassword, newPassword } = req.body;
   console.log(req.body);
@@ -100,10 +101,24 @@ const adminChangeEmployeePasswordController = asyncHandler(async (req, res) => {
   });
 });
 
+const adminDeleteEmployeeController = asyncHandler(async (req, res) => {
+  const { employeeId } = req.body;
+  console.log(req.body);
+  let deleteSql = `DELETE FROM employee WHERE id=?;`;
+  db.query(deleteSql, [employeeId], (err, result) => {
+    if (err) throw err;
+    else {
+      res.send("success");
+      console.log(result);
+    }
+  });
+});
+
 module.exports = {
   adminLoginController,
   adminAddEmployeeController,
   adminFetchEmployeeController,
   adminEditEmployeeController,
   adminChangeEmployeePasswordController,
+  adminDeleteEmployeeController,
 };
