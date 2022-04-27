@@ -16,7 +16,7 @@ export const employeeLoginAction = (username, password) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-    const { data } = await axios.get(
+    const { data } = await axios.post(
       `/api/employee/employeeLogin`,
       { username, password },
       config

@@ -1,7 +1,6 @@
 const express = require("express");
 const path = require("path");
 const { db } = require("../database/db.js");
-const { testDb } = require("./controllers/employee.js");
 const dotenv = require("dotenv");
 const adminRoutes = require("./routes/adminRoutes");
 const employeeRoutes = require("./routes/employeeRoutes");
@@ -11,7 +10,6 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 app.use(express.json());
 
-app.get("/test", testDb);
 app.use("/api/admin", adminRoutes);
 app.use("/api/employee", employeeRoutes);
 app.get("/api", (req, res) => {
