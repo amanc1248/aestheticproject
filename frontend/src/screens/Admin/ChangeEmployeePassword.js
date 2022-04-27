@@ -1,13 +1,28 @@
 import React, { useState, useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import { useDispatch, useSelector } from "react-redux";
+import { adminChangeEmployeePasswordAction } from "../../actions/adminActions";
 // import "../../styles/screens/Admin.css";
-function ChangeEmployeePassword({ setChangePassword }) {
+function ChangeEmployeePassword({ setChangePassword, employee }) {
+  const dispatch = useDispatch();
   const closeChangePassword = () => {
     setChangePassword(false);
   };
   // states
   const [oldPassword, setOldPassword] = useState();
   const [newPassword, setNewPassword] = useState();
+
+  // changePasswordHandler
+  const changePasswordHandler = (e) => {
+    e.preventDefault();
+    dispatch(
+      adminChangeEmployeePasswordAction(
+        employee.id,
+        "oldPassword",
+        "newPassword"
+      )
+    );
+  };
   return (
     <div>
       <div>
@@ -50,7 +65,10 @@ function ChangeEmployeePassword({ setChangePassword }) {
             </div>
 
             <div>
-              <button className="login__employee__button">
+              <button
+                className="login__employee__button"
+                onClick={changePasswordHandler}
+              >
                 Change Password
               </button>
             </div>

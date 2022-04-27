@@ -69,10 +69,23 @@ const adminEditEmployeeController = asyncHandler(async (req, res) => {
     }
   });
 });
+const adminChangeEmployeePasswordController = asyncHandler(async (req, res) => {
+  const { employeeId, oldPassword, newPassword } = req.body;
+  let sqlSelect = `SELECT password from employee WHERE id=?`;
+
+  db.query(sql, [employeeId], (err, result) => {
+    if (err) throw err;
+    else {
+      res.send(result);
+      console.log(result);
+    }
+  });
+});
 
 module.exports = {
   adminLoginController,
   adminAddEmployeeController,
   adminFetchEmployeeController,
   adminEditEmployeeController,
+  adminChangeEmployeePasswordController,
 };

@@ -144,8 +144,8 @@ export const adminEditEmployeeAction = (employee) => async (dispatch) => {
 
 // admin CHANGE EMPLOYEE PASSWORD
 export const adminChangeEmployeePasswordAction =
-  (oldPassword, newPassword) => async (dispatch) => {
-    console.log("adminFetchEmployeeAction Ran...");
+  (employeeId, oldPassword, newPassword) => async (dispatch) => {
+    console.log("adminChangeEmployeePasswordAction Ran...");
     try {
       dispatch({
         type: ADMIN_CHANGE_EMPLOYEE_PASSWORD,
@@ -157,7 +157,7 @@ export const adminChangeEmployeePasswordAction =
       };
       const { data } = await axios.put(
         `/api/admin/changeEmployeePassword`,
-        { oldPassword, newPassword },
+        { employeeId, oldPassword, newPassword },
         config
       );
       dispatch({
