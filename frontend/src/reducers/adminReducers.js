@@ -2,6 +2,9 @@ import {
   ADMIN_ADD_EMPLOYEE,
   ADMIN_ADD_EMPLOYEE_FAILURE,
   ADMIN_ADD_EMPLOYEE_SUCCESS,
+  ADMIN_CHANGE_EMPLOYEE_PASSWORD,
+  ADMIN_CHANGE_EMPLOYEE_PASSWORD_FAILURE,
+  ADMIN_CHANGE_EMPLOYEE_PASSWORD_SUCCESS,
   ADMIN_FETCH_EMPLOYEES,
   ADMIN_FETCH_EMPLOYEES_SUCCESS,
   ADMIN_LOGIN,
@@ -55,6 +58,19 @@ export const adminEditEmployeeReducer = (state = {}, action) => {
     case ADMIN_FETCH_EMPLOYEES_SUCCESS:
       return { loading: false, editedEmployee: action.payload };
     case ADMIN_ADD_EMPLOYEE_FAILURE:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const adminChangeEmployeePasswordReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ADMIN_CHANGE_EMPLOYEE_PASSWORD:
+      return { loading: true };
+    case ADMIN_CHANGE_EMPLOYEE_PASSWORD_SUCCESS:
+      return { loading: false, changedPassword: action.payload };
+    case ADMIN_CHANGE_EMPLOYEE_PASSWORD_FAILURE:
       return { loading: false, error: action.payload };
     default:
       return state;
