@@ -3,6 +3,7 @@ import {
   ADMIN_ADD_EMPLOYEE_FAILURE,
   ADMIN_ADD_EMPLOYEE_SUCCESS,
   ADMIN_CHANGE_EMPLOYEE_PASSWORD,
+  ADMIN_CHANGE_EMPLOYEE_PASSWORD_CLEAN_ERROR,
   ADMIN_CHANGE_EMPLOYEE_PASSWORD_FAILURE,
   ADMIN_CHANGE_EMPLOYEE_PASSWORD_SUCCESS,
   ADMIN_FETCH_EMPLOYEES,
@@ -10,6 +11,7 @@ import {
   ADMIN_LOGIN,
   ADMIN_LOGIN_FAIL,
   ADMIN_LOGIN_SUCCESS,
+  CLEAN_ERROR,
 } from "../constants/adminConstants";
 
 export const adminLoginReducer = (state = {}, action) => {
@@ -72,6 +74,8 @@ export const adminChangeEmployeePasswordReducer = (state = {}, action) => {
       return { loading: false, changedPassword: action.payload };
     case ADMIN_CHANGE_EMPLOYEE_PASSWORD_FAILURE:
       return { loading: false, error: action.payload };
+    case ADMIN_CHANGE_EMPLOYEE_PASSWORD_CLEAN_ERROR:
+      return { error: null };
     default:
       return state;
   }

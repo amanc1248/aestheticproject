@@ -21,17 +21,15 @@ function ChangeEmployeePassword({ setChangePassword, employee }) {
   // changePasswordHandler
   const changePasswordHandler = (e) => {
     e.preventDefault();
-    dispatch(
-      adminChangeEmployeePasswordAction(
-        "employee.id",
-        "oldPassword",
-        "newPassword"
-      )
-    );
+    if (oldPassword && newPassword) {
+      dispatch(
+        adminChangeEmployeePasswordAction(employee.id, oldPassword, newPassword)
+      );
+    }
   };
 
   // use selectors
-  const { loading, changePassword, error } = useSelector(
+  const { loading, changedPassword, error } = useSelector(
     (state) => state.adminChangeEmployeePasswordReducer
   );
   return (
@@ -84,6 +82,9 @@ function ChangeEmployeePassword({ setChangePassword, employee }) {
               </button>
             </div>
             {loading && <Loader></Loader>}
+            {changedPassword === "success" && (
+              <Message>{"Password Changed Successfully"}</Message>
+            )}
             {error && <Message variant="danger">{error}</Message>}
           </div>
         </div>

@@ -4,6 +4,7 @@ const { db } = require("../database/db.js");
 const { testDb } = require("./controllers/employee.js");
 const dotenv = require("dotenv");
 const adminRoutes = require("./routes/adminRoutes");
+const { notFound, errorHandler } = require("./middleware/middleWare.js");
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -11,6 +12,8 @@ app.use(express.json());
 
 app.get("/test", testDb);
 app.use("/api/admin", adminRoutes);
+// app.use(notFound);
+// app.use(errorHandler);
 app.get("/api", (req, res) => {
   res.send("Api is running");
 });

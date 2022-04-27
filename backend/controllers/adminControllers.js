@@ -71,17 +71,30 @@ const adminEditEmployeeController = asyncHandler(async (req, res) => {
 });
 const adminChangeEmployeePasswordController = asyncHandler(async (req, res) => {
   const { employeeId, oldPassword, newPassword } = req.body;
+  console.log(req.body);
   let sqlSelect = `SELECT password from employee WHERE id=?`;
-
+  let updateSql = `UPDATE employee set password=? where id=?;`;
   db.query(sqlSelect, [employeeId], (err, result) => {
     if (err) throw err;
     else {
-      console.log(result);
       if (result.length === 0) {
-        console.log("I ran here");
+        console.log(11111);
         res.status(401).send({ message: "Old Password did not match" });
       } else {
-        console.log(result[0].password);
+        if (result[0].password === oldPassword) {
+          console.log(22222);
+          db.query(updateSql, [newPassword, employeeId], (err, result) => {
+            if (err) throw err;
+            else {
+              res.send("success");
+              console.log("successfully changed the password");
+            }
+          });
+        } else {
+          console.log(33333);
+          res.status(401).send({ message: "Old Password did not match" });
+          console.log("old password did not match");
+        }
       }
     }
   });

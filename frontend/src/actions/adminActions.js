@@ -3,6 +3,7 @@ import {
   ADMIN_ADD_EMPLOYEE_FAILURE,
   ADMIN_ADD_EMPLOYEE_SUCCESS,
   ADMIN_CHANGE_EMPLOYEE_PASSWORD,
+  ADMIN_CHANGE_EMPLOYEE_PASSWORD_CLEAN_ERROR,
   ADMIN_CHANGE_EMPLOYEE_PASSWORD_FAILURE,
   ADMIN_CHANGE_EMPLOYEE_PASSWORD_SUCCESS,
   ADMIN_EDIT_EMPLOYEE,
@@ -14,6 +15,7 @@ import {
   ADMIN_LOGIN,
   ADMIN_LOGIN_FAIL,
   ADMIN_LOGIN_SUCCESS,
+  CLEAN_ERROR,
 } from "../constants/adminConstants";
 
 const axios = require("axios");
@@ -173,4 +175,13 @@ export const adminChangeEmployeePasswordAction =
             : error.message,
       });
     }
+  };
+
+// admin CHANGE EMPLOYEE PASSWORD CLEAN ERROR
+export const adminChangeEmployeePasswordActionCleanError =
+  () => async (dispatch) => {
+    console.log("adminChangeEmployeePasswordAction Ran...");
+    dispatch({
+      type: ADMIN_CHANGE_EMPLOYEE_PASSWORD_CLEAN_ERROR,
+    });
   };
