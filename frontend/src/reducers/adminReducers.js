@@ -6,6 +6,9 @@ import {
   ADMIN_CHANGE_EMPLOYEE_PASSWORD_CLEAN_ERROR,
   ADMIN_CHANGE_EMPLOYEE_PASSWORD_FAILURE,
   ADMIN_CHANGE_EMPLOYEE_PASSWORD_SUCCESS,
+  ADMIN_DELETE_EMPLOYEE,
+  ADMIN_DELETE_EMPLOYEE_FAILURE,
+  ADMIN_DELETE_EMPLOYEE_SUCCESS,
   ADMIN_FETCH_EMPLOYEES,
   ADMIN_FETCH_EMPLOYEES_SUCCESS,
   ADMIN_LOGIN,
@@ -76,6 +79,20 @@ export const adminChangeEmployeePasswordReducer = (state = {}, action) => {
       return { loading: false, error: action.payload };
     case ADMIN_CHANGE_EMPLOYEE_PASSWORD_CLEAN_ERROR:
       return { error: null };
+    default:
+      return state;
+  }
+};
+
+export const adminDeleteEmployeeReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ADMIN_DELETE_EMPLOYEE:
+      return { loading: true };
+    case ADMIN_DELETE_EMPLOYEE_SUCCESS:
+      return { loading: false, deletedEmployee: action.payload };
+    case ADMIN_DELETE_EMPLOYEE_FAILURE:
+      return { loading: false, error: action.payload };
+
     default:
       return state;
   }
