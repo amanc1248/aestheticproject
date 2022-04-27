@@ -15,4 +15,5 @@ router.route("/editEmployee").put(adminEditEmployeeController);
 router
   .route("/changeEmployeePassword")
   .put(adminChangeEmployeePasswordController);
+router.route("/deleteEmployee").put(adminDeleteEmployeeController);
 module.exports = router;
