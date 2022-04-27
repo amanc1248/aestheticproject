@@ -10,6 +10,7 @@ const Loader = () => {
         height: "100px",
         margin: "auto",
         display: "block",
+        zIndex: 1,
       }}
     >
       <span className="sr-only"></span>
