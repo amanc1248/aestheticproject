@@ -6,6 +6,8 @@ import {
   ADMIN_CHANGE_EMPLOYEE_PASSWORD_CLEAN_ERROR,
   ADMIN_CHANGE_EMPLOYEE_PASSWORD_FAILURE,
   ADMIN_CHANGE_EMPLOYEE_PASSWORD_SUCCESS,
+  ADMIN_DELETE_EMPLOYEE,
+  ADMIN_DELETE_EMPLOYEE_FAILURE,
   ADMIN_EDIT_EMPLOYEE,
   ADMIN_EDIT_EMPLOYEE_FAILURE,
   ADMIN_EDIT_EMPLOYEE_SUCCESS,
@@ -185,3 +187,34 @@ export const adminChangeEmployeePasswordActionCleanError =
       type: ADMIN_CHANGE_EMPLOYEE_PASSWORD_CLEAN_ERROR,
     });
   };
+
+// admin DELETE EMPLOYEE
+export const adminDeleteEmployeeAction = (employeeId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: ADMIN_DELETE_EMPLOYEE,
+    });
+    const config = {
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    const { data } = await axios.delete(
+      `/api/admin/deleteEmployee`,
+      employeeId,
+      config
+    );
+    dispatch({
+      type: ADMIN_ADD_EMPLOYEE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_DELETE_EMPLOYEE_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
