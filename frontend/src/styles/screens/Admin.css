@@ -76,6 +76,15 @@
       align-items: center;
       padding:10px 20px ;
   }
+ @media screen and (max-width:700px) {
+     .employee__container{
+         display: block;
+     }
+     .edit_employee__button, .delete__employee__button{
+         margin: 10px 0;
+     }
+ }
+
   .employee_details{
       display: flex;
       align-items: center;

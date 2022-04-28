@@ -22,13 +22,13 @@ const adminLoginController = asyncHandler(async (req, res) => {
 
 const adminAddEmployeeController = asyncHandler(async (req, res) => {
   console.log("I ran");
-  const { name, email, username, password, designation } = req.body;
+  const { name, email, password, designation } = req.body;
   const employeeId = uniqid();
   let sql = "INSERT INTO employee values (?,?,?,?,?,?)";
 
   db.query(
     sql,
-    [employeeId, name, email, username, password, designation],
+    [employeeId, name, email, employeeId, password, designation],
     (err, result) => {
       if (err) throw err;
       else {

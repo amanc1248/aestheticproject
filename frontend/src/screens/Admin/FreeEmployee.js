@@ -51,7 +51,7 @@ function FreeEmployee({ setFreeEmployee, employee }) {
     if (adminLogin === "success") {
       setPassConfirm(true);
     } else {
-      if (error === "failure") {
+      if (error === "Login Failed") {
         setPassConfirm(false);
       }
     }

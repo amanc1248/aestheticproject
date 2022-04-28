@@ -6,6 +6,7 @@ import FreeEmployee from "./FreeEmployee";
 import Loader from "../../components/Loader";
 import { adminFetchEmployeeAction } from "../../actions/adminActions";
 import ChangeEmployeePassword from "./ChangeEmployeePassword";
+import RevealUsernameAndPassword from "./RevealUsernameAndPassword";
 
 function AdminHome() {
   const dispatch = useDispatch();
@@ -99,9 +100,12 @@ function AdminSingleEmployee({ employee }) {
   const showFreeEmployee = () => {
     setFreeEmployee(true);
   };
-  // useEffect(() => {
-  //   dispatch(adminFetchEmployeeAction());
-  // }, [dispatch, freeEmployee]);
+
+  // for reveal username & password
+  const [revealUPass, setRevealUPass] = useState(false);
+  const showRevealUPass = () => {
+    setRevealUPass(true);
+  };
   return (
     <div>
       {editEmployee && (
@@ -122,6 +126,12 @@ function AdminSingleEmployee({ employee }) {
           employee={employee}
         ></FreeEmployee>
       )}
+      {revealUPass && (
+        <RevealUsernameAndPassword
+          setRevealUPass={setRevealUPass}
+          employee={employee}
+        ></RevealUsernameAndPassword>
+      )}
       <div className="employee__container">
         <div className="employee_details">
           <div className="employee__details__inner"></div>
@@ -141,6 +151,11 @@ function AdminSingleEmployee({ employee }) {
             onClick={showChangePassword}
           >
             Change Password
+          </button>
+        </div>
+        <div className="">
+          <button className="edit_employee__button" onClick={showRevealUPass}>
+            Reveal username & password
           </button>
         </div>
         <div>

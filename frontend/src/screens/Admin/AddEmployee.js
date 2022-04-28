@@ -21,16 +21,12 @@ function AddEmployee({ setAddEmployee }) {
   const [password, setPassword] = useState();
   const [designation, setDesignation] = useState();
 
-  const [buttonDisabled, setButtonDisabled] = useState(false);
-
   // handlers
   const addEmployeeHandler = (e) => {
     e.preventDefault();
-    if (name && email && username && password && designation) {
+    if (name && email && password && designation) {
       console.log("addEmployeeHandler ran");
-      dispatch(
-        adminAddEmployeeAction({ name, email, username, password, designation })
-      );
+      dispatch(adminAddEmployeeAction({ name, email, password, designation }));
     }
   };
 
@@ -80,17 +76,9 @@ function AddEmployee({ setAddEmployee }) {
             </div>
             <div>
               <label htmlFor="username" className="admin__login__label">
-                username<span style={{ color: "red" }}>*</span>
+                username<span style={{ color: "red" }}>Will Autogenerate</span>
               </label>
               <br />
-              <input
-                type="text"
-                id="username"
-                required
-                onChange={(e) => {
-                  setUsername(e.target.value);
-                }}
-              />
             </div>
             <div>
               <label htmlFor="password" className="admin__login__label">
@@ -136,7 +124,11 @@ function AddEmployee({ setAddEmployee }) {
             )}
             {loading && <Loader></Loader>}
             {addEmployee === "success" && (
-              <Message>{"Employee Added successfully"}</Message>
+              <Message>
+                {
+                  "Employee Added successfully. You can see employee username and password in your employee list"
+                }
+              </Message>
             )}
           </div>
         </form>
