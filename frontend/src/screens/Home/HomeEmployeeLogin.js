@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/screens/Home.css";
 import { useDispatch, useSelector } from "react-redux";
 import CloseIcon from "@mui/icons-material/Close";
 import { employeeLoginAction } from "../../actions/employeeActions";
+import { useNavigate } from "react-router-dom";
+
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
 function HomeEmployeeLogin({ setAdminLogin }) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const closeLogin = () => {
     setAdminLogin(false);
@@ -27,6 +30,14 @@ function HomeEmployeeLogin({ setAdminLogin }) {
   const { loading, employeeLogin, error } = useSelector(
     (state) => state.employeeLoginReducer
   );
+
+  // useEffect
+  useEffect(() => {
+    if (employeeLogin === "Success") {
+      navigate("/employee");
+    }
+  }, [employeeLogin, navigate]);
+
   return (
     <>
       <div className="home__admin__login">
