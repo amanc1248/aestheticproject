@@ -73,14 +73,18 @@ function ChangeEmployeePassword({ setChangePassword, employee }) {
               />
             </div>
 
-            <div>
-              <button
-                className="login__employee__button"
-                onClick={changePasswordHandler}
-              >
-                Change Password
-              </button>
-            </div>
+            {!loading && (
+              <div>
+                {!changedPassword && (
+                  <button
+                    className="login__employee__button"
+                    onClick={changePasswordHandler}
+                  >
+                    Change Password
+                  </button>
+                )}
+              </div>
+            )}
             {loading && <Loader></Loader>}
             {changedPassword === "success" && (
               <Message>{"Password Changed Successfully"}</Message>
