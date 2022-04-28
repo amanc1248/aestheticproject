@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch, useSelector } from "react-redux";
-import { adminAddEmployeeAction } from "../../actions/adminActions";
+import {
+  adminAddEmployeeAction,
+  adminAddEmployeeClear,
+} from "../../actions/adminActions";
+import Loader from "../../components/Loader";
+import Message from "../../components/Message";
 function AddEmployee({ setAddEmployee }) {
   const dispatch = useDispatch();
   const closeAddEmployee = () => {
+    dispatch(adminAddEmployeeClear());
     setAddEmployee(false);
   };
 
@@ -15,6 +21,9 @@ function AddEmployee({ setAddEmployee }) {
   const [password, setPassword] = useState();
   const [designation, setDesignation] = useState();
 
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+
+  // handlers
   const addEmployeeHandler = (e) => {
     e.preventDefault();
     if (name && email && username && password && designation) {
@@ -24,6 +33,11 @@ function AddEmployee({ setAddEmployee }) {
       );
     }
   };
+
+  // use selectors
+  const { loading, addEmployee, error } = useSelector(
+    (state) => state.adminAddEmployeeReducer
+  );
   return (
     <div>
       <div className="home__admin__login">
@@ -106,15 +120,24 @@ function AddEmployee({ setAddEmployee }) {
                 }}
               />
             </div>
-            <div>
-              <button
-                className="login__employee__button"
-                type="submit"
-                onClick={addEmployeeHandler}
-              >
-                Add Employee
-              </button>
-            </div>
+            {!loading && (
+              <div>
+                {!addEmployee && (
+                  <button
+                    className="login__employee__button"
+                    type="submit"
+                    onClick={addEmployeeHandler}
+                    disabled={addEmployee === "success" && true}
+                  >
+                    Add Employee
+                  </button>
+                )}
+              </div>
+            )}
+            {loading && <Loader></Loader>}
+            {addEmployee === "success" && (
+              <Message>{"Employee Added successfully"}</Message>
+            )}
           </div>
         </form>
       </div>

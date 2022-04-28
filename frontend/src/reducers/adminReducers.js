@@ -1,5 +1,6 @@
 import {
   ADMIN_ADD_EMPLOYEE,
+  ADMIN_ADD_EMPLOYEE_CLEAR,
   ADMIN_ADD_EMPLOYEE_FAILURE,
   ADMIN_ADD_EMPLOYEE_SUCCESS,
   ADMIN_CHANGE_EMPLOYEE_PASSWORD,
@@ -38,6 +39,8 @@ export const adminAddEmployeeReducer = (state = {}, action) => {
       return { loading: false, addEmployee: action.payload };
     case ADMIN_ADD_EMPLOYEE_FAILURE:
       return { loading: false, error: action.payload };
+    case ADMIN_ADD_EMPLOYEE_CLEAR:
+      return { addEmployee: null, error: null };
     default:
       return state;
   }

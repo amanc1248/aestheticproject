@@ -1,5 +1,6 @@
 import {
   ADMIN_ADD_EMPLOYEE,
+  ADMIN_ADD_EMPLOYEE_CLEAR,
   ADMIN_ADD_EMPLOYEE_FAILURE,
   ADMIN_ADD_EMPLOYEE_SUCCESS,
   ADMIN_CHANGE_EMPLOYEE_PASSWORD,
@@ -85,6 +86,13 @@ export const adminAddEmployeeAction = (employee) => async (dispatch) => {
           : error.message,
     });
   }
+};
+
+// admin CHANGE EMPLOYEE PASSWORD CLEAN ERROR
+export const adminAddEmployeeClear = () => async (dispatch) => {
+  dispatch({
+    type: ADMIN_ADD_EMPLOYEE_CLEAR,
+  });
 };
 
 // admin FETCH EMPLOYEE

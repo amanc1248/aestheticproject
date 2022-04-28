@@ -32,7 +32,7 @@ const adminAddEmployeeController = asyncHandler(async (req, res) => {
     (err, result) => {
       if (err) throw err;
       else {
-        res.send(result);
+        res.send("success");
         console.log(result);
       }
     }
