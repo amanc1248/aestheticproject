@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import "../../styles/screens/Home.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import Loader from "../../components/Loader";
+import Message from "../../components/Message";
 import CloseIcon from "@mui/icons-material/Close";
 import { adminLoginAction } from "../../actions/adminActions";
 function HomeAdminLogin({ setAdminLogin }) {
@@ -28,7 +29,9 @@ function HomeAdminLogin({ setAdminLogin }) {
   };
 
   // store state
-  const { adminLogin } = useSelector((state) => state.adminLoginReducer);
+  const { loading, adminLogin, error } = useSelector(
+    (state) => state.adminLoginReducer
+  );
 
   // useeffect
   useEffect(() => {
@@ -37,7 +40,7 @@ function HomeAdminLogin({ setAdminLogin }) {
     } else {
       console.log(adminLogin);
     }
-  }, [adminLogin]);
+  }, [adminLogin, navigate]);
 
   return (
     <div className="home__admin__login">
@@ -69,6 +72,8 @@ function HomeAdminLogin({ setAdminLogin }) {
               Login as Admin
             </button>
           </div>
+          {loading && <Loader></Loader>}
+          {error && <Message variant="danger">{error}</Message>}
         </div>
       </form>
     </div>
