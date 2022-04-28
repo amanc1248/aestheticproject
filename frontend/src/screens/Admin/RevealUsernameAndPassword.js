@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
-import { adminLoginAction } from "../../actions/adminActions";
+import { adminLoginAction, adminLoginClean } from "../../actions/adminActions";
 function RevealUsernameAndPassword({ setRevealUPass, employee }) {
   const dispatch = useDispatch();
   const closeRevealUPass = () => {
-    // dispatch(adminChangeEmployeePasswordActionCleanError());
+    dispatch(adminLoginClean());
     setRevealUPass(false);
   };
   // states
