@@ -18,6 +18,7 @@ import {
   ADMIN_FETCH_EMPLOYEES_FAILURE,
   ADMIN_FETCH_EMPLOYEES_SUCCESS,
   ADMIN_LOGIN,
+  ADMIN_LOGIN_CLEAN,
   ADMIN_LOGIN_FAIL,
   ADMIN_LOGIN_SUCCESS,
   CLEAN_ERROR,
@@ -55,6 +56,13 @@ export const adminLoginAction = (pass) => async (dispatch) => {
           : error.message,
     });
   }
+};
+
+// admin CHANGE EMPLOYEE PASSWORD CLEAN ERROR
+export const adminLoginClean = () => async (dispatch) => {
+  dispatch({
+    type: ADMIN_LOGIN_CLEAN,
+  });
 };
 
 // admin ADD EMPLOYEE
