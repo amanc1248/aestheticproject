@@ -59,6 +59,8 @@ function AdminEmployees() {
     <>
       {loading ? (
         <Loader></Loader>
+      ) : adminEmployees === "no employees" ? (
+        <h1>No Employees</h1>
       ) : (
         <>
           {adminEmployees &&

@@ -46,8 +46,11 @@ const adminFetchEmployeeController = asyncHandler(async (req, res) => {
   db.query(sql, (err, result) => {
     if (err) throw err;
     else {
-      res.send(result);
-      console.log(result);
+      if (result.length === 0) {
+        res.send("no employees");
+      } else {
+        res.send(result);
+      }
     }
   });
 });
