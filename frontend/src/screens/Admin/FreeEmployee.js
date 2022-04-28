@@ -15,7 +15,7 @@ function FreeEmployee({ setFreeEmployee, employee }) {
   const dispatch = useDispatch();
   const closeDeleteEmployee = () => {
     dispatch(adminLoginClean());
-
+    setMessage();
     setFreeEmployee(false);
   };
 
@@ -74,7 +74,6 @@ function FreeEmployee({ setFreeEmployee, employee }) {
                 <CloseIcon onClick={closeDeleteEmployee}></CloseIcon>
               </div>
             </div>
-
             <div>
               <label htmlFor="name" className="admin__login__label">
                 <b>NAME</b>: {employee.name}
@@ -93,14 +92,12 @@ function FreeEmployee({ setFreeEmployee, employee }) {
               </label>
               <br />
             </div>
-
             <div>
               <label htmlFor="designation" className="admin__login__label">
                 <b>DESIGNATION</b> : {employee.designation}
               </label>
               <br />
             </div>
-
             <h6>Confirm that its you, enter your admin pass:</h6>
             <input
               type="password"
@@ -120,21 +117,27 @@ function FreeEmployee({ setFreeEmployee, employee }) {
                 ? "Pass Rejected ❌"
                 : "Confirm Pass"}
             </button>
-            <div>
-              {passConfirm && (
-                <button
-                  className="login__employee__button"
-                  onClick={freeEmployeeHandler}
-                >
-                  Delete Employee
-                </button>
-              )}
-              {deleteLoading && <Loader></Loader>}
-              {message && <Message>{message}</Message>}
-              {deleteEmployeeError && (
-                <Message variant="danger">{deleteEmployeeError}</Message>
-              )}
-            </div>
+            {passConfirm && (
+              <div>
+                {!deleteLoading && (
+                  <>
+                    {!deletedEmployee && (
+                      <button
+                        className="login__employee__button"
+                        onClick={freeEmployeeHandler}
+                      >
+                        Delete Employee
+                      </button>
+                    )}
+                  </>
+                )}
+              </div>
+            )}
+            {deleteLoading && <Loader></Loader>}
+            {message && <Message>{message}</Message>}
+            {deleteEmployeeError && (
+              <Message variant="danger">{deleteEmployeeError}</Message>
+            )}
           </div>
         </div>
       </div>

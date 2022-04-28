@@ -8,6 +8,7 @@ import {
   ADMIN_CHANGE_EMPLOYEE_PASSWORD_FAILURE,
   ADMIN_CHANGE_EMPLOYEE_PASSWORD_SUCCESS,
   ADMIN_DELETE_EMPLOYEE,
+  ADMIN_DELETE_EMPLOYEE_CLEAN,
   ADMIN_DELETE_EMPLOYEE_FAILURE,
   ADMIN_DELETE_EMPLOYEE_SUCCESS,
   ADMIN_EDIT_EMPLOYEE,
@@ -104,6 +105,8 @@ export const adminDeleteEmployeeReducer = (state = {}, action) => {
       return { loading: false, deletedEmployee: action.payload };
     case ADMIN_DELETE_EMPLOYEE_FAILURE:
       return { loading: false, error: action.payload };
+    case ADMIN_DELETE_EMPLOYEE_CLEAN:
+      return { deletedEmployee: null, error: null };
 
     default:
       return state;
