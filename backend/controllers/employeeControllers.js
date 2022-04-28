@@ -23,7 +23,7 @@ const employeeLoginController = asyncHandler(async (req, res) => {
 
 //fetch users
 const employeeFetchUsersController = asyncHandler(async (req, res) => {
-  let sql = "SELECT * from users;";
+  let sql = "SELECT * from user;";
   db.query(sql, (err, result) => {
     if (err) throw err;
     else {
