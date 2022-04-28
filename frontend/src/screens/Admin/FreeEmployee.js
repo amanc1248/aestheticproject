@@ -8,6 +8,7 @@ import {
   adminDeleteEmployeeAction,
   adminEditEmployeeAction,
   adminLoginClean,
+  adminDeleteEmployeeClean,
 } from "../../actions/adminActions";
 import Message from "../../components/Message";
 
@@ -15,7 +16,7 @@ function FreeEmployee({ setFreeEmployee, employee }) {
   const dispatch = useDispatch();
   const closeDeleteEmployee = () => {
     dispatch(adminLoginClean());
-    setMessage();
+    dispatch(adminDeleteEmployeeClean());
     setFreeEmployee(false);
   };
 
