@@ -21,4 +21,19 @@ const employeeLoginController = asyncHandler(async (req, res) => {
   });
 });
 
-module.exports = { employeeLoginController };
+//fetch users
+const employeeFetchUsersController = asyncHandler(async (req, res) => {
+  let sql = "SELECT * from users;";
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+    else {
+      if (result[0].length === 0) {
+        res.send("no users");
+      } else {
+        res.send(result[0]);
+      }
+    }
+  });
+});
+
+module.exports = { employeeLoginController, employeeFetchUsersController };
