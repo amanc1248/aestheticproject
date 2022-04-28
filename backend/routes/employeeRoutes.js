@@ -1,6 +1,7 @@
 const express = require("express");
 const {
   employeeLoginController,
+  employeeFetchUsersController,
 } = require("../controllers/employeeControllers");
 
 const router = express.Router();
