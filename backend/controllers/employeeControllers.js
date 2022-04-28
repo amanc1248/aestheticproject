@@ -27,10 +27,11 @@ const employeeFetchUsersController = asyncHandler(async (req, res) => {
   db.query(sql, (err, result) => {
     if (err) throw err;
     else {
-      if (result[0].length === 0) {
+      console.log(result);
+      if (result.length === 0) {
         res.send("no users");
       } else {
-        res.send(result[0]);
+        res.send(result);
       }
     }
   });
