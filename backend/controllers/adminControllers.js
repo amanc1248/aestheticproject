@@ -68,7 +68,7 @@ const adminEditEmployeeController = asyncHandler(async (req, res) => {
   db.query(sql, [name, email, username, designation, id], (err, result) => {
     if (err) throw err;
     else {
-      res.send(result);
+      res.send("success");
       console.log(result);
     }
   });

@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import { useDispatch } from "react-redux";
-import { adminEditEmployeeAction } from "../../actions/adminActions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  adminEditEmployeeAction,
+  adminEditEmployeeClean,
+} from "../../actions/adminActions";
+import Loader from "../../components/Loader";
+import Message from "../../components/Message";
 function EditEmployee({ setEditEmployee, employee }) {
   const dispatch = useDispatch();
   const closeEditEmployee = () => {
+    dispatch(adminEditEmployeeClean());
     setEditEmployee(false);
   };
 
@@ -29,6 +35,11 @@ function EditEmployee({ setEditEmployee, employee }) {
       );
     }
   };
+
+  // selectors
+  const { loading, editedEmployee } = useSelector(
+    (state) => state.adminEditEmployeeReducer
+  );
   return (
     <div>
       <div>
@@ -102,14 +113,22 @@ function EditEmployee({ setEditEmployee, employee }) {
                 }}
               />
             </div>
-            <div>
-              <button
-                className="login__employee__button"
-                onClick={editEmployeeHandler}
-              >
-                Save Changes
-              </button>
-            </div>
+            {!loading && (
+              <div>
+                {!editedEmployee && (
+                  <button
+                    className="login__employee__button"
+                    onClick={editEmployeeHandler}
+                  >
+                    Save Changes
+                  </button>
+                )}
+              </div>
+            )}
+            {loading && <Loader></Loader>}
+            {editedEmployee === "success" && (
+              <Message> {"Edit Successful"}</Message>
+            )}
           </div>
         </div>
       </div>

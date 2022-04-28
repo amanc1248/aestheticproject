@@ -11,6 +11,7 @@ import {
   ADMIN_DELETE_EMPLOYEE_FAILURE,
   ADMIN_DELETE_EMPLOYEE_SUCCESS,
   ADMIN_EDIT_EMPLOYEE,
+  ADMIN_EDIT_EMPLOYEE_CLEAN,
   ADMIN_EDIT_EMPLOYEE_FAILURE,
   ADMIN_EDIT_EMPLOYEE_SUCCESS,
   ADMIN_FETCH_EMPLOYEES,
@@ -153,6 +154,13 @@ export const adminEditEmployeeAction = (employee) => async (dispatch) => {
           : error.message,
     });
   }
+};
+
+// admin EDIT EMPLOYEE
+export const adminEditEmployeeClean = () => async (dispatch) => {
+  dispatch({
+    type: ADMIN_EDIT_EMPLOYEE_CLEAN,
+  });
 };
 
 // admin CHANGE EMPLOYEE PASSWORD
