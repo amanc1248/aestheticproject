@@ -8,7 +8,10 @@ import {
   adminFetchEmployeeReducer,
   adminLoginReducer,
 } from "./reducers/adminReducers";
-import { employeeLoginReducer } from "./reducers/employeeReducers";
+import {
+  employeeFetchUsersReducer,
+  employeeLoginReducer,
+} from "./reducers/employeeReducers";
 const middleware = [thunk];
 const reducer = combineReducers({
   adminLoginReducer: adminLoginReducer,
@@ -16,6 +19,7 @@ const reducer = combineReducers({
   adminChangeEmployeePasswordReducer: adminChangeEmployeePasswordReducer,
   adminDeleteEmployeeReducer: adminDeleteEmployeeReducer,
   employeeLoginReducer: employeeLoginReducer,
+  employeeFetchUsersReducer: employeeFetchUsersReducer,
 });
 const initialState = {};
 const store = createStore(
