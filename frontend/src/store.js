@@ -3,6 +3,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 
 import thunk from "redux-thunk";
 import {
+  adminAddEmployeeReducer,
   adminChangeEmployeePasswordReducer,
   adminDeleteEmployeeReducer,
   adminFetchEmployeeReducer,
@@ -15,6 +16,7 @@ import {
 const middleware = [thunk];
 const reducer = combineReducers({
   adminLoginReducer: adminLoginReducer,
+  adminAddEmployeeReducer: adminAddEmployeeReducer,
   adminFetchEmployeeReducer: adminFetchEmployeeReducer,
   adminChangeEmployeePasswordReducer: adminChangeEmployeePasswordReducer,
   adminDeleteEmployeeReducer: adminDeleteEmployeeReducer,
