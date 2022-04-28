@@ -56,16 +56,15 @@ const adminFetchEmployeeController = asyncHandler(async (req, res) => {
 });
 
 const adminEditEmployeeController = asyncHandler(async (req, res) => {
-  const { id, name, email, username, designation } = req.body;
+  const { id, name, email, designation } = req.body;
   let sql = `UPDATE EMPLOYEE
   SET name=?,
       email=?,
-      username=?,
       designation=?
   WHERE id=?
   `;
 
-  db.query(sql, [name, email, username, designation, id], (err, result) => {
+  db.query(sql, [name, email, designation, id], (err, result) => {
     if (err) throw err;
     else {
       res.send("success");

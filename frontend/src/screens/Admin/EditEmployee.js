@@ -23,7 +23,7 @@ function EditEmployee({ setEditEmployee, employee }) {
   // edit employee handler
   const editEmployeeHandler = (e) => {
     e.preventDefault();
-    if (name && email && username && designation) {
+    if (name && email && designation) {
       dispatch(
         adminEditEmployeeAction({
           id: employee.id,
@@ -79,21 +79,6 @@ function EditEmployee({ setEditEmployee, employee }) {
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
-                }}
-              />
-            </div>
-            <div>
-              <label htmlFor="username" className="admin__login__label">
-                username<span style={{ color: "red" }}>*</span>
-              </label>
-              <br />
-              <input
-                type="text"
-                id="username"
-                required
-                value={username}
-                onChange={(e) => {
-                  setUsername(e.target.value);
                 }}
               />
             </div>
