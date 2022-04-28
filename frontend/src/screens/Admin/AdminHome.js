@@ -8,10 +8,16 @@ import { adminFetchEmployeeAction } from "../../actions/adminActions";
 import ChangeEmployeePassword from "./ChangeEmployeePassword";
 
 function AdminHome() {
+  const dispatch = useDispatch();
+
   const [addEmployee, setAddEmployee] = useState(false);
   const showAddEmployee = () => {
     setAddEmployee(true);
   };
+  useEffect(() => {
+    console.log("Use effect RAN.....");
+    dispatch(adminFetchEmployeeAction());
+  });
 
   return (
     <div className="admin__home apply__home__margin">
@@ -43,16 +49,10 @@ function AdminHome() {
 export default AdminHome;
 
 function AdminEmployees() {
-  const dispatch = useDispatch();
-
   // fetching employees
   const { adminEmployees, loading } = useSelector(
     (state) => state.adminFetchEmployeeReducer
   );
-  useEffect(() => {
-    dispatch(adminFetchEmployeeAction());
-  }, [dispatch]);
-
   console.log("Fetching employees");
   console.log(adminEmployees);
   return (
@@ -80,6 +80,8 @@ function AdminEmployees() {
 }
 
 function AdminSingleEmployee({ employee }) {
+  const dispatch = useDispatch();
+
   // for edit
   const [editEmployee, setEditEmployee] = useState(false);
   const showEditEmployee = () => {
@@ -97,7 +99,9 @@ function AdminSingleEmployee({ employee }) {
   const showFreeEmployee = () => {
     setFreeEmployee(true);
   };
-
+  // useEffect(() => {
+  //   dispatch(adminFetchEmployeeAction());
+  // }, [dispatch, freeEmployee]);
   return (
     <div>
       {editEmployee && (
