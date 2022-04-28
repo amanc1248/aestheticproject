@@ -5,5 +5,6 @@ const {
 
 const router = express.Router();
 router.route("/employeeLogin").post(employeeLoginController);
+router.route("/fetchUsers").get(employeeFetchUsersController);
 
 module.exports = router;
