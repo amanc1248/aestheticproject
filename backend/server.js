@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const adminRoutes = require("./routes/adminRoutes");
 const employeeRoutes = require("./routes/employeeRoutes");
 const { notFound, errorHandler } = require("./middleware/middleWare.js");
+const session = require("express-session");
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
