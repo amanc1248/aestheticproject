@@ -11,6 +11,14 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 app.use(express.json());
 
+// session
+app.use(
+  session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 app.use("/api/admin", adminRoutes);
 app.use("/api/employee", employeeRoutes);
 app.get("/api", (req, res) => {
