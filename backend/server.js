@@ -6,6 +6,7 @@ const adminRoutes = require("./routes/adminRoutes");
 const employeeRoutes = require("./routes/employeeRoutes");
 const { notFound, errorHandler } = require("./middleware/middleWare.js");
 const session = require("express-session");
+const store = new session.MemoryStore();
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -17,6 +18,12 @@ app.use(
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
+    store,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 2,
+      secure: false,
+      sameSite: "none",
+    },
   })
 );
 app.use("/api/admin", adminRoutes);
