@@ -13,6 +13,15 @@ function App() {
     <div className="App">
       <Routes>
         <Route
+          path="/employee"
+          element={
+            <>
+              <EmployeeHeader></EmployeeHeader>
+              <EmployeeHome></EmployeeHome>
+            </>
+          }
+        ></Route>
+        <Route
           path="/admin"
           element={
             <>
@@ -21,12 +30,13 @@ function App() {
             </>
           }
         ></Route>
+
         <Route
-          path="/employee"
+          path="/auth/:adminError/:employeeError"
           element={
             <>
-              <EmployeeHeader></EmployeeHeader>
-              <EmployeeHome></EmployeeHome>
+              <Header></Header>
+              <Home></Home>
             </>
           }
         ></Route>
@@ -38,7 +48,7 @@ function App() {
               <Home></Home>
             </>
           }
-        ></Route>
+        />
       </Routes>
     </div>
   );
