@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   adminChangeEmployeePasswordAction,
   adminChangeEmployeePasswordActionCleanError,
 } from "../../actions/adminActions";
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
+import HomeAdminLogin from "../Home/HomeAdminLogin";
 // import "../../styles/screens/Admin.css";
 function ChangeEmployeePassword({ setChangePassword, employee }) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const closeChangePassword = () => {
     dispatch(adminChangeEmployeePasswordActionCleanError());
@@ -32,6 +35,13 @@ function ChangeEmployeePassword({ setChangePassword, employee }) {
   const { loading, changedPassword, error } = useSelector(
     (state) => state.adminChangeEmployeePasswordReducer
   );
+  console.log("Change employee password error: ", error);
+  useEffect(() => {
+    if (error === "unAuthorized") {
+      navigate("/auth/true/false");
+    }
+  }, [navigate, error]);
+
   return (
     <>
       <div>
@@ -89,6 +99,7 @@ function ChangeEmployeePassword({ setChangePassword, employee }) {
             {changedPassword === "success" && (
               <Message>{"Password Changed Successfully"}</Message>
             )}
+
             {error && <Message variant="danger">{error}</Message>}
           </div>
         </div>
