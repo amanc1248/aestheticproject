@@ -4,21 +4,36 @@ import AddEmployee from "./AddEmployee";
 import EditEmployee from "./EditEmployee";
 import FreeEmployee from "./FreeEmployee";
 import Loader from "../../components/Loader";
-import { adminFetchEmployeeAction } from "../../actions/adminActions";
+import {
+  adminFetchEmployeeAction,
+  adminLoginClean,
+} from "../../actions/adminActions";
 import ChangeEmployeePassword from "./ChangeEmployeePassword";
 import RevealUsernameAndPassword from "./RevealUsernameAndPassword";
+import { useNavigate, Redirect } from "react-router-dom";
 
 function AdminHome() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [addEmployee, setAddEmployee] = useState(false);
   const showAddEmployee = () => {
     setAddEmployee(true);
   };
+  // USE SELECTOR
+  const { loading, adminEmployees, error } = useSelector(
+    (state) => state.adminFetchEmployeeReducer
+  );
+  console.log("error:", error);
+  // dispatch(adminLoginClean());
+  // useEffects
   useEffect(() => {
     console.log("Use effect RAN.....");
     dispatch(adminFetchEmployeeAction());
-  });
+    if (error === "unAuthorized") {
+      navigate("/auth/true/false");
+    }
+  }, [error, navigate, dispatch]);
 
   return (
     <div className="admin__home apply__home__margin">
