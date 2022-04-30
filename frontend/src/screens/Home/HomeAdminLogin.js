@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
 import CloseIcon from "@mui/icons-material/Close";
-import { adminLoginAction } from "../../actions/adminActions";
-function HomeAdminLogin({ setAdminLogin }) {
+import { adminLoginAction, adminLoginClean } from "../../actions/adminActions";
+function HomeAdminLogin({ setAdminLogin, adminError }) {
   const navigate = useNavigate();
   const closeLogin = () => {
     setAdminLogin(false);
@@ -19,29 +19,37 @@ function HomeAdminLogin({ setAdminLogin }) {
     console.log(adminPass);
   };
 
+  // USE
+  const { loading, adminLogin, error } = useSelector(
+    (state) => state.adminLoginReducer
+  );
+
   // actions
   const dispatch = useDispatch();
   const adminLoginHandler = (e) => {
     e.preventDefault();
     if (adminPass) {
       dispatch(adminLoginAction(adminPass));
+      // dispatch(adminLoginClean());
+    }
+    console.log("navigate is not working ");
+
+    if (adminLogin === "success") {
+      console.log("navigate is working ");
+      navigate("/admin");
     }
   };
-
-  // store state
-  const { loading, adminLogin, error } = useSelector(
-    (state) => state.adminLoginReducer
-  );
 
   // useeffect
   useEffect(() => {
     if (adminLogin === "success") {
+      dispatch(adminLoginClean());
+
       navigate("/admin");
-    } else {
-      console.log(adminLogin);
     }
   }, [adminLogin, navigate]);
 
+  console.log("AdminLogin: ", adminLogin);
   return (
     <div className="home__admin__login">
       <form action="">
@@ -52,6 +60,9 @@ function HomeAdminLogin({ setAdminLogin }) {
               <CloseIcon onClick={closeLogin}></CloseIcon>
             </div>
           </div>
+          {adminError === true && (
+            <Message variant="danger">{"Please login first"}</Message>
+          )}
           <label htmlFor="admin__login" className="admin__login__label">
             Admin pass<span style={{ color: "red" }}>*</span>
           </label>

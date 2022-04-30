@@ -136,7 +136,11 @@ function FreeEmployee({ setFreeEmployee, employee }) {
             )}
             {deleteLoading && <Loader></Loader>}
             {message && <Message>{message}</Message>}
-            {deleteEmployeeError && (
+            {deleteEmployeeError === "unAuthorized" ? (
+              <Message variant="danger">
+                {"Session Expired, Please login again"}
+              </Message>
+            ) : (
               <Message variant="danger">{deleteEmployeeError}</Message>
             )}
           </div>

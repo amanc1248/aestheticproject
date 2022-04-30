@@ -37,7 +37,7 @@ function EditEmployee({ setEditEmployee, employee }) {
   };
 
   // selectors
-  const { loading, editedEmployee } = useSelector(
+  const { loading, editedEmployee, error } = useSelector(
     (state) => state.adminEditEmployeeReducer
   );
   return (
@@ -113,6 +113,11 @@ function EditEmployee({ setEditEmployee, employee }) {
             {loading && <Loader></Loader>}
             {editedEmployee === "success" && (
               <Message> {"Edit Successful"}</Message>
+            )}
+            {error && (
+              <Message variant="danger">
+                {"Session Expired, Please login again"}
+              </Message>
             )}
           </div>
         </div>

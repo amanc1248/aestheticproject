@@ -2,24 +2,35 @@ import React, { useState } from "react";
 import "../../styles/screens/Home.css";
 import HomeAdminLogin from "./HomeAdminLogin";
 import HomeEmployeeLogin from "./HomeEmployeeLogin";
+import { useParams } from "react-router-dom";
 function Home() {
-  const [adminLogin, setAdminLogin] = useState(false);
+  const { adminError, employeeError } = useParams();
+  const adminErrorBool = adminError === "true";
+  const employeeErrorBool = employeeError === "true";
+  console.log(adminError, "  ", employeeError);
+  const [adminLogin, setAdminLogin] = useState(adminErrorBool);
   const showAdminLogin = () => {
     setAdminLogin(true);
   };
 
-  const [employeeLogin, setEmployeeLogin] = useState(false);
+  const [employeeLogin, setEmployeeLogin] = useState(employeeErrorBool);
   const showEmployeeLogin = () => {
     setEmployeeLogin(true);
   };
   return (
     <div className="home apply__home__margin">
       {adminLogin && (
-        <HomeAdminLogin setAdminLogin={setAdminLogin}></HomeAdminLogin>
+        <HomeAdminLogin
+          setAdminLogin={setAdminLogin}
+          adminError={adminErrorBool}
+        ></HomeAdminLogin>
       )}
 
       {employeeLogin && (
-        <HomeEmployeeLogin setAdminLogin={setEmployeeLogin}></HomeEmployeeLogin>
+        <HomeEmployeeLogin
+          setAdminLogin={setEmployeeLogin}
+          employeeError={employeeErrorBool}
+        ></HomeEmployeeLogin>
       )}
       <div className="home__title">
         Portal to send NFTs update to Aesthetic Users.

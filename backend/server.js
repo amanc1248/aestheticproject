@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const adminRoutes = require("./routes/adminRoutes");
 const employeeRoutes = require("./routes/employeeRoutes");
 const { notFound, errorHandler } = require("./middleware/middleWare.js");
+const { ensureAdminAuthentication } = require("./middleware/middleWare.js");
 const session = require("express-session");
 const store = new session.MemoryStore();
 dotenv.config();
@@ -20,14 +21,15 @@ app.use(
     saveUninitialized: false,
     store,
     cookie: {
-      maxAge: 1000 * 60 * 60 * 2,
+      maxAge: 20000,
       secure: false,
-      sameSite: "none",
     },
   })
 );
+
 app.use("/api/admin", adminRoutes);
 app.use("/api/employee", employeeRoutes);
+
 app.get("/api", (req, res) => {
   res.send("Api is running");
 });

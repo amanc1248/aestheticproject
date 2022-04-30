@@ -22,7 +22,6 @@ import {
   ADMIN_LOGIN_CLEAN,
   ADMIN_LOGIN_FAIL,
   ADMIN_LOGIN_SUCCESS,
-  CLEAN_ERROR,
 } from "../constants/adminConstants";
 
 const axios = require("axios");

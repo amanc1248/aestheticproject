@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -7,7 +7,11 @@ import {
 } from "../../actions/adminActions";
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
+import { useNavigate } from "react-router-dom";
+
 function AddEmployee({ setAddEmployee }) {
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const closeAddEmployee = () => {
     dispatch(adminAddEmployeeClear());
@@ -34,6 +38,12 @@ function AddEmployee({ setAddEmployee }) {
   const { loading, addEmployee, error } = useSelector(
     (state) => state.adminAddEmployeeReducer
   );
+  useEffect(() => {
+    if (error === "unAuthorized") {
+      navigate("/");
+    }
+  }, [error, navigate]);
+
   return (
     <div>
       <div className="home__admin__login">
@@ -128,6 +138,11 @@ function AddEmployee({ setAddEmployee }) {
                 {
                   "Employee Added successfully. You can see employee username and password in your employee list"
                 }
+              </Message>
+            )}
+            {error && (
+              <Message variant="danger">
+                {"Session Expired, Please login again"}
               </Message>
             )}
           </div>

@@ -25,7 +25,9 @@ const reducer = combineReducers({
   employeeLoginReducer: employeeLoginReducer,
   employeeFetchUsersReducer: employeeFetchUsersReducer,
 });
-const initialState = {};
+const initialState = {
+  adminLoginReducer: { adminLogin: null },
+};
 const store = createStore(
   reducer,
   initialState,

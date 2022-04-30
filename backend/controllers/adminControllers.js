@@ -2,6 +2,7 @@ const { db } = require("../../database/db.js");
 const asyncHandler = require("express-async-handler");
 const dotenv = require("dotenv");
 const uniqid = require("uniqid");
+// const session = require("express-session");
 dotenv.config();
 
 // admin login
@@ -12,8 +13,10 @@ const adminLoginController = asyncHandler(async (req, res) => {
   console.log("From env:>>", process.env.ADMIN_PASS, "<<");
 
   if (process.env.ADMIN_PASS === pass) {
+    req.session.adminAuthenticated = true;
+    req.session.admin = { pass: pass };
+    console.log(req.session);
     res.send("success");
-    console.log("success");
   } else {
     res.status(401).send({ message: "Login Failed" });
     console.log("failure");

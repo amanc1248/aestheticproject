@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
-function HomeEmployeeLogin({ setAdminLogin }) {
+function HomeEmployeeLogin({ setAdminLogin, employeeError }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const closeLogin = () => {
@@ -49,6 +49,11 @@ function HomeEmployeeLogin({ setAdminLogin }) {
                 <CloseIcon onClick={closeLogin}></CloseIcon>
               </div>
             </div>
+            {employeeError === true && (
+              <Message variant="danger">
+                {"Session Expired, Please login again"}
+              </Message>
+            )}
             <div>
               <label htmlFor="username" className="admin__login__label">
                 Username<span style={{ color: "red" }}>*</span>
