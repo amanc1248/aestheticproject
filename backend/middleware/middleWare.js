@@ -1,3 +1,7 @@
+const express = require("express");
+const app = express();
+const path = require("path");
+
 const notFound = (req, res, next) => {
   const error = new Error(`Not Found -${req.originalUrl}`);
   res.status(404);
@@ -11,4 +15,23 @@ const errorHandler = (err, req, res, next) => {
     stack: process.env.NODE_ENV === "production" ? null : err.stack,
   });
 };
-module.exports = { notFound, errorHandler };
+
+// ensure authentication
+const ensureAdminAuthentication = (req, res, next) => {
+  console.log("Inside ensureAdminAuthentication");
+  console.log(req.session);
+  if (req.session.adminAuthenticated) {
+    return next();
+  } else {
+    app.use(express.static(path.join(__dirname, "../frontend/build")));
+    app.get("*", (req, res) =>
+      res.sendFile(
+        path.resolve(__dirname, "../frontend", "build", "index.html")
+      )
+    );
+    // res.status(401).send({ message: "unAuthorized" });
+    console.log("You're not authorized as an Admin");
+  }
+};
+
+module.exports = { notFound, errorHandler, ensureAdminAuthentication };
