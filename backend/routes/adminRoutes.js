@@ -11,6 +11,7 @@ const { ensureAdminAuthentication } = require("../middleware/middleWare.js");
 const router = express.Router();
 
 router.route("/adminLogin").post(adminLoginController);
+// router.route("/admin/ensureLogin").get(ensureAdminAuthentication);
 router
   .route("/addEmployee")
   .post(ensureAdminAuthentication, adminAddEmployeeController);
@@ -20,11 +21,10 @@ router
 router
   .route("/editEmployee")
   .put(ensureAdminAuthentication, adminEditEmployeeController);
-router.route("/authenticateAdmin").get(ensureAdminAuthentication);
 router
   .route("/changeEmployeePassword")
-  .put(adminChangeEmployeePasswordController);
+  .put(ensureAdminAuthentication, adminChangeEmployeePasswordController);
 router
   .route("/deleteEmployee/:employeeId")
-  .delete(adminDeleteEmployeeController);
+  .delete(ensureAdminAuthentication, adminDeleteEmployeeController);
 module.exports = router;
