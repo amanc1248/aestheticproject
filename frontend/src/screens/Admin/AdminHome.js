@@ -6,6 +6,7 @@ import FreeEmployee from "./FreeEmployee";
 import Loader from "../../components/Loader";
 import {
   adminFetchEmployeeAction,
+  adminFetchEmployeeCleanAction,
   adminLoginClean,
 } from "../../actions/adminActions";
 import ChangeEmployeePassword from "./ChangeEmployeePassword";
@@ -80,6 +81,7 @@ function AdminEmployees() {
 
   useEffect(() => {
     if (adminEmployees === "unAuthorized") {
+      dispatch(adminFetchEmployeeCleanAction());
       navigate("/auth/true/false");
     }
   }, [adminEmployees, navigate]);
