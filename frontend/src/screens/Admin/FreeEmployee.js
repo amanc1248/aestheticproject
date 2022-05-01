@@ -49,7 +49,9 @@ function FreeEmployee({ setFreeEmployee, employee }) {
 
   // useEffect
   useEffect(() => {
-    if (adminLogin === "success") {
+    if (deletedEmployee === "unAuthorized") {
+      navigate("/auth/true/false");
+    } else if (adminLogin === "success") {
       setPassConfirm(true);
     } else {
       if (error === "Login Failed") {
@@ -136,11 +138,7 @@ function FreeEmployee({ setFreeEmployee, employee }) {
             )}
             {deleteLoading && <Loader></Loader>}
             {message && <Message>{message}</Message>}
-            {deleteEmployeeError === "unAuthorized" ? (
-              <Message variant="danger">
-                {"Session Expired, Please login again"}
-              </Message>
-            ) : (
+            {deleteEmployeeError && (
               <Message variant="danger">{deleteEmployeeError}</Message>
             )}
           </div>

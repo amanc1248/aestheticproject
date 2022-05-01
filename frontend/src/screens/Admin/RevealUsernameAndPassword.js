@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
 import { adminLoginAction, adminLoginClean } from "../../actions/adminActions";
 function RevealUsernameAndPassword({ setRevealUPass, employee }) {
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const closeRevealUPass = () => {
     dispatch(adminLoginClean());
@@ -30,12 +33,14 @@ function RevealUsernameAndPassword({ setRevealUPass, employee }) {
   useEffect(() => {
     if (adminLogin === "success") {
       setPassConfirm(true);
+    } else if (adminLogin === "unAuthorized") {
+      navigate("/auth/true/false");
     } else {
       if (error === "Login Failed") {
         setPassConfirm(false);
       }
     }
-  }, [adminLogin, error]);
+  }, [adminLogin, error, navigate]);
   return (
     <>
       <div>
