@@ -15,7 +15,10 @@ const employeeLoginController = asyncHandler(async (req, res) => {
       } else if (result[0].password !== password) {
         res.status(401).send({ message: "Invalid Password" });
       } else {
+        req.session.employeeAuthenticated = true;
+        req.session.employee = { username: username, password: password };
         res.send("Success");
+        console.log(req.session);
       }
     }
   });
@@ -37,4 +40,19 @@ const employeeFetchUsersController = asyncHandler(async (req, res) => {
   });
 });
 
-module.exports = { employeeLoginController, employeeFetchUsersController };
+const employeeLogoutController = asyncHandler(async (req, res) => {
+  if (req.session.employeeAuthenticated) {
+    req.session.destroy();
+    if (req.session) {
+      res.send("failure");
+    } else {
+      res.send("destroyed");
+    }
+  }
+});
+
+module.exports = {
+  employeeLoginController,
+  employeeFetchUsersController,
+  employeeLogoutController,
+};
