@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -7,7 +7,9 @@ import {
 } from "../../actions/adminActions";
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
+import { useNavigate } from "react-router-dom";
 function EditEmployee({ setEditEmployee, employee }) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const closeEditEmployee = () => {
     dispatch(adminEditEmployeeClean());
@@ -40,6 +42,12 @@ function EditEmployee({ setEditEmployee, employee }) {
   const { loading, editedEmployee, error } = useSelector(
     (state) => state.adminEditEmployeeReducer
   );
+  console.log("adminEditEMployReducer error: ", error);
+  useEffect(() => {
+    if (editedEmployee === "unAuthorized") {
+      navigate("/auth/true/false");
+    }
+  }, [navigate, editedEmployee]);
   return (
     <div>
       <div>
@@ -113,11 +121,6 @@ function EditEmployee({ setEditEmployee, employee }) {
             {loading && <Loader></Loader>}
             {editedEmployee === "success" && (
               <Message> {"Edit Successful"}</Message>
-            )}
-            {error && (
-              <Message variant="danger">
-                {"Session Expired, Please login again"}
-              </Message>
             )}
           </div>
         </div>

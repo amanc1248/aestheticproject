@@ -1,9 +1,17 @@
 import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
-
+import { useDispatch } from "react-redux";
+import { adminLogoutAction } from "../../actions/adminActions";
 function AdminProfile({ setAdminProfile }) {
+  const dispatch = useDispatch();
+
+  // handlers
   const closeAdminProfile = () => {
     setAdminProfile(false);
+  };
+
+  const logout = () => {
+    dispatch(adminLogoutAction());
   };
   return (
     <div>
@@ -20,7 +28,9 @@ function AdminProfile({ setAdminProfile }) {
             </div>
 
             <div>
-              <button className="login__employee__button">Logout</button>
+              <button className="login__employee__button" onClick={logout}>
+                Logout
+              </button>
             </div>
           </div>
         </div>

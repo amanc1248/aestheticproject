@@ -125,6 +125,13 @@ const adminDeleteEmployeeController = asyncHandler(async (req, res) => {
   });
 });
 
+const adminLogoutController = asyncHandler(async (req, res) => {
+  if (req.session.adminAuthenticated) {
+    req.session.destroy();
+    res.send("destroyed");
+  }
+});
+
 module.exports = {
   adminLoginController,
   adminAddEmployeeController,
@@ -132,4 +139,5 @@ module.exports = {
   adminEditEmployeeController,
   adminChangeEmployeePasswordController,
   adminDeleteEmployeeController,
+  adminLogoutController,
 };

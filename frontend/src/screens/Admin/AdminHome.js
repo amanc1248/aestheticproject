@@ -21,19 +21,18 @@ function AdminHome() {
     setAddEmployee(true);
   };
   // USE SELECTOR
-  const { loading, adminEmployees, error } = useSelector(
-    (state) => state.adminFetchEmployeeReducer
-  );
-  console.log("error:", error);
+  // const { loading, adminEmployees, error } = useSelector(
+  //   (state) => state.adminFetchEmployeeReducer
+  // );
+  // console.log("adminEMployee:", adminEmployees);
   // dispatch(adminLoginClean());
+
   // useEffects
-  useEffect(() => {
-    console.log("Use effect RAN.....");
-    dispatch(adminFetchEmployeeAction());
-    if (error === "unAuthorized") {
-      navigate("/auth/true/false");
-    }
-  }, [error, navigate, dispatch]);
+  // useEffect(() => {
+  //   console.log("Use effect RAN.....");
+
+  //   dispatch(adminFetchEmployeeAction());
+  // }, []);
 
   return (
     <div className="admin__home apply__home__margin">
@@ -65,11 +64,27 @@ function AdminHome() {
 export default AdminHome;
 
 function AdminEmployees() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   // fetching employees
   const { adminEmployees, loading } = useSelector(
     (state) => state.adminFetchEmployeeReducer
   );
-  console.log("Fetching employees");
+
+  // useEffects
+
+  useEffect(() => {
+    dispatch(adminFetchEmployeeAction());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (adminEmployees === "unAuthorized") {
+      navigate("/auth/true/false");
+    }
+  }, [adminEmployees, navigate]);
+
+  console.log("Here i am running infinie loop");
   console.log(adminEmployees);
   return (
     <>
@@ -77,27 +92,24 @@ function AdminEmployees() {
         <Loader></Loader>
       ) : adminEmployees === "no employees" ? (
         <h1>No Employees</h1>
-      ) : (
+      ) : adminEmployees === "unAuthorized" ? (
+        <h1>unAuthorized</h1>
+      ) : adminEmployees !== undefined ? (
         <>
-          {adminEmployees &&
-            adminEmployees.map((employee) => {
-              return (
-                <div className="admin__employee__container" key={employee.id}>
-                  <AdminSingleEmployee
-                    employee={employee}
-                  ></AdminSingleEmployee>
-                </div>
-              );
-            })}
+          {adminEmployees.map((employee) => {
+            return (
+              <div className="admin__employee__container" key={employee.id}>
+                <AdminSingleEmployee employee={employee}></AdminSingleEmployee>
+              </div>
+            );
+          })}
         </>
-      )}
+      ) : null}
     </>
   );
 }
 
 function AdminSingleEmployee({ employee }) {
-  const dispatch = useDispatch();
-
   // for edit
   const [editEmployee, setEditEmployee] = useState(false);
   const showEditEmployee = () => {

@@ -264,11 +264,12 @@ export const adminLogoutAction = () => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-    const { data } = await axios.get(`/api/admin/logout}`, config);
+    const { data } = await axios.get(`/api/admin/logout`, config);
     dispatch({
       type: AMDIN_LOGOUT_SUCCESS,
       payload: data,
     });
+    console.log("Logout action data: ", data);
   } catch (error) {
     dispatch({
       type: ADMIN_LOGOUT_FAILURE,

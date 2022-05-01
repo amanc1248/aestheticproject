@@ -37,10 +37,10 @@ function ChangeEmployeePassword({ setChangePassword, employee }) {
   );
   console.log("Change employee password error: ", error);
   useEffect(() => {
-    if (error === "unAuthorized") {
+    if (changedPassword === "unAuthorized") {
       navigate("/auth/true/false");
     }
-  }, [navigate, error]);
+  }, [navigate, changedPassword]);
 
   return (
     <>

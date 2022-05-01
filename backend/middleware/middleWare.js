@@ -23,7 +23,7 @@ const ensureAdminAuthentication = (req, res, next) => {
   if (req.session.adminAuthenticated) {
     return next();
   } else {
-    res.status(401).send({ message: "unAuthorized" });
+    res.send("unAuthorized");
     console.log("You're not authorized as an Admin");
   }
 };

@@ -11,8 +11,10 @@ import {
   adminDeleteEmployeeClean,
 } from "../../actions/adminActions";
 import Message from "../../components/Message";
+import { useNavigate } from "react-router-dom";
 
 function FreeEmployee({ setFreeEmployee, employee }) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const closeDeleteEmployee = () => {
     dispatch(adminLoginClean());
@@ -24,11 +26,6 @@ function FreeEmployee({ setFreeEmployee, employee }) {
   const [adminPass, setAdminPass] = useState();
   const [passConfirm, setPassConfirm] = useState();
   const [message, setMessage] = useState();
-
-  // const [name, setName] = useState(employee.name);
-  // const [email, setEmail] = useState(employee.email);
-  // const [username, setUsername] = useState(employee.username);
-  // const [designation, setDesignation] = useState(employee.designation);
 
   // const handlers
   const passConfirmHandler = () => {
@@ -62,7 +59,10 @@ function FreeEmployee({ setFreeEmployee, employee }) {
     if (deletedEmployee === "success") {
       setMessage("Deleted Successfully");
     }
-  }, [adminLogin, error, deletedEmployee]);
+    if (error === "unAuthorized") {
+      navigate("/auth/true/false");
+    }
+  }, [adminLogin, error, deletedEmployee, navigate]);
 
   return (
     <div>

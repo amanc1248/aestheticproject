@@ -6,6 +6,7 @@ const {
   adminEditEmployeeController,
   adminChangeEmployeePasswordController,
   adminDeleteEmployeeController,
+  adminLogoutController,
 } = require("../controllers/adminControllers.js");
 const { ensureAdminAuthentication } = require("../middleware/middleWare.js");
 const router = express.Router();
@@ -27,4 +28,5 @@ router
 router
   .route("/deleteEmployee/:employeeId")
   .delete(ensureAdminAuthentication, adminDeleteEmployeeController);
+router.route("/logout").get(adminLogoutController);
 module.exports = router;
