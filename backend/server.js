@@ -14,21 +14,30 @@ const PORT = process.env.PORT || 3001;
 app.use(express.json());
 
 // session
-app.use(
-  session({
-    secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: false,
-    store,
-    cookie: {
-      maxAge: 20000,
-      secure: false,
-    },
-  })
-);
+const adminSessoin = session({
+  secret: process.env.ADMIN_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  store,
+  cookie: {
+    maxAge: 20000,
+    secure: false,
+  },
+});
 
-app.use("/api/admin", adminRoutes);
-app.use("/api/employee", employeeRoutes);
+const employeeSession = session({
+  secret: process.env.EMPLOYEE_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  store,
+  cookie: {
+    maxAge: 20000,
+    secure: false,
+  },
+});
+
+app.use("/api/admin", adminSessoin, adminRoutes);
+app.use("/api/employee", employeeSession, employeeRoutes);
 
 app.get("/api", (req, res) => {
   res.send("Api is running");
