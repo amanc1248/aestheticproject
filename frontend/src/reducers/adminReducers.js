@@ -25,6 +25,10 @@ import {
   ADMIN_LOGIN_CLEAN,
   ADMIN_LOGIN_FAIL,
   ADMIN_LOGIN_SUCCESS,
+  ADMIN_LOGOUT,
+  ADMIN_LOGOUT_CLEAN,
+  ADMIN_LOGOUT_FAILURE,
+  AMDIN_LOGOUT_SUCCESS,
   CLEAN_ERROR,
 } from "../constants/adminConstants";
 
@@ -113,6 +117,21 @@ export const adminDeleteEmployeeReducer = (state = {}, action) => {
     case ADMIN_DELETE_EMPLOYEE_CLEAN:
       return { deletedEmployee: null, error: null };
 
+    default:
+      return state;
+  }
+};
+
+export const adminLogoutReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ADMIN_LOGOUT:
+      return { loading: true };
+    case AMDIN_LOGOUT_SUCCESS:
+      return { loading: false, adminLogout: action.payload };
+    case ADMIN_LOGOUT_FAILURE:
+      return { loading: false, error: action.payload };
+    case ADMIN_LOGOUT_CLEAN:
+      return { adminLogout: null, error: null };
     default:
       return state;
   }
