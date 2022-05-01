@@ -128,7 +128,11 @@ const adminDeleteEmployeeController = asyncHandler(async (req, res) => {
 const adminLogoutController = asyncHandler(async (req, res) => {
   if (req.session.adminAuthenticated) {
     req.session.destroy();
-    res.send("destroyed");
+    if (req.session) {
+      res.send("failure");
+    } else {
+      res.send("destroyed");
+    }
   }
 });
 
