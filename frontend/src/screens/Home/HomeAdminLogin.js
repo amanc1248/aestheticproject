@@ -47,7 +47,7 @@ function HomeAdminLogin({ setAdminLogin, adminError }) {
 
       navigate("/admin");
     }
-  }, [adminLogin, navigate]);
+  }, [adminLogin, navigate, dispatch]);
 
   console.log("AdminLogin: ", adminLogin);
   return (
