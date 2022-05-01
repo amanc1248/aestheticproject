@@ -16,6 +16,7 @@ import {
   ADMIN_EDIT_EMPLOYEE_FAILURE,
   ADMIN_EDIT_EMPLOYEE_SUCCESS,
   ADMIN_FETCH_EMPLOYEES,
+  ADMIN_FETCH_EMPLOYEES_CLEAN,
   ADMIN_FETCH_EMPLOYEES_FAILURE,
   ADMIN_FETCH_EMPLOYEES_SUCCESS,
   ADMIN_LOGIN,
@@ -133,6 +134,13 @@ export const adminFetchEmployeeAction = () => async (dispatch) => {
           : error.message,
     });
   }
+};
+
+// admin CHANGE EMPLOYEE PASSWORD CLEAN ERROR
+export const adminFetchEmployeeCleanAction = () => async (dispatch) => {
+  dispatch({
+    type: ADMIN_FETCH_EMPLOYEES_CLEAN,
+  });
 };
 
 // admin EDIT EMPLOYEE
