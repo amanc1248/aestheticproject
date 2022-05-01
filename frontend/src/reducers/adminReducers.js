@@ -19,6 +19,7 @@ import {
   ADMIN_ENSURE_LOGIN_FAIL,
   ADMIN_ENSURE_LOGIN_SUCCESS,
   ADMIN_FETCH_EMPLOYEES,
+  ADMIN_FETCH_EMPLOYEES_CLEAN,
   ADMIN_FETCH_EMPLOYEES_FAILURE,
   ADMIN_FETCH_EMPLOYEES_SUCCESS,
   ADMIN_LOGIN,
@@ -71,6 +72,8 @@ export const adminFetchEmployeeReducer = (state = {}, action) => {
       return { loading: false, adminEmployees: action.payload };
     case ADMIN_FETCH_EMPLOYEES_FAILURE:
       return { loading: false, error: action.payload };
+    case ADMIN_FETCH_EMPLOYEES_CLEAN:
+      return { adminEmployees: null };
     default:
       return state;
   }
