@@ -39,10 +39,10 @@ function AddEmployee({ setAddEmployee }) {
     (state) => state.adminAddEmployeeReducer
   );
   useEffect(() => {
-    if (error === "unAuthorized") {
-      navigate("/");
+    if (addEmployee === "unAuthorized") {
+      navigate("/auth/true/false");
     }
-  }, [error, navigate]);
+  }, [error, navigate, addEmployee]);
 
   return (
     <div>
@@ -138,11 +138,6 @@ function AddEmployee({ setAddEmployee }) {
                 {
                   "Employee Added successfully. You can see employee username and password in your employee list"
                 }
-              </Message>
-            )}
-            {error && (
-              <Message variant="danger">
-                {"Session Expired, Please login again"}
               </Message>
             )}
           </div>

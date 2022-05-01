@@ -84,7 +84,7 @@ function AdminEmployees() {
       dispatch(adminFetchEmployeeCleanAction());
       navigate("/auth/true/false");
     }
-  }, [adminEmployees, navigate]);
+  }, [adminEmployees, navigate, dispatch]);
 
   console.log("Here i am running infinie loop");
   console.log(adminEmployees);
@@ -96,7 +96,11 @@ function AdminEmployees() {
         <h1>No Employees</h1>
       ) : adminEmployees === "unAuthorized" ? (
         <h1>unAuthorized</h1>
-      ) : adminEmployees !== undefined ? (
+      ) : adminEmployees === undefined ? (
+        <h1>undefined</h1>
+      ) : adminEmployees === null ? (
+        <h1>null</h1>
+      ) : (
         <>
           {adminEmployees.map((employee) => {
             return (
@@ -106,7 +110,7 @@ function AdminEmployees() {
             );
           })}
         </>
-      ) : null}
+      )}
     </>
   );
 }

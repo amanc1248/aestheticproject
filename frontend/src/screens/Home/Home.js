@@ -3,7 +3,17 @@ import "../../styles/screens/Home.css";
 import HomeAdminLogin from "./HomeAdminLogin";
 import HomeEmployeeLogin from "./HomeEmployeeLogin";
 import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {
+  adminAddEmployeeClear,
+  adminChangeEmployeePasswordActionCleanError,
+  adminDeleteEmployeeClean,
+  adminFetchEmployeeCleanAction,
+  adminLoginClean,
+} from "../../actions/adminActions";
 function Home() {
+  const dispatch = useDispatch();
+
   const { adminError, employeeError } = useParams();
   const adminErrorBool = adminError === "true";
   const employeeErrorBool = employeeError === "true";
@@ -17,6 +27,13 @@ function Home() {
   const showEmployeeLogin = () => {
     setEmployeeLogin(true);
   };
+
+  dispatch(adminAddEmployeeClear());
+  dispatch(adminChangeEmployeePasswordActionCleanError());
+  dispatch(adminDeleteEmployeeClean());
+  dispatch(adminLoginClean());
+  dispatch(adminFetchEmployeeCleanAction());
+
   return (
     <div className="home apply__home__margin">
       {adminLogin && (
