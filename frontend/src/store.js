@@ -9,6 +9,7 @@ import {
   adminEditEmployeeReducer,
   adminFetchEmployeeReducer,
   adminLoginReducer,
+  adminLogoutReducer,
 } from "./reducers/adminReducers";
 import {
   employeeFetchUsersReducer,
@@ -17,6 +18,7 @@ import {
 const middleware = [thunk];
 const reducer = combineReducers({
   adminLoginReducer: adminLoginReducer,
+  adminLogoutReducer: adminLogoutReducer,
   adminAddEmployeeReducer: adminAddEmployeeReducer,
   adminEditEmployeeReducer: adminEditEmployeeReducer,
   adminFetchEmployeeReducer: adminFetchEmployeeReducer,
