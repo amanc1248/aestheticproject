@@ -14,6 +14,7 @@ import {
 import {
   employeeFetchUsersReducer,
   employeeLoginReducer,
+  employeeLogoutReducer,
 } from "./reducers/employeeReducers";
 const middleware = [thunk];
 const reducer = combineReducers({
@@ -25,6 +26,7 @@ const reducer = combineReducers({
   adminChangeEmployeePasswordReducer: adminChangeEmployeePasswordReducer,
   adminDeleteEmployeeReducer: adminDeleteEmployeeReducer,
   employeeLoginReducer: employeeLoginReducer,
+  employeeLogoutReducer: employeeLogoutReducer,
   employeeFetchUsersReducer: employeeFetchUsersReducer,
 });
 const initialState = {
