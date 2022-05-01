@@ -12,6 +12,11 @@ import {
   adminLoginClean,
   adminLogoutClean,
 } from "../../actions/adminActions";
+import {
+  employeeFetchUsersClean,
+  employeeLoginClean,
+  employeeLogoutClean,
+} from "../../actions/employeeActions";
 function Home() {
   const dispatch = useDispatch();
 
@@ -35,6 +40,9 @@ function Home() {
   dispatch(adminLoginClean());
   dispatch(adminFetchEmployeeCleanAction());
   dispatch(adminLogoutClean());
+  dispatch(employeeFetchUsersClean());
+  dispatch(employeeLoginClean());
+  dispatch(employeeLogoutClean());
   return (
     <div className="home apply__home__margin">
       {adminLogin && (

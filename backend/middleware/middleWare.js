@@ -16,7 +16,7 @@ const errorHandler = (err, req, res, next) => {
   });
 };
 
-// ensure authentication
+// ensure admin authentication
 const ensureAdminAuthentication = (req, res, next) => {
   console.log("Inside ensureAdminAuthentication");
   console.log(req.session);
@@ -27,5 +27,21 @@ const ensureAdminAuthentication = (req, res, next) => {
     console.log("You're not authorized as an Admin");
   }
 };
+// ensure employee authentication
+const ensureEmployeeAuthentication = (req, res, next) => {
+  console.log("Inside ensureEmployeeAuthentication");
+  console.log(req.session);
+  if (req.session.employeeAuthenticated) {
+    return next();
+  } else {
+    res.send("unAuthorized");
+    console.log("You're not authorized as an Employee");
+  }
+};
 
-module.exports = { notFound, errorHandler, ensureAdminAuthentication };
+module.exports = {
+  notFound,
+  errorHandler,
+  ensureAdminAuthentication,
+  ensureEmployeeAuthentication,
+};

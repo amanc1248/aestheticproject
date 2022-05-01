@@ -219,7 +219,6 @@ export const adminChangeEmployeePasswordAction =
 // admin CHANGE EMPLOYEE PASSWORD CLEAN ERROR
 export const adminChangeEmployeePasswordActionCleanError =
   () => async (dispatch) => {
-    console.log("adminChangeEmployeePasswordAction Ran...");
     dispatch({
       type: ADMIN_CHANGE_EMPLOYEE_PASSWORD_CLEAN_ERROR,
     });

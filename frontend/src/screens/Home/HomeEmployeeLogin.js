@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import "../../styles/screens/Home.css";
 import { useDispatch, useSelector } from "react-redux";
 import CloseIcon from "@mui/icons-material/Close";
-import { employeeLoginAction } from "../../actions/employeeActions";
+import {
+  employeeFetchUsersClean,
+  employeeLoginAction,
+  employeeLoginClean,
+  employeeLogoutClean,
+} from "../../actions/employeeActions";
 import { useNavigate } from "react-router-dom";
 
 import Loader from "../../components/Loader";
@@ -38,6 +43,14 @@ function HomeEmployeeLogin({ setAdminLogin, employeeError }) {
     }
   }, [employeeLogin, navigate]);
 
+  useEffect(() => {
+    dispatch(employeeFetchUsersClean());
+    dispatch(employeeLoginClean());
+    dispatch(employeeLogoutClean());
+  }, []);
+
+  console.log("I am infinite loop");
+
   return (
     <>
       <div className="home__admin__login">
@@ -50,9 +63,7 @@ function HomeEmployeeLogin({ setAdminLogin, employeeError }) {
               </div>
             </div>
             {employeeError === true && (
-              <Message variant="danger">
-                {"Session Expired, Please login again"}
-              </Message>
+              <Message variant="danger">{"Please login first"}</Message>
             )}
             <div>
               <label htmlFor="username" className="admin__login__label">

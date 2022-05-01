@@ -5,7 +5,15 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
 import CloseIcon from "@mui/icons-material/Close";
-import { adminLoginAction, adminLoginClean } from "../../actions/adminActions";
+import {
+  adminAddEmployeeClear,
+  adminChangeEmployeePasswordActionCleanError,
+  adminDeleteEmployeeClean,
+  adminFetchEmployeeCleanAction,
+  adminLoginAction,
+  adminLoginClean,
+  adminLogoutClean,
+} from "../../actions/adminActions";
 function HomeAdminLogin({ setAdminLogin, adminError }) {
   const navigate = useNavigate();
   const closeLogin = () => {
@@ -48,6 +56,16 @@ function HomeAdminLogin({ setAdminLogin, adminError }) {
       navigate("/admin");
     }
   }, [adminLogin, navigate, dispatch]);
+
+  useEffect(() => {
+    dispatch(adminAddEmployeeClear());
+    dispatch(adminChangeEmployeePasswordActionCleanError());
+    dispatch(adminDeleteEmployeeClean());
+
+    dispatch(adminLoginClean());
+    dispatch(adminFetchEmployeeCleanAction());
+    dispatch(adminLogoutClean());
+  }, []);
 
   console.log("AdminLogin: ", adminLogin);
   return (
