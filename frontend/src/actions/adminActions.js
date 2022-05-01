@@ -24,6 +24,7 @@ import {
   ADMIN_LOGIN_FAIL,
   ADMIN_LOGIN_SUCCESS,
   ADMIN_LOGOUT,
+  ADMIN_LOGOUT_CLEAN,
   ADMIN_LOGOUT_FAILURE,
   AMDIN_LOGOUT_SUCCESS,
 } from "../constants/adminConstants";
@@ -287,4 +288,11 @@ export const adminLogoutAction = () => async (dispatch) => {
           : error.message,
     });
   }
+};
+
+// admin LOGOUT CLEAN
+export const adminLogoutClean = () => async (dispatch) => {
+  dispatch({
+    type: ADMIN_LOGOUT_CLEAN,
+  });
 };
