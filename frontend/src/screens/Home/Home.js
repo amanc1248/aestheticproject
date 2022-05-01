@@ -10,6 +10,7 @@ import {
   adminDeleteEmployeeClean,
   adminFetchEmployeeCleanAction,
   adminLoginClean,
+  adminLogoutClean,
 } from "../../actions/adminActions";
 function Home() {
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ function Home() {
   dispatch(adminDeleteEmployeeClean());
   dispatch(adminLoginClean());
   dispatch(adminFetchEmployeeCleanAction());
-
+  dispatch(adminLogoutClean());
   return (
     <div className="home apply__home__margin">
       {adminLogin && (
