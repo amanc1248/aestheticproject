@@ -1,10 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import { useDispatch, useSelector } from "react-redux";
+import { employeeLogoutAction } from "../../actions/employeeActions";
+import { useNavigate } from "react-router-dom";
+import Loader from "../../components/Loader";
+import Message from "../../components/Message";
 
 function EmployeeProfile({ setEmployeeProfile }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const closeEmployeeProfile = () => {
     setEmployeeProfile(false);
   };
+
+  // handlers
+  const logout = () => {
+    dispatch(employeeLogoutAction());
+  };
+
+  // useSelectors
+  const { loading, employeeLogout, error } = useSelector(
+    (state) => state.employeeLogoutReducer
+  );
+
+  // useEffects
+  useEffect(() => {
+    if (employeeLogout === "destroyed") {
+      navigate("/");
+    }
+  }, [employeeLogout, navigate]);
   return (
     <div>
       <div>
@@ -21,8 +45,12 @@ function EmployeeProfile({ setEmployeeProfile }) {
               </div>
 
               <div>
-                <button className="login__employee__button">Logout</button>
+                <button className="login__employee__button" onClick={logout}>
+                  Logout
+                </button>
               </div>
+              {loading && <Loader></Loader>}
+              {error && <Message variant="danger">{error}</Message>}
             </div>
           </div>
         </div>
