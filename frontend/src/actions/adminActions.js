@@ -22,6 +22,9 @@ import {
   ADMIN_LOGIN_CLEAN,
   ADMIN_LOGIN_FAIL,
   ADMIN_LOGIN_SUCCESS,
+  ADMIN_LOGOUT,
+  ADMIN_LOGOUT_FAILURE,
+  AMDIN_LOGOUT_SUCCESS,
 } from "../constants/adminConstants";
 
 const axios = require("axios");
@@ -248,4 +251,31 @@ export const adminDeleteEmployeeClean = () => async (dispatch) => {
   dispatch({
     type: ADMIN_DELETE_EMPLOYEE_CLEAN,
   });
+};
+
+// admin LOGOUT
+export const adminLogoutAction = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: ADMIN_LOGOUT,
+    });
+    const config = {
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    const { data } = await axios.get(`/api/admin/logout}`, config);
+    dispatch({
+      type: AMDIN_LOGOUT_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_LOGOUT_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
 };
