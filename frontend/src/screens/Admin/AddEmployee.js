@@ -24,7 +24,7 @@ function AddEmployee({ setAddEmployee }) {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [designation, setDesignation] = useState();
-
+  const [buttonDisable, setButtonDisable] = useState(false);
   // handlers
   const addEmployeeHandler = (e) => {
     e.preventDefault();
@@ -41,6 +41,9 @@ function AddEmployee({ setAddEmployee }) {
   useEffect(() => {
     if (addEmployee === "unAuthorized") {
       navigate("/auth/true/false");
+    }
+    if (addEmployee === "success") {
+      setButtonDisable(true);
     }
   }, [error, navigate, addEmployee]);
 
@@ -68,6 +71,7 @@ function AddEmployee({ setAddEmployee }) {
                 onChange={(e) => {
                   setName(e.target.value);
                 }}
+                disabled={buttonDisable}
               />
             </div>
             <div>
@@ -82,6 +86,7 @@ function AddEmployee({ setAddEmployee }) {
                 onChange={(e) => {
                   setEmail(e.target.value);
                 }}
+                disabled={buttonDisable}
               />
             </div>
             <div>
@@ -102,6 +107,7 @@ function AddEmployee({ setAddEmployee }) {
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
+                disabled={buttonDisable}
               />
             </div>
             <div>
@@ -116,6 +122,7 @@ function AddEmployee({ setAddEmployee }) {
                 onChange={(e) => {
                   setDesignation(e.target.value);
                 }}
+                disabled={buttonDisable}
               />
             </div>
             {!loading && (

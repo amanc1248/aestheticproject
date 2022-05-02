@@ -27,7 +27,7 @@ const adminAddEmployeeController = asyncHandler(async (req, res) => {
   console.log("I ran");
   const { name, email, password, designation } = req.body;
   const employeeId = uniqid();
-  let sql = "INSERT INTO employee values (?,?,?,?,?,?)";
+  let sql = "INSERT INTO employee values (?,?,?,?,?,?,CURRENT_TIMESTAMP())";
 
   db.query(
     sql,
@@ -44,7 +44,7 @@ const adminAddEmployeeController = asyncHandler(async (req, res) => {
 
 const adminFetchEmployeeController = asyncHandler(async (req, res) => {
   console.log("adminFetchEmployeeController ran");
-  let sql = "select * from employee";
+  let sql = "select * from employee order by date_time DESC";
 
   db.query(sql, (err, result) => {
     if (err) throw err;

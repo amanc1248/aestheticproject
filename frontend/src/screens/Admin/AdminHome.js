@@ -68,11 +68,11 @@ function AdminEmployees() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // fetching employees
+  // useSelectors
   const { adminEmployees, loading } = useSelector(
     (state) => state.adminFetchEmployeeReducer
   );
-
+  const { addEmployee } = useSelector((state) => state.adminAddEmployeeReducer);
   // useEffects
 
   useEffect(() => {
@@ -85,6 +85,12 @@ function AdminEmployees() {
       navigate("/auth/true/false");
     }
   }, [adminEmployees, navigate, dispatch]);
+
+  useEffect(() => {
+    if (addEmployee === "success") {
+      dispatch(adminFetchEmployeeAction());
+    }
+  }, [addEmployee, dispatch]);
 
   console.log("Here i am running infinie loop");
   console.log(adminEmployees);
