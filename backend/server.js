@@ -20,7 +20,7 @@ const adminSessoin = session({
   saveUninitialized: false,
   store,
   cookie: {
-    maxAge: 20000,
+    maxAge: 600000,
     secure: false,
   },
 });
@@ -31,7 +31,7 @@ const employeeSession = session({
   saveUninitialized: false,
   store,
   cookie: {
-    maxAge: 20000,
+    maxAge: 600000,
     secure: false,
   },
 });
