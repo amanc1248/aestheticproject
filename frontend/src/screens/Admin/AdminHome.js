@@ -5,7 +5,11 @@ import EditEmployee from "./EditEmployee";
 import FreeEmployee from "./FreeEmployee";
 import Loader from "../../components/Loader";
 import {
+  adminAddEmployeeClear,
+  adminChangeEmployeePasswordActionCleanError,
+  adminDeleteEmployeeClean,
   adminEditEmployeeAction,
+  adminEditEmployeeClean,
   adminFetchEmployeeAction,
   adminFetchEmployeeCleanAction,
   adminLoginClean,
@@ -112,16 +116,28 @@ function AdminEmployees() {
     }
     if (changedPassword === "success") {
       dispatch(adminFetchEmployeeAction());
-      setMessage("Changed Password Successfully");
+      setMessage("Password Changed Successfully");
     }
     if (deletedEmployee === "success") {
       dispatch(adminFetchEmployeeAction());
-      setMessage("Delete Successfully");
+      setMessage("Deleted Successfully");
     }
   }, [addEmployee, dispatch, editedEmployee, changedPassword, deletedEmployee]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setMessage();
+      dispatch(adminAddEmployeeClear());
+      dispatch(adminChangeEmployeePasswordActionCleanError());
+      dispatch(adminDeleteEmployeeClean());
+      dispatch(adminLoginClean());
+      dispatch(adminEditEmployeeClean());
+    }, 5000);
+  }, [message]);
+
   console.log("Here i am running infinie loop");
   console.log(adminEmployees);
+
   return (
     <>
       {loading ? (
