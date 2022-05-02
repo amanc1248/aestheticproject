@@ -5,6 +5,7 @@ import EditEmployee from "./EditEmployee";
 import FreeEmployee from "./FreeEmployee";
 import Loader from "../../components/Loader";
 import {
+  adminEditEmployeeAction,
   adminFetchEmployeeAction,
   adminFetchEmployeeCleanAction,
   adminLoginClean,
@@ -12,6 +13,7 @@ import {
 import ChangeEmployeePassword from "./ChangeEmployeePassword";
 import RevealUsernameAndPassword from "./RevealUsernameAndPassword";
 import { useNavigate, Redirect } from "react-router-dom";
+import Message from "../../components/Message";
 
 function AdminHome() {
   const dispatch = useDispatch();
@@ -68,11 +70,24 @@ function AdminEmployees() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  // usestates
+  const [message, setMessage] = useState();
+
   // useSelectors
   const { adminEmployees, loading } = useSelector(
     (state) => state.adminFetchEmployeeReducer
   );
   const { addEmployee } = useSelector((state) => state.adminAddEmployeeReducer);
+  const { editedEmployee } = useSelector(
+    (state) => state.adminEditEmployeeReducer
+  );
+  const { changedPassword } = useSelector(
+    (state) => state.adminChangeEmployeePasswordReducer
+  );
+  const { deletedEmployee } = useSelector(
+    (state) => state.adminDeleteEmployeeReducer
+  );
+
   // useEffects
 
   useEffect(() => {
@@ -89,8 +104,21 @@ function AdminEmployees() {
   useEffect(() => {
     if (addEmployee === "success") {
       dispatch(adminFetchEmployeeAction());
+      setMessage("Employee Added Successfully");
     }
-  }, [addEmployee, dispatch]);
+    if (editedEmployee === "success") {
+      dispatch(adminFetchEmployeeAction());
+      setMessage("Employee Edited Successfully");
+    }
+    if (changedPassword === "success") {
+      dispatch(adminFetchEmployeeAction());
+      setMessage("Changed Password Successfully");
+    }
+    if (deletedEmployee === "success") {
+      dispatch(adminFetchEmployeeAction());
+      setMessage("Delete Successfully");
+    }
+  }, [addEmployee, dispatch, editedEmployee, changedPassword, deletedEmployee]);
 
   console.log("Here i am running infinie loop");
   console.log(adminEmployees);
@@ -108,6 +136,7 @@ function AdminEmployees() {
         <h1>null</h1>
       ) : (
         <>
+          {message && <Message>{message}</Message>}
           {adminEmployees.map((employee) => {
             return (
               <div className="admin__employee__container" key={employee.id}>
