@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   adminEditEmployeeAction,
   adminEditEmployeeClean,
+  adminFetchEmployeeAction,
 } from "../../actions/adminActions";
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
@@ -21,7 +22,6 @@ function EditEmployee({ setEditEmployee, employee }) {
   const [email, setEmail] = useState(employee.email);
   const [username, setUsername] = useState(employee.username);
   const [designation, setDesignation] = useState(employee.designation);
-
   // edit employee handler
   const editEmployeeHandler = (e) => {
     e.preventDefault();
@@ -108,20 +108,15 @@ function EditEmployee({ setEditEmployee, employee }) {
             </div>
             {!loading && (
               <div>
-                {!editedEmployee && (
-                  <button
-                    className="login__employee__button"
-                    onClick={editEmployeeHandler}
-                  >
-                    Save Changes
-                  </button>
-                )}
+                <button
+                  className="login__employee__button"
+                  onClick={editEmployeeHandler}
+                >
+                  Save Changes
+                </button>
               </div>
             )}
             {loading && <Loader></Loader>}
-            {editedEmployee === "success" && (
-              <Message> {"Edit Successful"}</Message>
-            )}
           </div>
         </div>
       </div>

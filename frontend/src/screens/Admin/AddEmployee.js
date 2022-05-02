@@ -35,7 +35,7 @@ function AddEmployee({ setAddEmployee }) {
   };
 
   // use selectors
-  const { loading, addEmployee, error } = useSelector(
+  const { loading, addEmployee } = useSelector(
     (state) => state.adminAddEmployeeReducer
   );
   useEffect(() => {
@@ -45,7 +45,7 @@ function AddEmployee({ setAddEmployee }) {
     if (addEmployee === "success") {
       setButtonDisable(true);
     }
-  }, [error, navigate, addEmployee]);
+  }, [navigate, addEmployee]);
 
   return (
     <div>

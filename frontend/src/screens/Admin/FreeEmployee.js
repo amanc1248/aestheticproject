@@ -35,6 +35,7 @@ function FreeEmployee({ setFreeEmployee, employee }) {
   };
   const freeEmployeeHandler = () => {
     dispatch(adminDeleteEmployeeAction(employee.id));
+    dispatch(adminLoginClean());
   };
 
   // use selector
@@ -124,20 +125,17 @@ function FreeEmployee({ setFreeEmployee, employee }) {
               <div>
                 {!deleteLoading && (
                   <>
-                    {!deletedEmployee && (
-                      <button
-                        className="login__employee__button"
-                        onClick={freeEmployeeHandler}
-                      >
-                        Delete Employee
-                      </button>
-                    )}
+                    <button
+                      className="login__employee__button"
+                      onClick={freeEmployeeHandler}
+                    >
+                      Delete Employee
+                    </button>
                   </>
                 )}
               </div>
             )}
             {deleteLoading && <Loader></Loader>}
-            {message && <Message>{message}</Message>}
             {deleteEmployeeError && (
               <Message variant="danger">{deleteEmployeeError}</Message>
             )}
