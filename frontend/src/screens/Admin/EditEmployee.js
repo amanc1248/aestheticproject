@@ -20,18 +20,18 @@ function EditEmployee({ setEditEmployee, employee }) {
   // employee details states
   const [name, setName] = useState(employee.name);
   const [email, setEmail] = useState(employee.email);
-  const [username, setUsername] = useState(employee.username);
+  const [emailPassword, setEmailPassword] = useState(employee.email_password);
   const [designation, setDesignation] = useState(employee.designation);
   // edit employee handler
   const editEmployeeHandler = (e) => {
     e.preventDefault();
-    if (name && email && designation) {
+    if (name && email && emailPassword && designation) {
       dispatch(
         adminEditEmployeeAction({
           id: employee.id,
           name,
           email,
-          username,
+          emailPassword,
           designation,
         })
       );
@@ -87,6 +87,21 @@ function EditEmployee({ setEditEmployee, employee }) {
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
+                }}
+              />
+            </div>
+            <div>
+              <label htmlFor="email_password" className="admin__login__label">
+                Email Password<span style={{ color: "red" }}>*</span>
+              </label>
+              <br />
+              <input
+                type="password"
+                id="email_password"
+                required
+                value={emailPassword}
+                onChange={(e) => {
+                  setEmailPassword(e.target.value);
                 }}
               />
             </div>

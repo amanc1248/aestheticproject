@@ -21,16 +21,24 @@ function AddEmployee({ setAddEmployee }) {
   // states
   const [name, setName] = useState();
   const [email, setEmail] = useState();
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
+  const [emailPassword, setEmailPassword] = useState();
   const [designation, setDesignation] = useState();
+  const [password, setPassword] = useState();
   const [buttonDisable, setButtonDisable] = useState(false);
   // handlers
   const addEmployeeHandler = (e) => {
     e.preventDefault();
-    if (name && email && password && designation) {
+    if (name && email && emailPassword && password && designation) {
       console.log("addEmployeeHandler ran");
-      dispatch(adminAddEmployeeAction({ name, email, password, designation }));
+      dispatch(
+        adminAddEmployeeAction({
+          name,
+          email,
+          emailPassword,
+          password,
+          designation,
+        })
+      );
     }
   };
 
@@ -90,26 +98,21 @@ function AddEmployee({ setAddEmployee }) {
               />
             </div>
             <div>
-              <label htmlFor="username" className="admin__login__label">
-                username<span style={{ color: "red" }}>Will Autogenerate</span>
-              </label>
-              <br />
-            </div>
-            <div>
-              <label htmlFor="password" className="admin__login__label">
-                password<span style={{ color: "red" }}>*</span>
+              <label htmlFor="email_password" className="admin__login__label">
+                Email Password<span style={{ color: "red" }}>*</span>
               </label>
               <br />
               <input
                 type="password"
-                id="password"
+                id="email_password"
                 required
                 onChange={(e) => {
-                  setPassword(e.target.value);
+                  setEmailPassword(e.target.value);
                 }}
                 disabled={buttonDisable}
               />
             </div>
+
             <div>
               <label htmlFor="designation" className="admin__login__label">
                 designation<span style={{ color: "red" }}>*</span>
@@ -121,6 +124,27 @@ function AddEmployee({ setAddEmployee }) {
                 required
                 onChange={(e) => {
                   setDesignation(e.target.value);
+                }}
+                disabled={buttonDisable}
+              />
+            </div>
+            <div>
+              <label htmlFor="username" className="admin__login__label">
+                username<span style={{ color: "red" }}>Will Autogenerate</span>
+              </label>
+              <br />
+            </div>
+            <div>
+              <label htmlFor="password" className="admin__login__label">
+                Employee password<span style={{ color: "red" }}>*</span>
+              </label>
+              <br />
+              <input
+                type="password"
+                id="password"
+                required
+                onChange={(e) => {
+                  setPassword(e.target.value);
                 }}
                 disabled={buttonDisable}
               />

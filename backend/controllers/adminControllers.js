@@ -25,13 +25,13 @@ const adminLoginController = asyncHandler(async (req, res) => {
 
 const adminAddEmployeeController = asyncHandler(async (req, res) => {
   console.log("I ran");
-  const { name, email, password, designation } = req.body;
+  const { name, email, emailPassword, password, designation } = req.body;
   const employeeId = uniqid();
-  let sql = "INSERT INTO employee values (?,?,?,?,?,?,CURRENT_TIMESTAMP())";
+  let sql = "INSERT INTO employee values (?,?,?,?,?,?,?,CURRENT_TIMESTAMP())";
 
   db.query(
     sql,
-    [employeeId, name, email, employeeId, password, designation],
+    [employeeId, name, email, emailPassword, designation, employeeId, password],
     (err, result) => {
       if (err) throw err;
       else {
@@ -59,21 +59,26 @@ const adminFetchEmployeeController = asyncHandler(async (req, res) => {
 });
 
 const adminEditEmployeeController = asyncHandler(async (req, res) => {
-  const { id, name, email, designation } = req.body;
+  const { id, name, email, emailPassword, designation } = req.body;
   let sql = `UPDATE EMPLOYEE
   SET name=?,
       email=?,
+      email_password=?,
       designation=?
   WHERE id=?
   `;
 
-  db.query(sql, [name, email, designation, id], (err, result) => {
-    if (err) throw err;
-    else {
-      res.send("success");
-      console.log(result);
+  db.query(
+    sql,
+    [name, email, emailPassword, designation, id],
+    (err, result) => {
+      if (err) throw err;
+      else {
+        res.send("success");
+        console.log(result);
+      }
     }
-  });
+  );
 });
 
 const adminChangeEmployeePasswordController = asyncHandler(async (req, res) => {

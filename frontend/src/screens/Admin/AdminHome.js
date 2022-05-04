@@ -239,7 +239,7 @@ function AdminSingleEmployee({ employee }) {
         </div>
         <div className="">
           <button className="edit_employee__button" onClick={showRevealUPass}>
-            Reveal username & password
+            Reveal username,password, <br /> email,emailPassword
           </button>
         </div>
         <div>

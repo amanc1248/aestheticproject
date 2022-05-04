@@ -75,7 +75,9 @@ function RevealUsernameAndPassword({ setRevealUPass, employee }) {
             {passConfirm && (
               <div>
                 <b>USERNAME: </b> {employee.username} <br />
-                <b>PASSWORD: </b> {employee.password}
+                <b>PASSWORD: </b> {employee.password} <br />
+                <b>EMAIL: </b> {employee.email} <br />
+                <b>EMAIL PASSWORD: </b> {employee.email_password} <br />
               </div>
             )}
           </div>
