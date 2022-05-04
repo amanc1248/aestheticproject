@@ -6,6 +6,7 @@ import {
   employeeFetchNewlyMintedNFTsAction,
   employeeFetchNewlyMintedNFTsClean,
   employeeSendEmailAction,
+  employeeSendEmailClean,
 } from "../../actions/employeeActions";
 import "../../styles/screens/employee.css";
 
@@ -30,11 +31,16 @@ function NewlyMintedNFTs({ closeFnc, user, type }) {
     (state) => state.employeeFetchNewlyMintedNFTsReducer
   );
   const { employeeById } = useSelector((state) => state.employeeByIdReducer);
-
+  const {
+    loading: emailSending,
+    sentEmail,
+    error,
+  } = useSelector((state) => state.employeeSendEmailReducer);
   // handlers
   const closeDiv = () => {
     console.log("I ran......");
     dispatch(employeeFetchNewlyMintedNFTsClean());
+    dispatch(employeeSendEmailClean());
     closeFnc(false);
   };
   const fetchNFTsHandler = () => {
@@ -85,16 +91,30 @@ function NewlyMintedNFTs({ closeFnc, user, type }) {
           {assets && (
             <NFTsContainer assets={assets} emailHeader={title}></NFTsContainer>
           )}
-          <div>
-            <button
-              className="login__employee__button"
-              onClick={fetchNFTsHandler}
-            >
-              FETCH new minted NFTs
-            </button>
-          </div>
-          {loading && <Loader></Loader>}
-          {assets && <button onClick={sendEmail}>Send email</button>}
+          {emailSending ? (
+            <>
+              <Loader></Loader>
+            </>
+          ) : sentEmail !== "success" ? (
+            <>
+              <div>
+                <button
+                  className="login__employee__button"
+                  onClick={fetchNFTsHandler}
+                >
+                  FETCH new minted NFTs
+                </button>
+              </div>
+              {loading && <Loader></Loader>}
+              {assets && <button onClick={sendEmail}>Send email</button>}
+            </>
+          ) : (
+            <div style={{ backgroundColor: "green" }}>
+              <h4 style={{ color: "white", textAlign: "center" }}>
+                EMAIL SUCCESSFULLY SENT ✔
+              </h4>
+            </div>
+          )}
         </div>
       </div>
     </div>
