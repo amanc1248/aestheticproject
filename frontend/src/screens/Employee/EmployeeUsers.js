@@ -5,21 +5,25 @@ import {
   employeeFetchUsersClean,
   employeeLoginClean,
 } from "../../actions/employeeActions";
-import PopularNFTs from "./PopularNFTs";
-import RecentlySold from "./RecentlySold";
 import Loader from "../../components/Loader";
 import { useNavigate } from "react-router-dom";
+import NewlyMintedNFTs from "./NewlyMintedNFTs";
 function EmployeeUsers() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   // states
   const [popularNFTs, setPopularNFTs] = useState(false);
   const [recentlySold, setRecentlySold] = useState(false);
+  const [newMinted, setNewMinted] = useState(false);
   const showPopularNFTs = () => {
     setPopularNFTs(true);
   };
   const showRecentlySold = () => {
     setRecentlySold(true);
+  };
+  const showNewlyMinted = () => {
+    setNewMinted(true);
   };
 
   // useSelectors
@@ -59,12 +63,25 @@ function EmployeeUsers() {
                 {" "}
                 <div className="admin__employee__container">
                   {popularNFTs && (
-                    <PopularNFTs setPopularNFTs={setPopularNFTs}></PopularNFTs>
+                    <NewlyMintedNFTs
+                      closeFnc={setPopularNFTs}
+                      user={user}
+                      type="popularNFTs"
+                    ></NewlyMintedNFTs>
                   )}
                   {recentlySold && (
-                    <RecentlySold
-                      setRecentlySold={setRecentlySold}
-                    ></RecentlySold>
+                    <NewlyMintedNFTs
+                      closeFnc={setRecentlySold}
+                      user={user}
+                      type="recentlySold"
+                    ></NewlyMintedNFTs>
+                  )}
+                  {newMinted && (
+                    <NewlyMintedNFTs
+                      closeFnc={setNewMinted}
+                      user={user}
+                      type="newlyMinted"
+                    ></NewlyMintedNFTs>
                   )}
                   <div className="employee__container">
                     <div className="employee_details">
@@ -89,6 +106,15 @@ function EmployeeUsers() {
                         >
                           Send recently sold NFTs of this week.
                         </button>
+                      </div>
+                      <br />
+                      <div>
+                        <button
+                          className="edit_employee__button"
+                          onClick={showNewlyMinted}
+                        >
+                          Send Newly Minted NFTs.
+                        </button>{" "}
                       </div>
                     </div>
                   </div>

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
 
-function EmployeeProfile({ setEmployeeProfile }) {
+function EmployeeProfile({ setEmployeeProfile, employee }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const closeEmployeeProfile = () => {
@@ -43,7 +43,11 @@ function EmployeeProfile({ setEmployeeProfile }) {
                   <CloseIcon onClick={closeEmployeeProfile}></CloseIcon>
                 </div>
               </div>
-
+              <div>
+                <b>NAME:</b> {employee && employee.name} <br />
+                <b>EMAIL:</b> {employee && employee.email} <br />
+                <b>DESIGNATION:</b> {employee && employee.designation}
+              </div>
               <div>
                 <button className="login__employee__button" onClick={logout}>
                   Logout

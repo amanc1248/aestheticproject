@@ -12,9 +12,13 @@ import {
   adminLogoutReducer,
 } from "./reducers/adminReducers";
 import {
+  employeeByIdReducer,
+  employeeFetchMostPopularNFTsReducer,
+  employeeFetchNewlyMintedNFTsReducer,
   employeeFetchUsersReducer,
   employeeLoginReducer,
   employeeLogoutReducer,
+  employeeSendEmailReducer,
 } from "./reducers/employeeReducers";
 const middleware = [thunk];
 const reducer = combineReducers({
@@ -28,6 +32,10 @@ const reducer = combineReducers({
   employeeLoginReducer: employeeLoginReducer,
   employeeLogoutReducer: employeeLogoutReducer,
   employeeFetchUsersReducer: employeeFetchUsersReducer,
+  employeeFetchMostPopularNFTsReducer: employeeFetchMostPopularNFTsReducer,
+  employeeFetchNewlyMintedNFTsReducer: employeeFetchNewlyMintedNFTsReducer,
+  employeeSendEmailReducer: employeeSendEmailReducer,
+  employeeByIdReducer: employeeByIdReducer,
 });
 const initialState = {
   adminLoginReducer: { adminLogin: null },

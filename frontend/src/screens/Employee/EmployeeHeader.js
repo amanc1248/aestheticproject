@@ -1,18 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Nav, Navbar } from "react-bootstrap";
 import MenuIcon from "@mui/icons-material/Menu";
 import "../../styles/screens/Admin.css";
 import EmployeeProfile from "./EmployeeProfile";
+import { useDispatch, useSelector } from "react-redux";
+import { employeeByIdAction } from "../../actions/employeeActions";
 function EmployeeHeader() {
+  const dispatch = useDispatch();
+
+  // states
   const [employeeProfile, setEmployeeProfile] = useState(false);
+
+  // handlers
   const showEmployeeProfile = () => {
     setEmployeeProfile(true);
   };
+
+  // useSelectors
+  const { loading, employeeById, error } = useSelector(
+    (state) => state.employeeByIdReducer
+  );
+
+  // useEffect
+  useEffect(() => {
+    dispatch(employeeByIdAction());
+  }, [dispatch]);
+  console.log(employeeById);
   return (
     <div>
       {employeeProfile && (
         <EmployeeProfile
           setEmployeeProfile={setEmployeeProfile}
+          employee={employeeById}
         ></EmployeeProfile>
       )}
       <Navbar expand="lg" bg="white" className="the__navbar">
@@ -20,7 +39,10 @@ function EmployeeHeader() {
           <Navbar.Brand href="/">
             <div className="admin__brand__container">
               <div className="admin__brand">A</div>
-              <div className="admin__brand__name">employee</div>
+              <div className="admin__brand__name">
+                {employeeById && employeeById.name} <br />
+                Employee
+              </div>
             </div>
           </Navbar.Brand>
         </div>
