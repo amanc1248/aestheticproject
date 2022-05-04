@@ -1,6 +1,8 @@
 const { db } = require("../../database/db.js");
 const asyncHandler = require("express-async-handler");
 const nodemailer = require("nodemailer");
+const dotenv = require("dotenv");
+dotenv.config();
 // employee LOGIN
 const employeeLoginController = asyncHandler(async (req, res) => {
   const { username, password } = req.body;
@@ -71,9 +73,15 @@ const employeeSendEmailController = asyncHandler(async (req, res) => {
   console.log(req.body);
   const { employeeEmail, password, assets, subject, userEmail, title } =
     req.body;
+  let hostName;
+  if (process.env.NODE_ENV === "development") {
+    hostName = "proudposhak.com";
+  } else {
+    hostName = "https://aestheticportal.herokuapp.com";
+  }
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
-    host: "proudposhak.com",
+    host: hostName,
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
