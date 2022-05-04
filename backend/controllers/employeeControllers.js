@@ -74,14 +74,14 @@ const employeeSendEmailController = asyncHandler(async (req, res) => {
   const { employeeEmail, password, assets, subject, userEmail, title } =
     req.body;
   let hostName;
-  if (process.env.NODE_ENV === "development") {
-    hostName = "proudposhak.com";
-  } else {
-    hostName = "https://aestheticportal.herokuapp.com";
-  }
+  // if (process.env.NODE_ENV === "deveslopment") {
+  //   hostName = "proudposhak.com";
+  // } else {
+  //   hostName = "https://aestheticportal.herokuapp.com";
+  // }
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
-    host: hostName,
+    host: "proudposhak.com",
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
