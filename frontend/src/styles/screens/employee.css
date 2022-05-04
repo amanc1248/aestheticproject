@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,700&display=swap');
+
+.two_div_nft_container{
+    /* display: flex; */
+    justify-content: space-around;
+    /* width: 500px; */
+    height: 300px;
+    overflow-y: scroll;
+}
+.nft_div {
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(229, 232, 235);
+    border-radius: 10px;
+    width: max-content;
+    text-align: center;
+    font-family: 'DM Sans', sans-serif;
+  }
+.nft_div:hover{
+    box-shadow: 0 0 2px 3px #88888828;
+}
+.details_div{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+}
+.div_2{
+    font-size: small;
+}
