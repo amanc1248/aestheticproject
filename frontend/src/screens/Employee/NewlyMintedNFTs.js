@@ -94,7 +94,9 @@ function NewlyMintedNFTs({ closeFnc, user, type }) {
           <div className="title__and__close">
             <div className="admin__login__title">{title}</div>
             <div className="close__icon">
-              <CloseIcon onClick={closeDiv}></CloseIcon>
+              {emailSending !== true && (
+                <CloseIcon onClick={closeDiv}></CloseIcon>
+              )}
             </div>
           </div>
           {assets && (
@@ -140,7 +142,13 @@ function NFTsContainer({ assets, emailHeader }) {
           <span>This is the preview of your email👇</span>
           <h1>
             This is NFTs update from
-            <a href="https://www.aesthetic.com/">Aesthetic.com</a>
+            <a
+              href="https://www.aesthetic.com/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Aesthetic.com
+            </a>
           </h1>
           <h4>{emailHeader}</h4>
           <div>

@@ -18,7 +18,7 @@ const employeeLoginController = asyncHandler(async (req, res) => {
         res.status(401).send({ message: "Invalid Password" });
       } else {
         req.session.employeeAuthenticated = true;
-        req.session.username = { username };
+        req.session.username = username;
         res.send("Success");
         console.log(req.session);
       }
@@ -28,7 +28,7 @@ const employeeLoginController = asyncHandler(async (req, res) => {
 
 //fetch employee by Id
 const employeeByIdController = asyncHandler(async (req, res) => {
-  const { username } = req.session.employee;
+  const username = req.session.username;
   let sql = "SELECT * from employee where username=?;";
   db.query(sql, [username], (err, result) => {
     if (err) throw err;
