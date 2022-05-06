@@ -18,7 +18,7 @@ const employeeLoginController = asyncHandler(async (req, res) => {
         res.status(401).send({ message: "Invalid Password" });
       } else {
         req.session.employeeAuthenticated = true;
-        req.session.employee = { username: username, password: password };
+        req.session.username = { username };
         res.send("Success");
         console.log(req.session);
       }
