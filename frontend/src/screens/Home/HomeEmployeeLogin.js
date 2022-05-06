@@ -62,8 +62,12 @@ function HomeEmployeeLogin({ setAdminLogin, employeeError }) {
                 <CloseIcon onClick={closeLogin}></CloseIcon>
               </div>
             </div>
-            {employeeError === true && (
-              <Message variant="danger">{"Please login first"}</Message>
+            {employeeError && (
+              <Message variant="danger">
+                {employeeError === "employeeLoginExpired"
+                  ? "Session expired. Please login again"
+                  : "Please login first"}
+              </Message>
             )}
             <div>
               <label htmlFor="username" className="admin__login__label">

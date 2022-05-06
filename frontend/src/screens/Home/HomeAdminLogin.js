@@ -78,8 +78,12 @@ function HomeAdminLogin({ setAdminLogin, adminError }) {
               <CloseIcon onClick={closeLogin}></CloseIcon>
             </div>
           </div>
-          {adminError === true && (
-            <Message variant="danger">{"Please login first"}</Message>
+          {adminError && (
+            <Message variant="danger">
+              {adminError === "adminLoginExpired"
+                ? "Session expired. Please login again"
+                : "Please login first"}
+            </Message>
           )}
           <label htmlFor="admin__login" className="admin__login__label">
             Admin pass<span style={{ color: "red" }}>*</span>

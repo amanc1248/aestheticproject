@@ -5,8 +5,11 @@ import "../../styles/screens/Admin.css";
 import EmployeeProfile from "./EmployeeProfile";
 import { useDispatch, useSelector } from "react-redux";
 import { employeeByIdAction } from "../../actions/employeeActions";
+import { useNavigate } from "react-router-dom";
+
 function EmployeeHeader() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // states
   const [employeeProfile, setEmployeeProfile] = useState(false);
@@ -25,7 +28,16 @@ function EmployeeHeader() {
   useEffect(() => {
     dispatch(employeeByIdAction());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (employeeById === "unAuthorized") {
+      // dispatch(employeeFetchUsersClean());
+      navigate("/auth/false/notLoggedIn");
+    }
+  }, [employeeById, navigate, dispatch]);
+
   console.log(employeeById);
+
   return (
     <div>
       {employeeProfile && (

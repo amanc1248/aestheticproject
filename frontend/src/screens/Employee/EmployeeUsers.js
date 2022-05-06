@@ -39,7 +39,7 @@ function EmployeeUsers() {
   useEffect(() => {
     if (fetchedUsers === "unAuthorized") {
       // dispatch(employeeFetchUsersClean());
-      navigate("/auth/false/true");
+      navigate("/auth/false/notLoggedIn");
     }
   }, [fetchedUsers, navigate, dispatch]);
 
