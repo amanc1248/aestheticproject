@@ -37,8 +37,11 @@ function ChangeEmployeePassword({ setChangePassword, employee }) {
   );
   console.log("Change employee password error: ", error);
   useEffect(() => {
-    if (changedPassword === "unAuthorized") {
-      navigate("/auth/true/false");
+    if (changedPassword === "expired") {
+      navigate("/auth/adminLoginExpired/false");
+    }
+    if (changedPassword === "notLoggedIn") {
+      navigate("/auth/adminNotLoggedIn/false");
     }
   }, [navigate, changedPassword]);
 

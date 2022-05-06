@@ -9,9 +9,11 @@ import {
   employeeSendEmailClean,
 } from "../../actions/employeeActions";
 import "../../styles/screens/employee.css";
+import { useNavigate } from "react-router-dom";
 
 function NewlyMintedNFTs({ closeFnc, user, type }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // state
 
@@ -77,6 +79,13 @@ function NewlyMintedNFTs({ closeFnc, user, type }) {
       setApi(nftsAPI.recentlySoldAPI);
     }
   }, []);
+
+  useEffect(() => {
+    if (sentEmail === "unAuthorized") {
+      // dispatch(employeeFetchUsersClean());
+      navigate("/auth/false/notLoggedIn");
+    }
+  }, [sentEmail, navigate]);
 
   return (
     <div>

@@ -33,8 +33,10 @@ function RevealUsernameAndPassword({ setRevealUPass, employee }) {
   useEffect(() => {
     if (adminLogin === "success") {
       setPassConfirm(true);
-    } else if (adminLogin === "unAuthorized") {
-      navigate("/auth/true/false");
+    } else if (adminLogin === "expired") {
+      navigate("/auth/adminLoginExpired/false");
+    } else if (adminLogin === "notLoggedIn") {
+      navigate("/auth/adminNotLoggedIn/false");
     } else {
       if (error === "Login Failed") {
         setPassConfirm(false);

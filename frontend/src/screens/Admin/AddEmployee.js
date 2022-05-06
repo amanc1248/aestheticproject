@@ -47,8 +47,11 @@ function AddEmployee({ setAddEmployee }) {
     (state) => state.adminAddEmployeeReducer
   );
   useEffect(() => {
-    if (addEmployee === "unAuthorized") {
-      navigate("/auth/true/false");
+    if (addEmployee === "expired") {
+      navigate("/auth/adminLoginExpired/false");
+    }
+    if (addEmployee === "notLoggedIn") {
+      navigate("/auth/adminNotLoggedIn/false");
     }
     if (addEmployee === "success") {
       setButtonDisable(true);

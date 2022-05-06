@@ -44,8 +44,11 @@ function EditEmployee({ setEditEmployee, employee }) {
   );
   console.log("adminEditEMployReducer error: ", error);
   useEffect(() => {
-    if (editedEmployee === "unAuthorized") {
-      navigate("/auth/true/false");
+    if (editedEmployee === "expired") {
+      navigate("/auth/adminLoginExpired/false");
+    }
+    if (editedEmployee === "notLoggedIn") {
+      navigate("/auth/adminNotLoggedIn/false");
     }
   }, [navigate, editedEmployee]);
   return (

@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 const path = require("path");
+const { db } = require("../../database/db.js");
+const asyncHandler = require("express-async-handler");
 
 const notFound = (req, res, next) => {
   const error = new Error(`Not Found -${req.originalUrl}`);
@@ -20,12 +22,23 @@ const errorHandler = (err, req, res, next) => {
 const ensureAdminAuthentication = (req, res, next) => {
   console.log("Inside ensureAdminAuthentication");
   console.log(req.session);
-  if (req.session.adminAuthenticated) {
-    return next();
-  } else {
-    res.send("unAuthorized");
-    console.log("You're not authorized as an Admin");
-  }
+  let sql = "select previous_loggedIn from admin where id=1;";
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+    else {
+      if (result[0].previous_loggedIn === "true") {
+        if (req.session.adminAuthenticated) {
+          return next();
+        } else {
+          console.log("expired");
+          res.send("expired");
+        }
+      } else {
+        console.log("notLoggedIn");
+        res.send("notLoggedIn");
+      }
+    }
+  });
 };
 // ensure employee authentication
 const ensureEmployeeAuthentication = (req, res, next) => {

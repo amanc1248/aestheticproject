@@ -50,8 +50,10 @@ function FreeEmployee({ setFreeEmployee, employee }) {
 
   // useEffect
   useEffect(() => {
-    if (deletedEmployee === "unAuthorized") {
-      navigate("/auth/true/false");
+    if (deletedEmployee === "expired") {
+      navigate("/auth/adminLoginExpired/false");
+    } else if (deletedEmployee === "notLoggedIn") {
+      navigate("/auth/adminNotLoggedIn/false");
     } else if (adminLogin === "success") {
       setPassConfirm(true);
     } else {

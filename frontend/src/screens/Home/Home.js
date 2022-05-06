@@ -21,8 +21,14 @@ function Home() {
   const dispatch = useDispatch();
 
   const { adminError, employeeError } = useParams();
-  const adminErrorBool = adminError === "true";
-  const employeeErrorBool = employeeError === "true";
+  const adminErrorBool =
+    adminError === "adminLoginExpired" || adminError === "notLoggedIn"
+      ? true
+      : false;
+  const employeeErrorBool =
+    employeeError === "employeeLoginExpired" || employeeError === "notLoggedIn"
+      ? true
+      : false;
   console.log(adminError, "  ", employeeError);
   const [adminLogin, setAdminLogin] = useState(adminErrorBool);
   const showAdminLogin = () => {
@@ -48,14 +54,14 @@ function Home() {
       {adminLogin && (
         <HomeAdminLogin
           setAdminLogin={setAdminLogin}
-          adminError={adminErrorBool}
+          adminError={adminError}
         ></HomeAdminLogin>
       )}
 
       {employeeLogin && (
         <HomeEmployeeLogin
           setAdminLogin={setEmployeeLogin}
-          employeeError={employeeErrorBool}
+          employeeError={employeeError}
         ></HomeEmployeeLogin>
       )}
       <div className="home__title">

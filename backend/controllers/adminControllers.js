@@ -11,12 +11,21 @@ const adminLoginController = asyncHandler(async (req, res) => {
   const { pass } = req.body;
   console.log("pass:>>", pass, "<<");
   console.log("From env:>>", process.env.ADMIN_PASS, "<<");
-
+  let sql = `
+  update admin
+  set previous_loggedIn='true'
+  where id =1;
+  `;
   if (process.env.ADMIN_PASS === pass) {
     req.session.adminAuthenticated = true;
-    req.session.admin = { pass: pass };
-    console.log(req.session);
-    res.send("success");
+    db.query(sql, (err, result) => {
+      if (err) throw err;
+      else {
+        if (result) {
+          res.send("success");
+        }
+      }
+    });
   } else {
     res.status(401).send({ message: "Login Failed" });
     console.log("failure");

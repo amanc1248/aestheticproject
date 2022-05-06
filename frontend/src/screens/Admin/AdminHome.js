@@ -99,9 +99,12 @@ function AdminEmployees() {
   }, [dispatch]);
 
   useEffect(() => {
-    if (adminEmployees === "unAuthorized") {
+    if (adminEmployees === "expired") {
       dispatch(adminFetchEmployeeCleanAction());
-      navigate("/auth/true/false");
+      navigate("/auth/adminLoginExpired/false");
+    } else if (adminEmployees === "notLoggedIn") {
+      dispatch(adminFetchEmployeeCleanAction());
+      navigate("/auth/adminNotLoggedIn/false");
     }
   }, [adminEmployees, navigate, dispatch]);
 
@@ -144,12 +147,14 @@ function AdminEmployees() {
         <Loader></Loader>
       ) : adminEmployees === "no employees" ? (
         <h1>No Employees</h1>
-      ) : adminEmployees === "unAuthorized" ? (
-        <h1>unAuthorized</h1>
+      ) : adminEmployees === "expired" ? (
+        <h1>expired</h1>
       ) : adminEmployees === undefined ? (
         <h1>undefined</h1>
       ) : adminEmployees === null ? (
         <h1>null</h1>
+      ) : adminEmployees === "notLoggedIn" ? (
+        <h1>Not logged in</h1>
       ) : (
         <>
           {message && <Message>{message}</Message>}
