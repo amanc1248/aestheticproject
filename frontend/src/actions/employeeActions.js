@@ -1,5 +1,9 @@
 import axios from "axios";
 import {
+  CHECK_EMPLOYEE_LOGIN_STATUS,
+  CHECK_EMPLOYEE_LOGIN_STATUS_CLEAN,
+  CHECK_EMPLOYEE_LOGIN_STATUS_FAIL,
+  CHECK_EMPLOYEE_LOGIN_STATUS_SUCCESS,
   EMPLOYEE_BY_ID,
   EMPLOYEE_BY_ID_CLEAN,
   EMPLOYEE_BY_ID_FAILURE,
@@ -66,8 +70,46 @@ export const employeeLoginClean = () => async (dispatch) => {
     type: EMPLOYEE_LOGIN_CLEAN,
   });
 };
+
+// check employee login status
+export const checkEmployeeLoginStatusAction = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: CHECK_EMPLOYEE_LOGIN_STATUS,
+    });
+    const config = {
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    const { data } = await axios.get(
+      `/api/employee/employeeLoginStatus`,
+      config
+    );
+    dispatch({
+      type: CHECK_EMPLOYEE_LOGIN_STATUS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: CHECK_EMPLOYEE_LOGIN_STATUS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// CHECK_EMPLOYEE_LOGIN_STATUS_CLEAN
+export const checkEmployeeLoginStatusClean = () => async (dispatch) => {
+  dispatch({
+    type: CHECK_EMPLOYEE_LOGIN_STATUS_CLEAN,
+  });
+};
+
 // employee BY ID
-export const employeeByIdAction = (id) => async (dispatch) => {
+export const employeeByIdAction = () => async (dispatch) => {
   try {
     dispatch({
       type: EMPLOYEE_BY_ID,
@@ -77,10 +119,7 @@ export const employeeByIdAction = (id) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-    const { data } = await axios.get(
-      `/api/employee/employeeById/${id}`,
-      config
-    );
+    const { data } = await axios.get(`/api/employee/employeeById`, config);
     dispatch({
       type: EMPLOYEE_BY_ID_SUCCESS,
       payload: data,

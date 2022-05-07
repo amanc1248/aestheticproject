@@ -1,4 +1,8 @@
 import {
+  CHECK_EMPLOYEE_LOGIN_STATUS,
+  CHECK_EMPLOYEE_LOGIN_STATUS_CLEAN,
+  CHECK_EMPLOYEE_LOGIN_STATUS_FAIL,
+  CHECK_EMPLOYEE_LOGIN_STATUS_SUCCESS,
   EMPLOYEE_BY_ID,
   EMPLOYEE_BY_ID_CLEAN,
   EMPLOYEE_BY_ID_FAILURE,
@@ -39,6 +43,22 @@ export const employeeLoginReducer = (state = {}, action) => {
       return { loading: false, error: action.payload };
     case EMPLOYEE_LOGIN_CLEAN:
       return { employeeLogin: null };
+
+    default:
+      return state;
+  }
+};
+
+export const checkEmployeeLoginStatusReducer = (state = {}, action) => {
+  switch (action.type) {
+    case CHECK_EMPLOYEE_LOGIN_STATUS:
+      return { loading: true };
+    case CHECK_EMPLOYEE_LOGIN_STATUS_SUCCESS:
+      return { loading: false, checkEmployeeLoginStatus: action.payload };
+    case CHECK_EMPLOYEE_LOGIN_STATUS_FAIL:
+      return { loading: false, error: action.payload };
+    case CHECK_EMPLOYEE_LOGIN_STATUS_CLEAN:
+      return { checkEmployeeLoginStatus: null, error: null };
 
     default:
       return state;

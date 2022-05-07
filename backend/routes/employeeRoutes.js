@@ -6,13 +6,15 @@ const {
   employeeMostPopularNFTsController,
   employeeSendEmailController,
   employeeByIdController,
+  checkEmployeeLoginStatus,
 } = require("../controllers/employeeControllers");
 const { ensureEmployeeAuthentication } = require("../middleware/middleWare");
 
 const router = express.Router();
 router.route("/employeeLogin").post(employeeLoginController);
+router.route("/employeeLoginStatus").get(checkEmployeeLoginStatus);
 router
-  .route("/employeeById/:id")
+  .route("/employeeById")
   .get(ensureEmployeeAuthentication, employeeByIdController);
 router
   .route("/fetchUsers")

@@ -27,6 +27,10 @@ import {
   ADMIN_LOGOUT_CLEAN,
   ADMIN_LOGOUT_FAILURE,
   AMDIN_LOGOUT_SUCCESS,
+  CHECK_ADMIN_LOGIN_STATUS,
+  CHECK_ADMIN_LOGIN_STATUS_CLEAN,
+  CHECK_ADMIN_LOGIN_STATUS_FAIL,
+  CHECK_ADMIN_LOGIN_STATUS_SUCCESS,
 } from "../constants/adminConstants";
 
 const axios = require("axios");
@@ -67,6 +71,39 @@ export const adminLoginAction = (pass) => async (dispatch) => {
 export const adminLoginClean = () => async (dispatch) => {
   dispatch({
     type: ADMIN_LOGIN_CLEAN,
+  });
+};
+// check admin login status
+export const checkAdminLoginStatusAction = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: CHECK_ADMIN_LOGIN_STATUS,
+    });
+    const config = {
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    const { data } = await axios.get(`/api/admin/adminLoginStatus`, config);
+    dispatch({
+      type: CHECK_ADMIN_LOGIN_STATUS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: CHECK_ADMIN_LOGIN_STATUS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// CHECK_ADMIN_LOGIN_STATUS_CLEAN
+export const checkAdminLoginStatusClean = () => async (dispatch) => {
+  dispatch({
+    type: CHECK_ADMIN_LOGIN_STATUS_CLEAN,
   });
 };
 

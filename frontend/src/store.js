@@ -10,8 +10,10 @@ import {
   adminFetchEmployeeReducer,
   adminLoginReducer,
   adminLogoutReducer,
+  checkAdminLoginStatusReducer,
 } from "./reducers/adminReducers";
 import {
+  checkEmployeeLoginStatusReducer,
   employeeByIdReducer,
   employeeFetchMostPopularNFTsReducer,
   employeeFetchNewlyMintedNFTsReducer,
@@ -23,6 +25,7 @@ import {
 const middleware = [thunk];
 const reducer = combineReducers({
   adminLoginReducer: adminLoginReducer,
+  checkAdminLoginStatusReducer: checkAdminLoginStatusReducer,
   adminLogoutReducer: adminLogoutReducer,
   adminAddEmployeeReducer: adminAddEmployeeReducer,
   adminEditEmployeeReducer: adminEditEmployeeReducer,
@@ -30,6 +33,7 @@ const reducer = combineReducers({
   adminChangeEmployeePasswordReducer: adminChangeEmployeePasswordReducer,
   adminDeleteEmployeeReducer: adminDeleteEmployeeReducer,
   employeeLoginReducer: employeeLoginReducer,
+  checkEmployeeLoginStatusReducer: checkEmployeeLoginStatusReducer,
   employeeLogoutReducer: employeeLogoutReducer,
   employeeFetchUsersReducer: employeeFetchUsersReducer,
   employeeFetchMostPopularNFTsReducer: employeeFetchMostPopularNFTsReducer,

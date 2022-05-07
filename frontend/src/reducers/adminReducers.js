@@ -30,6 +30,10 @@ import {
   ADMIN_LOGOUT_CLEAN,
   ADMIN_LOGOUT_FAILURE,
   AMDIN_LOGOUT_SUCCESS,
+  CHECK_ADMIN_LOGIN_STATUS,
+  CHECK_ADMIN_LOGIN_STATUS_CLEAN,
+  CHECK_ADMIN_LOGIN_STATUS_FAIL,
+  CHECK_ADMIN_LOGIN_STATUS_SUCCESS,
   CLEAN_ERROR,
 } from "../constants/adminConstants";
 
@@ -43,6 +47,22 @@ export const adminLoginReducer = (state = {}, action) => {
       return { loading: false, error: action.payload };
     case ADMIN_LOGIN_CLEAN:
       return { adminLogin: null, error: null };
+
+    default:
+      return state;
+  }
+};
+
+export const checkAdminLoginStatusReducer = (state = {}, action) => {
+  switch (action.type) {
+    case CHECK_ADMIN_LOGIN_STATUS:
+      return { loading: true };
+    case CHECK_ADMIN_LOGIN_STATUS_SUCCESS:
+      return { loading: false, checkAdminLoginStatus: action.payload };
+    case CHECK_ADMIN_LOGIN_STATUS_FAIL:
+      return { loading: false, error: action.payload };
+    case CHECK_ADMIN_LOGIN_STATUS_CLEAN:
+      return { checkAdminLoginStatus: null, error: null };
 
     default:
       return state;

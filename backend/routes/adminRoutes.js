@@ -7,21 +7,25 @@ const {
   adminChangeEmployeePasswordController,
   adminDeleteEmployeeController,
   adminLogoutController,
+  checkAdminLoginStatus,
 } = require("../controllers/adminControllers.js");
-const { ensureAdminAuthentication } = require("../middleware/middleWare.js");
+const {
+  ensureAdminAuthentication,
+  smtpVerify,
+} = require("../middleware/middleWare.js");
 const router = express.Router();
 
 router.route("/adminLogin").post(adminLoginController);
-// router.route("/admin/ensureLogin").get(ensureAdminAuthentication);
+router.route("/adminLoginStatus").get(checkAdminLoginStatus);
 router
   .route("/addEmployee")
-  .post(ensureAdminAuthentication, adminAddEmployeeController);
+  .post(ensureAdminAuthentication, smtpVerify, adminAddEmployeeController);
 router
   .route("/fetchEmployee")
   .get(ensureAdminAuthentication, adminFetchEmployeeController);
 router
   .route("/editEmployee")
-  .put(ensureAdminAuthentication, adminEditEmployeeController);
+  .put(ensureAdminAuthentication, smtpVerify, adminEditEmployeeController);
 router
   .route("/changeEmployeePassword")
   .put(ensureAdminAuthentication, adminChangeEmployeePasswordController);
