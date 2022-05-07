@@ -23,7 +23,7 @@
 
 /* admin login */
 .home__admin__login{
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -56,4 +56,30 @@ justify-content: center;
 .title__and__close{
     display: flex;
     justify-content: space-between;
+}
+.main__loader{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: white;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    z-index: 1;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.main__loader__text{
+    height: 100px;
+    width: 100px;
+    background-color: black;
+    color: white;
+    border-radius: 8px;
+    text-align: center;
+    display: flex;
+justify-content: center;
+align-items: center;
+font-size: 25px;
+font-weight: 800;
 }
