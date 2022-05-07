@@ -33,7 +33,7 @@ const adminSession = session({
   store: sessionStore,
   name: "adminSession",
   cookie: {
-    maxAge: 40000,
+    maxAge: 1000 * 60 * 60 * 24,
     secure: false,
   },
 });
@@ -47,7 +47,7 @@ const employeeSession = session({
   name: "employeeSession",
 
   cookie: {
-    maxAge: 40000,
+    maxAge: 1000 * 60 * 60 * 24,
     secure: false,
   },
 });
