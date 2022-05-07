@@ -14,6 +14,8 @@ function EmployeeUsers() {
   const dispatch = useDispatch();
 
   // states
+  const [message, setMessage] = useState();
+
   const [popularNFTs, setPopularNFTs] = useState(false);
   const [recentlySold, setRecentlySold] = useState(false);
   const [newMinted, setNewMinted] = useState(false);
@@ -44,6 +46,12 @@ function EmployeeUsers() {
     }
   }, [fetchedUsers, navigate, dispatch]);
 
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setMessage();
+  //     dispatch(employeeLoginClean());
+  //   }, 5000);
+  // }, [message]);
   return (
     <>
       {loading ? (
@@ -58,71 +66,72 @@ function EmployeeUsers() {
         <h1>null</h1>
       ) : (
         <>
-          {fetchedUsers.map((user) => {
-            return (
-              <div key={user.id}>
-                {" "}
-                <div className="admin__employee__container">
-                  {popularNFTs && (
-                    <NewlyMintedNFTs
-                      closeFnc={setPopularNFTs}
-                      user={user}
-                      type="popularNFTs"
-                    ></NewlyMintedNFTs>
-                  )}
-                  {recentlySold && (
-                    <NewlyMintedNFTs
-                      closeFnc={setRecentlySold}
-                      user={user}
-                      type="recentlySold"
-                    ></NewlyMintedNFTs>
-                  )}
-                  {newMinted && (
-                    <NewlyMintedNFTs
-                      closeFnc={setNewMinted}
-                      user={user}
-                      type="newlyMinted"
-                    ></NewlyMintedNFTs>
-                  )}
-                  <div className="employee__container">
-                    <div className="employee_details">
-                      <div className="employee__name__post">
-                        <div className="employee__name">{user.name}</div>
+          {fetchedUsers.length !== 0 &&
+            fetchedUsers.map((user) => {
+              return (
+                <div key={user.id}>
+                  {" "}
+                  <div className="admin__employee__container">
+                    {popularNFTs && (
+                      <NewlyMintedNFTs
+                        closeFnc={setPopularNFTs}
+                        user={user}
+                        type="popularNFTs"
+                      ></NewlyMintedNFTs>
+                    )}
+                    {recentlySold && (
+                      <NewlyMintedNFTs
+                        closeFnc={setRecentlySold}
+                        user={user}
+                        type="recentlySold"
+                      ></NewlyMintedNFTs>
+                    )}
+                    {newMinted && (
+                      <NewlyMintedNFTs
+                        closeFnc={setNewMinted}
+                        user={user}
+                        type="newlyMinted"
+                      ></NewlyMintedNFTs>
+                    )}
+                    <div className="employee__container">
+                      <div className="employee_details">
+                        <div className="employee__name__post">
+                          <div className="employee__name">{user.name}</div>
+                        </div>
                       </div>
-                    </div>
-                    <div className="">
-                      <div>
-                        <button
-                          className="edit_employee__button"
-                          onClick={showPopularNFTs}
-                        >
-                          Send Most Popular NFTs of this week.
-                        </button>{" "}
-                      </div>
-                      <br />
-                      <div>
-                        <button
-                          className="delete__employee__button"
-                          onClick={showRecentlySold}
-                        >
-                          Send recently sold NFTs of this week.
-                        </button>
-                      </div>
-                      <br />
-                      <div>
-                        <button
-                          className="edit_employee__button"
-                          onClick={showNewlyMinted}
-                        >
-                          Send Newly Minted NFTs.
-                        </button>{" "}
+                      <div className="">
+                        <div>
+                          <button
+                            className="edit_employee__button"
+                            onClick={showPopularNFTs}
+                          >
+                            Send Most Popular NFTs of this week.
+                          </button>{" "}
+                        </div>
+                        <br />
+                        <div>
+                          <button
+                            className="delete__employee__button"
+                            onClick={showRecentlySold}
+                          >
+                            Send recently sold NFTs of this week.
+                          </button>
+                        </div>
+                        <br />
+                        <div>
+                          <button
+                            className="edit_employee__button"
+                            onClick={showNewlyMinted}
+                          >
+                            Send Newly Minted NFTs.
+                          </button>{" "}
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
         </>
       )}
     </>

@@ -38,34 +38,26 @@ function HomeAdminLogin({ setAdminLogin, adminError }) {
     e.preventDefault();
     if (adminPass) {
       dispatch(adminLoginAction(adminPass));
-      // dispatch(adminLoginClean());
     }
     console.log("navigate is not working ");
-
-    if (adminLogin === "success") {
-      console.log("navigate is working ");
-      navigate("/admin");
-    }
   };
 
   // useeffect
   useEffect(() => {
     if (adminLogin === "success") {
-      dispatch(adminLoginClean());
-
       navigate("/admin");
     }
   }, [adminLogin, navigate, dispatch]);
 
-  useEffect(() => {
-    dispatch(adminAddEmployeeClear());
-    dispatch(adminChangeEmployeePasswordActionCleanError());
-    dispatch(adminDeleteEmployeeClean());
+  // useEffect(() => {
+  //   dispatch(adminAddEmployeeClear());
+  //   dispatch(adminChangeEmployeePasswordActionCleanError());
+  //   dispatch(adminDeleteEmployeeClean());
 
-    dispatch(adminLoginClean());
-    dispatch(adminFetchEmployeeCleanAction());
-    dispatch(adminLogoutClean());
-  }, []);
+  //   dispatch(adminLoginClean());
+  //   dispatch(adminFetchEmployeeCleanAction());
+  //   dispatch(adminLogoutClean());
+  // }, []);
 
   console.log("AdminLogin: ", adminLogin);
   return (

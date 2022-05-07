@@ -21,10 +21,12 @@ function AddEmployee({ setAddEmployee }) {
   // states
   const [name, setName] = useState();
   const [email, setEmail] = useState();
+  const [host, setHost] = useState();
   const [emailPassword, setEmailPassword] = useState();
   const [designation, setDesignation] = useState();
   const [password, setPassword] = useState();
   const [buttonDisable, setButtonDisable] = useState(false);
+
   // handlers
   const addEmployeeHandler = (e) => {
     e.preventDefault();
@@ -33,6 +35,7 @@ function AddEmployee({ setAddEmployee }) {
       dispatch(
         adminAddEmployeeAction({
           name,
+          host,
           email,
           emailPassword,
           password,
@@ -81,6 +84,21 @@ function AddEmployee({ setAddEmployee }) {
                 required
                 onChange={(e) => {
                   setName(e.target.value);
+                }}
+                disabled={buttonDisable}
+              />
+            </div>
+            <div>
+              <label htmlFor="host" className="admin__login__label">
+                Host<span style={{ color: "red" }}>*</span>
+              </label>
+              <br />
+              <input
+                type="text"
+                id="host"
+                required
+                onChange={(e) => {
+                  setHost(e.target.value);
                 }}
                 disabled={buttonDisable}
               />
@@ -172,6 +190,11 @@ function AddEmployee({ setAddEmployee }) {
                 {
                   "Employee Added successfully. You can see employee username and password in your employee list"
                 }
+              </Message>
+            )}
+            {addEmployee === "invalid" && (
+              <Message variant="danger">
+                {"Invalid host, email or email password."}
               </Message>
             )}
           </div>

@@ -11,7 +11,7 @@ function RevealUsernameAndPassword({ setRevealUPass, employee }) {
 
   const dispatch = useDispatch();
   const closeRevealUPass = () => {
-    dispatch(adminLoginClean());
+    // dispatch(adminLoginClean());
     setRevealUPass(false);
   };
   // states
@@ -19,42 +19,42 @@ function RevealUsernameAndPassword({ setRevealUPass, employee }) {
   const [passConfirm, setPassConfirm] = useState();
 
   // const handlers
-  const passConfirmHandler = () => {
-    if (adminPass) {
-      dispatch(adminLoginAction(adminPass));
-    }
-  };
+  // const passConfirmHandler = () => {
+  //   if (adminPass) {
+  //     dispatch(adminLoginAction(adminPass));
+  //   }
+  // };
   // use selectors
-  const { loading, adminLogin, error } = useSelector(
-    (state) => state.adminLoginReducer
-  );
+  // const { loading, adminLogin, error } = useSelector(
+  //   (state) => state.adminLoginReducer
+  // );
 
   // useEffect
-  useEffect(() => {
-    if (adminLogin === "success") {
-      setPassConfirm(true);
-    } else if (adminLogin === "expired") {
-      navigate("/auth/adminLoginExpired/false");
-    } else if (adminLogin === "notLoggedIn") {
-      navigate("/auth/adminNotLoggedIn/false");
-    } else {
-      if (error === "Login Failed") {
-        setPassConfirm(false);
-      }
-    }
-  }, [adminLogin, error, navigate]);
+  // useEffect(() => {
+  //   if (adminLogin === "success") {
+  //     setPassConfirm(true);
+  //   } else if (adminLogin === "expired") {
+  //     navigate("/auth/adminLoginExpired/false");
+  //   } else if (adminLogin === "notLoggedIn") {
+  //     navigate("/auth/adminNotLoggedIn/false");
+  //   } else {
+  //     if (error === "Login Failed") {
+  //       setPassConfirm(false);
+  //     }
+  //   }
+  // }, [adminLogin, error, navigate]);
   return (
     <>
       <div>
         <div className="home__admin__login">
           <div className="employee__add__container">
             <div className="title__and__close">
-              <div className="admin__login__title">Verification</div>
+              <div className="admin__login__title">Employee Credentials</div>
               <div className="close__icon">
                 <CloseIcon onClick={closeRevealUPass}></CloseIcon>
               </div>
             </div>
-
+            {/* 
             <h6>Confirm that its you, enter your admin pass:</h6>
             <input
               type="password"
@@ -64,24 +64,14 @@ function RevealUsernameAndPassword({ setRevealUPass, employee }) {
               onChange={(e) => {
                 setAdminPass(e.target.value);
               }}
-            />
-            <button onClick={passConfirmHandler}>
-              {loading
-                ? "Confirming Pass..."
-                : passConfirm
-                ? "Pass Confirmed ✔"
-                : passConfirm === false
-                ? "Pass Rejected ❌"
-                : "Confirm Pass"}
-            </button>
-            {passConfirm && (
-              <div>
-                <b>USERNAME: </b> {employee.username} <br />
-                <b>PASSWORD: </b> {employee.password} <br />
-                <b>EMAIL: </b> {employee.email} <br />
-                <b>EMAIL PASSWORD: </b> {employee.email_password} <br />
-              </div>
-            )}
+            /> */}
+
+            <div>
+              <b>USERNAME: </b> {employee.username} <br />
+              <b>PASSWORD: </b> {employee.password} <br />
+              <b>EMAIL: </b> {employee.email} <br />
+              <b>EMAIL PASSWORD: </b> {employee.email_password} <br />
+            </div>
           </div>
         </div>
       </div>

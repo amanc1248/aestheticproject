@@ -35,13 +35,11 @@ function FreeEmployee({ setFreeEmployee, employee }) {
   };
   const freeEmployeeHandler = () => {
     dispatch(adminDeleteEmployeeAction(employee.id));
-    dispatch(adminLoginClean());
+    // dispatch(adminLoginClean());
   };
 
   // use selector
-  const { loading, adminLogin, error } = useSelector(
-    (state) => state.adminLoginReducer
-  );
+
   const {
     loading: deleteLoading,
     deletedEmployee,
@@ -54,20 +52,10 @@ function FreeEmployee({ setFreeEmployee, employee }) {
       navigate("/auth/adminLoginExpired/false");
     } else if (deletedEmployee === "notLoggedIn") {
       navigate("/auth/adminNotLoggedIn/false");
-    } else if (adminLogin === "success") {
-      setPassConfirm(true);
     } else {
-      if (error === "Login Failed") {
-        setPassConfirm(false);
-      }
-    }
-    if (deletedEmployee === "success") {
       setMessage("Deleted Successfully");
     }
-    if (error === "unAuthorized") {
-      navigate("/auth/true/false");
-    }
-  }, [adminLogin, error, deletedEmployee, navigate]);
+  }, [deletedEmployee, navigate]);
 
   return (
     <div>
@@ -104,7 +92,7 @@ function FreeEmployee({ setFreeEmployee, employee }) {
               </label>
               <br />
             </div>
-            <h6>Confirm that its you, enter your admin pass:</h6>
+            {/* <h6>Confirm that its you, enter your admin pass:</h6>
             <input
               type="password"
               name="adminpass"
@@ -113,8 +101,8 @@ function FreeEmployee({ setFreeEmployee, employee }) {
               onChange={(e) => {
                 setAdminPass(e.target.value);
               }}
-            />
-            <button onClick={passConfirmHandler}>
+            /> */}
+            {/* <button onClick={passConfirmHandler}>
               {loading
                 ? "Confirming Pass..."
                 : passConfirm
@@ -122,21 +110,21 @@ function FreeEmployee({ setFreeEmployee, employee }) {
                 : passConfirm === false
                 ? "Pass Rejected ❌"
                 : "Confirm Pass"}
-            </button>
-            {passConfirm && (
-              <div>
-                {!deleteLoading && (
-                  <>
-                    <button
-                      className="login__employee__button"
-                      onClick={freeEmployeeHandler}
-                    >
-                      Delete Employee
-                    </button>
-                  </>
-                )}
-              </div>
-            )}
+            </button> */}
+            {/* {passConfirm && ( */}
+            <div>
+              {!deleteLoading && (
+                <>
+                  <button
+                    className="login__employee__button"
+                    onClick={freeEmployeeHandler}
+                  >
+                    Delete Employee
+                  </button>
+                </>
+              )}
+            </div>
+            {/* )} */}
             {deleteLoading && <Loader></Loader>}
             {deleteEmployeeError && (
               <Message variant="danger">{deleteEmployeeError}</Message>

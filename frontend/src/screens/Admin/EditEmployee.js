@@ -19,6 +19,7 @@ function EditEmployee({ setEditEmployee, employee }) {
 
   // employee details states
   const [name, setName] = useState(employee.name);
+  const [host, setHost] = useState(employee.host);
   const [email, setEmail] = useState(employee.email);
   const [emailPassword, setEmailPassword] = useState(employee.email_password);
   const [designation, setDesignation] = useState(employee.designation);
@@ -30,6 +31,7 @@ function EditEmployee({ setEditEmployee, employee }) {
         adminEditEmployeeAction({
           id: employee.id,
           name,
+          host,
           email,
           emailPassword,
           designation,
@@ -75,6 +77,21 @@ function EditEmployee({ setEditEmployee, employee }) {
                 value={name}
                 onChange={(e) => {
                   setName(e.target.value);
+                }}
+              />
+            </div>
+            <div>
+              <label htmlFor="host" className="admin__login__label">
+                Host<span style={{ color: "red" }}>*</span>
+              </label>
+              <br />
+              <input
+                type="text"
+                id="host"
+                required
+                value={host}
+                onChange={(e) => {
+                  setHost(e.target.value);
                 }}
               />
             </div>
@@ -135,6 +152,11 @@ function EditEmployee({ setEditEmployee, employee }) {
               </div>
             )}
             {loading && <Loader></Loader>}
+            {editedEmployee === "invalid" && (
+              <Message variant="danger">
+                {"Invalid host, email or email password."}
+              </Message>
+            )}
           </div>
         </div>
       </div>

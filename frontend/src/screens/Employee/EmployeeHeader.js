@@ -4,7 +4,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 import "../../styles/screens/Admin.css";
 import EmployeeProfile from "./EmployeeProfile";
 import { useDispatch, useSelector } from "react-redux";
-import { employeeByIdAction } from "../../actions/employeeActions";
+import {
+  employeeByIdAction,
+  employeeByIdClean,
+} from "../../actions/employeeActions";
 import { useNavigate } from "react-router-dom";
 
 function EmployeeHeader() {
@@ -31,7 +34,7 @@ function EmployeeHeader() {
 
   useEffect(() => {
     if (employeeById === "unAuthorized") {
-      // dispatch(employeeFetchUsersClean());
+      // dispatch(employeeByIdClean());
       navigate("/auth/false/notLoggedIn");
     }
   }, [employeeById, navigate, dispatch]);

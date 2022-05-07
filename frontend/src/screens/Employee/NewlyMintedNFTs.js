@@ -50,13 +50,16 @@ function NewlyMintedNFTs({ closeFnc, user, type }) {
   };
   const sendEmail = () => {
     const employeeEmail = employeeById.email;
+    const host = employeeById.host;
     const password = employeeById.email_password;
     const subject = "NFT UPDATE FROM AESTHETIC.COM";
     const userEmail = user.email;
+
     dispatch(
       employeeSendEmailAction({
         employeeEmail,
         password,
+        host,
         assets,
         subject,
         userEmail,

@@ -11,11 +11,15 @@ import {
   adminFetchEmployeeCleanAction,
   adminLoginClean,
   adminLogoutClean,
+  checkAdminLoginStatusClean,
 } from "../../actions/adminActions";
 import {
+  checkEmployeeLoginStatusClean,
+  employeeByIdClean,
   employeeFetchUsersClean,
   employeeLoginClean,
   employeeLogoutClean,
+  employeeSendEmailClean,
 } from "../../actions/employeeActions";
 function Home() {
   const dispatch = useDispatch();
@@ -39,16 +43,20 @@ function Home() {
   const showEmployeeLogin = () => {
     setEmployeeLogin(true);
   };
-
-  dispatch(adminAddEmployeeClear());
-  dispatch(adminChangeEmployeePasswordActionCleanError());
-  dispatch(adminDeleteEmployeeClean());
   dispatch(adminLoginClean());
-  dispatch(adminFetchEmployeeCleanAction());
-  dispatch(adminLogoutClean());
-  dispatch(employeeFetchUsersClean());
+  dispatch(checkAdminLoginStatusClean());
   dispatch(employeeLoginClean());
-  dispatch(employeeLogoutClean());
+  dispatch(checkEmployeeLoginStatusClean());
+  // dispatch(adminAddEmployeeClear());
+  // dispatch(adminChangeEmployeePasswordActionCleanError());
+  // dispatch(adminDeleteEmployeeClean());
+  // dispatch(adminLoginClean());
+  // dispatch(adminFetchEmployeeCleanAction());
+  // dispatch(adminLogoutClean());
+  // dispatch(employeeFetchUsersClean());
+  // dispatch(employeeByIdClean());
+  // dispatch(employeeLogoutClean());
+  // dispatch(employeeSendEmailClean());
   return (
     <div className="home apply__home__margin">
       {adminLogin && (
@@ -79,7 +87,6 @@ function Home() {
           Login as employee
         </button>
       </div>
-      <a href="/admin">Go to admin</a>
     </div>
   );
 }

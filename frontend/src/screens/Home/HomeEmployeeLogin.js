@@ -41,13 +41,13 @@ function HomeEmployeeLogin({ setAdminLogin, employeeError }) {
     if (employeeLogin === "Success") {
       navigate("/employee");
     }
-  }, [employeeLogin, navigate]);
+  }, [employeeLogin, navigate, dispatch]);
 
-  useEffect(() => {
-    dispatch(employeeFetchUsersClean());
-    dispatch(employeeLoginClean());
-    dispatch(employeeLogoutClean());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(employeeFetchUsersClean());
+  //   dispatch(employeeLoginClean());
+  //   dispatch(employeeLogoutClean());
+  // }, []);
 
   console.log("I am infinite loop");
 

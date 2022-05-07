@@ -13,6 +13,7 @@ import {
   adminFetchEmployeeAction,
   adminFetchEmployeeCleanAction,
   adminLoginClean,
+  checkAdminLoginStatusAction,
 } from "../../actions/adminActions";
 import ChangeEmployeePassword from "./ChangeEmployeePassword";
 import RevealUsernameAndPassword from "./RevealUsernameAndPassword";
@@ -23,36 +24,63 @@ import LoaderMain from "../../components/LoaderMain";
 function AdminHome() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const [addEmployee, setAddEmployee] = useState(false);
   const showAddEmployee = () => {
     setAddEmployee(true);
   };
 
-  return (
-    <div className="admin__home apply__home__margin">
-      {addEmployee && (
-        <AddEmployee setAddEmployee={setAddEmployee}></AddEmployee>
-      )}
+  // useSelectors
+  const { loading, checkAdminLoginStatus, error } = useSelector(
+    (state) => state.checkAdminLoginStatusReducer
+  );
+  useEffect(() => {
+    dispatch(checkAdminLoginStatusAction());
+  }, [dispatch]);
 
-      <div className="row">
-        <div className="add__employee__container col-lg-6 col-md-12 col-sm-12 ">
-          <img
-            src="https://www.aesthetic.com/img/homepage/create.svg"
-            alt="add emplyee"
-            height="200px"
-          />
-          <h3>Add employee to the portal</h3>
-          <h6>Employee can send NFTs update from the portal</h6>
-          <button className="add__employee__button" onClick={showAddEmployee}>
-            Add Employee
-          </button>
+  useEffect(() => {
+    if (checkAdminLoginStatus === "expired") {
+      console.log("adminLoginClean ran");
+      navigate("/auth/adminLoginExpired/false");
+    }
+    if (checkAdminLoginStatus === "notLoggedIn") {
+      console.log("adminLoginClean ran");
+
+      navigate("/auth/adminNotLoggedIn/false");
+    }
+  }, [navigate, checkAdminLoginStatus, dispatch]);
+
+  return (
+    <>
+      {checkAdminLoginStatus !== "success" ? (
+        <LoaderMain></LoaderMain>
+      ) : (
+        <div className="admin__home apply__home__margin">
+          {addEmployee && (
+            <AddEmployee setAddEmployee={setAddEmployee}></AddEmployee>
+          )}
+          <div className="row">
+            <div className="add__employee__container col-lg-6 col-md-12 col-sm-12 ">
+              <img
+                src="https://www.aesthetic.com/img/homepage/create.svg"
+                alt="add emplyee"
+                height="200px"
+              />
+              <h3>Add employee to the portal</h3>
+              <h6>Employee can send NFTs update from the portal</h6>
+              <button
+                className="add__employee__button"
+                onClick={showAddEmployee}
+              >
+                Add Employee
+              </button>
+            </div>
+            <div className="users__container col-lg-6 col-md-12 col-sm-12">
+              <AdminEmployees></AdminEmployees>
+            </div>
+          </div>
         </div>
-        <div className="users__container col-lg-6 col-md-12 col-sm-12">
-          <AdminEmployees></AdminEmployees>
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 
@@ -88,10 +116,10 @@ function AdminEmployees() {
 
   useEffect(() => {
     if (adminEmployees === "expired") {
-      dispatch(adminFetchEmployeeCleanAction());
+      // dispatch(adminFetchEmployeeCleanAction());
       navigate("/auth/adminLoginExpired/false");
     } else if (adminEmployees === "notLoggedIn") {
-      dispatch(adminFetchEmployeeCleanAction());
+      // dispatch(adminFetchEmployeeCleanAction());
       navigate("/auth/adminNotLoggedIn/false");
     }
   }, [adminEmployees, navigate, dispatch]);
@@ -119,12 +147,7 @@ function AdminEmployees() {
   useEffect(() => {
     setTimeout(() => {
       setMessage();
-      dispatch(adminAddEmployeeClear());
-      dispatch(adminChangeEmployeePasswordActionCleanError());
-      dispatch(adminDeleteEmployeeClean());
-      dispatch(adminLoginClean());
-      dispatch(adminEditEmployeeClean());
-    }, 5000);
+    }, 8000);
   }, [message]);
 
   console.log("Here i am running infinie loop");
@@ -132,8 +155,9 @@ function AdminEmployees() {
 
   return (
     <>
+      {message && <Message>{message}</Message>}
       {loading ? (
-        <LoaderMain></LoaderMain>
+        <Loader></Loader>
       ) : adminEmployees === "no employees" ? (
         <h1>No Employees</h1>
       ) : adminEmployees === "expired" ? (
@@ -146,14 +170,16 @@ function AdminEmployees() {
         <h1>Not logged in</h1>
       ) : (
         <>
-          {message && <Message>{message}</Message>}
-          {adminEmployees.map((employee) => {
-            return (
-              <div className="admin__employee__container" key={employee.id}>
-                <AdminSingleEmployee employee={employee}></AdminSingleEmployee>
-              </div>
-            );
-          })}
+          {adminEmployees !== 0 &&
+            adminEmployees.map((employee) => {
+              return (
+                <div className="admin__employee__container" key={employee.id}>
+                  <AdminSingleEmployee
+                    employee={employee}
+                  ></AdminSingleEmployee>
+                </div>
+              );
+            })}
         </>
       )}
     </>
