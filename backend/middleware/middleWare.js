@@ -3,6 +3,7 @@ const app = express();
 const path = require("path");
 const { db } = require("../../database/db.js");
 const asyncHandler = require("express-async-handler");
+const nodemailer = require("nodemailer");
 
 const notFound = (req, res, next) => {
   const error = new Error(`Not Found -${req.originalUrl}`);
@@ -52,9 +53,39 @@ const ensureEmployeeAuthentication = (req, res, next) => {
   }
 };
 
+// host, email, password testing
+const smtpVerify = asyncHandler(async (req, res, next) => {
+  console.log(req.body);
+  const { email, host, emailPassword } = req.body;
+  console.log("CREDENTIALS");
+  let transporter = nodemailer.createTransport({
+    host: host,
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: email, // generated ethereal user
+      pass: emailPassword, // generated ethereal password
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+  });
+
+  // verify connection configuration
+  transporter.verify(function (error, success) {
+    if (error) {
+      res.send("invalid");
+      console.log(error);
+    } else {
+      console.log("Server is ready to take our messages");
+      next();
+    }
+  });
+});
 module.exports = {
   notFound,
   errorHandler,
   ensureAdminAuthentication,
   ensureEmployeeAuthentication,
+  smtpVerify,
 };
