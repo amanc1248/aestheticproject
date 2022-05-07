@@ -32,15 +32,45 @@ const adminLoginController = asyncHandler(async (req, res) => {
   }
 });
 
+const checkAdminLoginStatus = (req, res) => {
+  console.log(req.session);
+  let sql = "select previous_loggedIn from admin where id=1;";
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+    else {
+      if (result[0].previous_loggedIn === "true") {
+        if (req.session.adminAuthenticated) {
+          res.send("success");
+        } else {
+          console.log("expired");
+          res.send("expired");
+        }
+      } else {
+        console.log("notLoggedIn");
+        res.send("notLoggedIn");
+      }
+    }
+  });
+};
 const adminAddEmployeeController = asyncHandler(async (req, res) => {
   console.log("I ran");
-  const { name, email, emailPassword, password, designation } = req.body;
+  console.log(req.body);
+  const { name, email, host, emailPassword, password, designation } = req.body;
   const employeeId = uniqid();
-  let sql = "INSERT INTO employee values (?,?,?,?,?,?,?,CURRENT_TIMESTAMP())";
+  let sql = "INSERT INTO employee values (?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP())";
 
   db.query(
     sql,
-    [employeeId, name, email, emailPassword, designation, employeeId, password],
+    [
+      employeeId,
+      name,
+      host,
+      email,
+      emailPassword,
+      designation,
+      employeeId,
+      password,
+    ],
     (err, result) => {
       if (err) throw err;
       else {
@@ -68,9 +98,10 @@ const adminFetchEmployeeController = asyncHandler(async (req, res) => {
 });
 
 const adminEditEmployeeController = asyncHandler(async (req, res) => {
-  const { id, name, email, emailPassword, designation } = req.body;
+  const { id, name, host, email, emailPassword, designation } = req.body;
   let sql = `UPDATE EMPLOYEE
   SET name=?,
+      host=?,
       email=?,
       email_password=?,
       designation=?
@@ -79,7 +110,7 @@ const adminEditEmployeeController = asyncHandler(async (req, res) => {
 
   db.query(
     sql,
-    [name, email, emailPassword, designation, id],
+    [name, host, email, emailPassword, designation, id],
     (err, result) => {
       if (err) throw err;
       else {
@@ -140,13 +171,11 @@ const adminDeleteEmployeeController = asyncHandler(async (req, res) => {
 });
 
 const adminLogoutController = asyncHandler(async (req, res) => {
-  if (req.session.adminAuthenticated) {
-    req.session.destroy();
-    if (req.session) {
-      res.send("failure");
-    } else {
-      res.send("destroyed");
-    }
+  req.session.destroy();
+  if (req.session) {
+    res.send("failure");
+  } else {
+    res.send("destroyed");
   }
 });
 
@@ -158,4 +187,5 @@ module.exports = {
   adminChangeEmployeePasswordController,
   adminDeleteEmployeeController,
   adminLogoutController,
+  checkAdminLoginStatus,
 };

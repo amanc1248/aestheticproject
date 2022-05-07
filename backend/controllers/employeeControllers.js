@@ -26,9 +26,22 @@ const employeeLoginController = asyncHandler(async (req, res) => {
   });
 });
 
+// employee check login status
+const checkEmployeeLoginStatus = asyncHandler(async (req, res, next) => {
+  console.log("Inside ensureEmployeeAuthentication");
+  console.log(req.session);
+  if (req.session.employeeAuthenticated) {
+    res.send("success");
+  } else {
+    res.send("unAuthorized");
+    console.log("You're not authorized as an Employee");
+  }
+});
+
 //fetch employee by Id
 const employeeByIdController = asyncHandler(async (req, res) => {
   const username = req.session.username;
+  console.log("here is the usernaem: ", username);
   let sql = "SELECT * from employee where username=?;";
   db.query(sql, [username], (err, result) => {
     if (err) throw err;
@@ -59,21 +72,18 @@ const employeeFetchUsersController = asyncHandler(async (req, res) => {
 });
 
 const employeeLogoutController = asyncHandler(async (req, res) => {
-  if (req.session.employeeAuthenticated) {
-    req.session.destroy();
-    if (req.session) {
-      res.send("failure");
-    } else {
-      res.send("destroyed");
-    }
+  req.session.destroy();
+  if (req.session) {
+    res.send("failure");
+  } else {
+    res.send("destroyed");
   }
 });
 
 const employeeSendEmailController = asyncHandler(async (req, res) => {
-  console.log(req.body);
-  const { employeeEmail, password, assets, subject, userEmail, title } =
+  const { employeeEmail, password, host, assets, subject, userEmail, title } =
     req.body;
-  let hostName;
+  console.log(employeeEmail, password, host, subject, userEmail, title);
   // if (process.env.NODE_ENV === "deveslopment") {
   //   hostName = "proudposhak.com";
   // } else {
@@ -81,7 +91,7 @@ const employeeSendEmailController = asyncHandler(async (req, res) => {
   // }
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
-    host: "proudposhak.com",
+    host: host,
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
@@ -160,6 +170,16 @@ const employeeSendEmailController = asyncHandler(async (req, res) => {
 </html>
 
 `;
+
+  // verify connection configuration
+  transporter.verify(function (error, success) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Server is ready to take our messages");
+    }
+  });
+
   // send mail with defined transport object
   let info = await transporter.sendMail({
     from: `"Aesthetic.com team" <${employeeEmail}>`, // sender address
@@ -185,4 +205,5 @@ module.exports = {
   employeeLogoutController,
   employeeSendEmailController,
   employeeByIdController,
+  checkEmployeeLoginStatus,
 };
