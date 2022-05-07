@@ -8,6 +8,7 @@ import {
 import Loader from "../../components/Loader";
 import { useNavigate } from "react-router-dom";
 import NewlyMintedNFTs from "./NewlyMintedNFTs";
+import LoaderMain from "../../components/LoaderMain";
 function EmployeeUsers() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -46,7 +47,7 @@ function EmployeeUsers() {
   return (
     <>
       {loading ? (
-        <Loader></Loader>
+        <LoaderMain></LoaderMain>
       ) : fetchedUsers === "no users" ? (
         <h1>No Users</h1>
       ) : fetchedUsers === "unAuthorized" ? (

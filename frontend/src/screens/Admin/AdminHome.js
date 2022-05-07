@@ -18,6 +18,7 @@ import ChangeEmployeePassword from "./ChangeEmployeePassword";
 import RevealUsernameAndPassword from "./RevealUsernameAndPassword";
 import { useNavigate, Redirect } from "react-router-dom";
 import Message from "../../components/Message";
+import LoaderMain from "../../components/LoaderMain";
 
 function AdminHome() {
   const dispatch = useDispatch();
@@ -27,19 +28,6 @@ function AdminHome() {
   const showAddEmployee = () => {
     setAddEmployee(true);
   };
-  // USE SELECTOR
-  // const { loading, adminEmployees, error } = useSelector(
-  //   (state) => state.adminFetchEmployeeReducer
-  // );
-  // console.log("adminEMployee:", adminEmployees);
-  // dispatch(adminLoginClean());
-
-  // useEffects
-  // useEffect(() => {
-  //   console.log("Use effect RAN.....");
-
-  //   dispatch(adminFetchEmployeeAction());
-  // }, []);
 
   return (
     <div className="admin__home apply__home__margin">
@@ -113,6 +101,7 @@ function AdminEmployees() {
       dispatch(adminFetchEmployeeAction());
       setMessage("Employee Added Successfully");
     }
+
     if (editedEmployee === "success") {
       dispatch(adminFetchEmployeeAction());
       setMessage("Employee Edited Successfully");
@@ -144,7 +133,7 @@ function AdminEmployees() {
   return (
     <>
       {loading ? (
-        <Loader></Loader>
+        <LoaderMain></LoaderMain>
       ) : adminEmployees === "no employees" ? (
         <h1>No Employees</h1>
       ) : adminEmployees === "expired" ? (
