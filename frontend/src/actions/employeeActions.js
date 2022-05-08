@@ -73,6 +73,7 @@ export const employeeLoginClean = () => async (dispatch) => {
 
 // check employee login status
 export const checkEmployeeLoginStatusAction = () => async (dispatch) => {
+  console.log("I am the last oe to run");
   try {
     dispatch({
       type: CHECK_EMPLOYEE_LOGIN_STATUS,

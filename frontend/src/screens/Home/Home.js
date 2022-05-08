@@ -5,21 +5,15 @@ import HomeEmployeeLogin from "./HomeEmployeeLogin";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
-  adminAddEmployeeClear,
-  adminChangeEmployeePasswordActionCleanError,
-  adminDeleteEmployeeClean,
-  adminFetchEmployeeCleanAction,
   adminLoginClean,
   adminLogoutClean,
   checkAdminLoginStatusClean,
 } from "../../actions/adminActions";
 import {
   checkEmployeeLoginStatusClean,
-  employeeByIdClean,
   employeeFetchUsersClean,
   employeeLoginClean,
   employeeLogoutClean,
-  employeeSendEmailClean,
 } from "../../actions/employeeActions";
 function Home() {
   const dispatch = useDispatch();
@@ -44,19 +38,13 @@ function Home() {
     setEmployeeLogin(true);
   };
   dispatch(adminLoginClean());
+  dispatch(adminLogoutClean());
   dispatch(checkAdminLoginStatusClean());
   dispatch(employeeLoginClean());
+  dispatch(employeeLogoutClean());
   dispatch(checkEmployeeLoginStatusClean());
-  // dispatch(adminAddEmployeeClear());
-  // dispatch(adminChangeEmployeePasswordActionCleanError());
-  // dispatch(adminDeleteEmployeeClean());
-  // dispatch(adminLoginClean());
-  // dispatch(adminFetchEmployeeCleanAction());
-  // dispatch(adminLogoutClean());
-  // dispatch(employeeFetchUsersClean());
-  // dispatch(employeeByIdClean());
-  // dispatch(employeeLogoutClean());
-  // dispatch(employeeSendEmailClean());
+  dispatch(employeeFetchUsersClean());
+
   return (
     <div className="home apply__home__margin">
       {adminLogin && (

@@ -24,6 +24,8 @@ function NewlyMintedNFTs({ closeFnc, user, type }) {
       "https://api.opensea.io/api/v1/assets?order_direction=desc&limit=10&include_orders=false",
     recentlySoldAPI:
       "https://api.opensea.io/api/v1/assets?order_direction=desc&limit=10&include_orders=false",
+    oldestNFTs:
+      "https://api.opensea.io/api/v1/assets?order_direction=asc&limit=10&include_orders=false",
   };
   const [title, setTitle] = useState();
   const [api, setApi] = useState();
@@ -33,11 +35,9 @@ function NewlyMintedNFTs({ closeFnc, user, type }) {
     (state) => state.employeeFetchNewlyMintedNFTsReducer
   );
   const { employeeById } = useSelector((state) => state.employeeByIdReducer);
-  const {
-    loading: emailSending,
-    sentEmail,
-    error,
-  } = useSelector((state) => state.employeeSendEmailReducer);
+  const { loading: emailSending, sentEmail } = useSelector(
+    (state) => state.employeeSendEmailReducer
+  );
   // handlers
   const closeDiv = () => {
     console.log("I ran......");
@@ -81,6 +81,10 @@ function NewlyMintedNFTs({ closeFnc, user, type }) {
       setTitle("Recently Sold NFTs in OpenSea");
       setApi(nftsAPI.recentlySoldAPI);
     }
+    if (type === "oldestNFTs") {
+      setTitle("Some of the Oldest NFTs in OpenSea");
+      setApi(nftsAPI.oldestNFTs);
+    }
   }, []);
 
   useEffect(() => {
@@ -116,7 +120,7 @@ function NewlyMintedNFTs({ closeFnc, user, type }) {
                   className="login__employee__button"
                   onClick={fetchNFTsHandler}
                 >
-                  FETCH new minted NFTs
+                  FETCH NFTs
                 </button>
               </div>
               {loading && <Loader></Loader>}
@@ -143,7 +147,7 @@ function NFTsContainer({ assets, emailHeader }) {
       {assets && (
         <>
           <span>This is the preview of your email👇</span>
-          <h1>
+          <h4>
             This is NFTs update from
             <a
               href="https://www.aesthetic.com/"
@@ -152,8 +156,8 @@ function NFTsContainer({ assets, emailHeader }) {
             >
               Aesthetic.com
             </a>
-          </h1>
-          <h4>{emailHeader}</h4>
+          </h4>
+          <h6>{emailHeader}</h6>
           <div>
             <div class="two_div_nft_container">
               {assets &&

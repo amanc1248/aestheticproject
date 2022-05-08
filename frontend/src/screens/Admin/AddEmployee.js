@@ -69,7 +69,7 @@ function AddEmployee({ setAddEmployee }) {
             <div className="title__and__close">
               <div className="admin__login__title">Add Employee</div>
               <div className="close__icon">
-                <CloseIcon onClick={closeAddEmployee}></CloseIcon>
+                {!loading && <CloseIcon onClick={closeAddEmployee}></CloseIcon>}
               </div>
             </div>
 

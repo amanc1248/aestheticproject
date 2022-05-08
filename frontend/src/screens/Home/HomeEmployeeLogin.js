@@ -3,10 +3,11 @@ import "../../styles/screens/Home.css";
 import { useDispatch, useSelector } from "react-redux";
 import CloseIcon from "@mui/icons-material/Close";
 import {
+  checkEmployeeLoginStatusClean,
+  employeeByIdClean,
   employeeFetchUsersClean,
   employeeLoginAction,
   employeeLoginClean,
-  employeeLogoutClean,
 } from "../../actions/employeeActions";
 import { useNavigate } from "react-router-dom";
 
@@ -23,18 +24,21 @@ function HomeEmployeeLogin({ setAdminLogin, employeeError }) {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
 
-  // handlers
-  const employeeLoginHandler = (e) => {
-    e.preventDefault();
-    if (username && password) {
-      dispatch(employeeLoginAction(username, password));
-    }
-  };
-
   // selectors
   const { loading, employeeLogin, error } = useSelector(
     (state) => state.employeeLoginReducer
   );
+
+  // handlers
+  const employeeLoginHandler = (e) => {
+    e.preventDefault();
+    if (username && password) {
+      dispatch(checkEmployeeLoginStatusClean());
+      dispatch(employeeFetchUsersClean());
+      dispatch(employeeByIdClean());
+      dispatch(employeeLoginAction(username, password));
+    }
+  };
 
   // useEffect
   useEffect(() => {
@@ -42,14 +46,13 @@ function HomeEmployeeLogin({ setAdminLogin, employeeError }) {
       navigate("/employee");
     }
   }, [employeeLogin, navigate, dispatch]);
+  useEffect(() => {
+    console.log("checkEmployeeLoginStatusClean ran");
+    dispatch(checkEmployeeLoginStatusClean());
+    dispatch(employeeFetchUsersClean());
+  }, []);
 
-  // useEffect(() => {
-  //   dispatch(employeeFetchUsersClean());
-  //   dispatch(employeeLoginClean());
-  //   dispatch(employeeLogoutClean());
-  // }, []);
-
-  console.log("I am infinite loop");
+  console.log("I am employee login");
 
   return (
     <>
@@ -108,7 +111,7 @@ function HomeEmployeeLogin({ setAdminLogin, employeeError }) {
             </div>
             {loading && <Loader></Loader>}
             {error && <Message variant="danger">{error}</Message>}
-            {employeeLogin && <Message>{"Login Successful"}</Message>}
+            {/* {employeeLogin && <Message>{"Login Successful"}</Message>} */}
           </div>
         </form>
       </div>

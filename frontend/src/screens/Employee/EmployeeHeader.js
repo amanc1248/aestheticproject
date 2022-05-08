@@ -23,23 +23,20 @@ function EmployeeHeader() {
   };
 
   // useSelectors
-  const { loading, employeeById, error } = useSelector(
-    (state) => state.employeeByIdReducer
-  );
+  const { employeeById } = useSelector((state) => state.employeeByIdReducer);
 
   // useEffect
   useEffect(() => {
     dispatch(employeeByIdAction());
+    console.log("here is the employeeByID mystery");
   }, [dispatch]);
 
   useEffect(() => {
     if (employeeById === "unAuthorized") {
-      // dispatch(employeeByIdClean());
+      console.log("employeeById === unauthorized i ran");
       navigate("/auth/false/notLoggedIn");
     }
-  }, [employeeById, navigate, dispatch]);
-
-  console.log(employeeById);
+  }, []);
 
   return (
     <div>

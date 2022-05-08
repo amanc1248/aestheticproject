@@ -3,9 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   employeeFetchUsersAction,
   employeeFetchUsersClean,
-  employeeLoginClean,
 } from "../../actions/employeeActions";
-import Loader from "../../components/Loader";
 import { useNavigate } from "react-router-dom";
 import NewlyMintedNFTs from "./NewlyMintedNFTs";
 import LoaderMain from "../../components/LoaderMain";
@@ -14,11 +12,11 @@ function EmployeeUsers() {
   const dispatch = useDispatch();
 
   // states
-  const [message, setMessage] = useState();
 
   const [popularNFTs, setPopularNFTs] = useState(false);
   const [recentlySold, setRecentlySold] = useState(false);
   const [newMinted, setNewMinted] = useState(false);
+  const [oldestNFTs, setOldestNFTs] = useState(false);
   const showPopularNFTs = () => {
     setPopularNFTs(true);
   };
@@ -27,6 +25,9 @@ function EmployeeUsers() {
   };
   const showNewlyMinted = () => {
     setNewMinted(true);
+  };
+  const showOldestNFTs = () => {
+    setOldestNFTs(true);
   };
 
   // useSelectors
@@ -41,17 +42,10 @@ function EmployeeUsers() {
 
   useEffect(() => {
     if (fetchedUsers === "unAuthorized") {
-      // dispatch(employeeFetchUsersClean());
       navigate("/auth/false/notLoggedIn");
     }
-  }, [fetchedUsers, navigate, dispatch]);
+  }, [fetchedUsers, navigate]);
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setMessage();
-  //     dispatch(employeeLoginClean());
-  //   }, 5000);
-  // }, [message]);
   return (
     <>
       {loading ? (
@@ -72,20 +66,14 @@ function EmployeeUsers() {
                 <div key={user.id}>
                   {" "}
                   <div className="admin__employee__container">
-                    {popularNFTs && (
+                    {oldestNFTs && (
                       <NewlyMintedNFTs
-                        closeFnc={setPopularNFTs}
+                        closeFnc={setOldestNFTs}
                         user={user}
-                        type="popularNFTs"
+                        type="oldestNFTs"
                       ></NewlyMintedNFTs>
                     )}
-                    {recentlySold && (
-                      <NewlyMintedNFTs
-                        closeFnc={setRecentlySold}
-                        user={user}
-                        type="recentlySold"
-                      ></NewlyMintedNFTs>
-                    )}
+
                     {newMinted && (
                       <NewlyMintedNFTs
                         closeFnc={setNewMinted}
@@ -103,20 +91,12 @@ function EmployeeUsers() {
                         <div>
                           <button
                             className="edit_employee__button"
-                            onClick={showPopularNFTs}
+                            onClick={showOldestNFTs}
                           >
-                            Send Most Popular NFTs of this week.
+                            Send some Oldest NFTs from Opensea.
                           </button>{" "}
                         </div>
-                        <br />
-                        <div>
-                          <button
-                            className="delete__employee__button"
-                            onClick={showRecentlySold}
-                          >
-                            Send recently sold NFTs of this week.
-                          </button>
-                        </div>
+
                         <br />
                         <div>
                           <button
