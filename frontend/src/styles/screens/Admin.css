@@ -63,6 +63,7 @@
       font-weight: 700;
   }
   .admin__employee__container{
+      margin: 10px 0;
       border: 1px solid #3627dd59 ;
       border-radius: 4px;
   }
@@ -121,7 +122,7 @@
     background-color: white;
     height: max-content;
     width: 400px;
-    margin-top: 10%;
+    margin-top: 5%;
     text-align: left;
     padding: 20px ;
     display: flex;
