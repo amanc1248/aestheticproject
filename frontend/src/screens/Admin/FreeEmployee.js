@@ -4,10 +4,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import Loader from "../../components/Loader";
 
 import {
-  adminLoginAction,
   adminDeleteEmployeeAction,
-  adminEditEmployeeAction,
-  adminLoginClean,
   adminDeleteEmployeeClean,
 } from "../../actions/adminActions";
 import Message from "../../components/Message";
@@ -17,22 +14,15 @@ function FreeEmployee({ setFreeEmployee, employee }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const closeDeleteEmployee = () => {
-    dispatch(adminLoginClean());
     dispatch(adminDeleteEmployeeClean());
     setFreeEmployee(false);
   };
 
   // states
-  const [adminPass, setAdminPass] = useState();
-  const [passConfirm, setPassConfirm] = useState();
-  const [message, setMessage] = useState();
+  const [buttonDisable, setButtonDisable] = useState(false);
 
-  // const handlers
-  const passConfirmHandler = () => {
-    if (adminPass) {
-      dispatch(adminLoginAction(adminPass));
-    }
-  };
+  //  handlers
+
   const freeEmployeeHandler = () => {
     dispatch(adminDeleteEmployeeAction(employee.id));
     // dispatch(adminLoginClean());
@@ -50,10 +40,12 @@ function FreeEmployee({ setFreeEmployee, employee }) {
   useEffect(() => {
     if (deletedEmployee === "expired") {
       navigate("/auth/adminLoginExpired/false");
-    } else if (deletedEmployee === "notLoggedIn") {
+    }
+    if (deletedEmployee === "notLoggedIn") {
       navigate("/auth/adminNotLoggedIn/false");
-    } else {
-      setMessage("Deleted Successfully");
+    }
+    if (deletedEmployee === "success") {
+      setButtonDisable(true);
     }
   }, [deletedEmployee, navigate]);
 
@@ -65,7 +57,9 @@ function FreeEmployee({ setFreeEmployee, employee }) {
             <div className="title__and__close">
               <div className="admin__login__title">Delete Employee</div>
               <div className="close__icon">
-                <CloseIcon onClick={closeDeleteEmployee}></CloseIcon>
+                {!deleteLoading && (
+                  <CloseIcon onClick={closeDeleteEmployee}></CloseIcon>
+                )}
               </div>
             </div>
             <div>
@@ -92,35 +86,18 @@ function FreeEmployee({ setFreeEmployee, employee }) {
               </label>
               <br />
             </div>
-            {/* <h6>Confirm that its you, enter your admin pass:</h6>
-            <input
-              type="password"
-              name="adminpass"
-              id=""
-              required
-              onChange={(e) => {
-                setAdminPass(e.target.value);
-              }}
-            /> */}
-            {/* <button onClick={passConfirmHandler}>
-              {loading
-                ? "Confirming Pass..."
-                : passConfirm
-                ? "Pass Confirmed ✔"
-                : passConfirm === false
-                ? "Pass Rejected ❌"
-                : "Confirm Pass"}
-            </button> */}
-            {/* {passConfirm && ( */}
+
             <div>
               {!deleteLoading && (
                 <>
-                  <button
-                    className="login__employee__button"
-                    onClick={freeEmployeeHandler}
-                  >
-                    Delete Employee
-                  </button>
+                  {!buttonDisable && (
+                    <button
+                      className="login__employee__button"
+                      onClick={freeEmployeeHandler}
+                    >
+                      Delete Employee
+                    </button>
+                  )}
                 </>
               )}
             </div>

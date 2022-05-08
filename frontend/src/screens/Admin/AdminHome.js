@@ -5,19 +5,15 @@ import EditEmployee from "./EditEmployee";
 import FreeEmployee from "./FreeEmployee";
 import Loader from "../../components/Loader";
 import {
-  adminAddEmployeeClear,
   adminChangeEmployeePasswordActionCleanError,
   adminDeleteEmployeeClean,
-  adminEditEmployeeAction,
   adminEditEmployeeClean,
   adminFetchEmployeeAction,
-  adminFetchEmployeeCleanAction,
-  adminLoginClean,
   checkAdminLoginStatusAction,
 } from "../../actions/adminActions";
 import ChangeEmployeePassword from "./ChangeEmployeePassword";
 import RevealUsernameAndPassword from "./RevealUsernameAndPassword";
-import { useNavigate, Redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Message from "../../components/Message";
 import LoaderMain from "../../components/LoaderMain";
 
@@ -30,7 +26,7 @@ function AdminHome() {
   };
 
   // useSelectors
-  const { loading, checkAdminLoginStatus, error } = useSelector(
+  const { checkAdminLoginStatus } = useSelector(
     (state) => state.checkAdminLoginStatusReducer
   );
   useEffect(() => {
@@ -94,20 +90,13 @@ function AdminEmployees() {
   const [message, setMessage] = useState();
 
   // useSelectors
-  const { adminEmployees, loading } = useSelector(
+  let { adminEmployees, loading } = useSelector(
     (state) => state.adminFetchEmployeeReducer
   );
   const { addEmployee } = useSelector((state) => state.adminAddEmployeeReducer);
-  const { editedEmployee } = useSelector(
-    (state) => state.adminEditEmployeeReducer
-  );
-  const { changedPassword } = useSelector(
-    (state) => state.adminChangeEmployeePasswordReducer
-  );
   const { deletedEmployee } = useSelector(
     (state) => state.adminDeleteEmployeeReducer
   );
-
   // useEffects
 
   useEffect(() => {
@@ -116,10 +105,8 @@ function AdminEmployees() {
 
   useEffect(() => {
     if (adminEmployees === "expired") {
-      // dispatch(adminFetchEmployeeCleanAction());
       navigate("/auth/adminLoginExpired/false");
     } else if (adminEmployees === "notLoggedIn") {
-      // dispatch(adminFetchEmployeeCleanAction());
       navigate("/auth/adminNotLoggedIn/false");
     }
   }, [adminEmployees, navigate, dispatch]);
@@ -127,28 +114,12 @@ function AdminEmployees() {
   useEffect(() => {
     if (addEmployee === "success") {
       dispatch(adminFetchEmployeeAction());
-      setMessage("Employee Added Successfully");
     }
 
-    if (editedEmployee === "success") {
-      dispatch(adminFetchEmployeeAction());
-      setMessage("Employee Edited Successfully");
-    }
-    if (changedPassword === "success") {
-      dispatch(adminFetchEmployeeAction());
-      setMessage("Password Changed Successfully");
-    }
     if (deletedEmployee === "success") {
       dispatch(adminFetchEmployeeAction());
-      setMessage("Deleted Successfully");
     }
-  }, [addEmployee, dispatch, editedEmployee, changedPassword, deletedEmployee]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setMessage();
-    }, 8000);
-  }, [message]);
+  }, [addEmployee, dispatch, deletedEmployee]);
 
   console.log("Here i am running infinie loop");
   console.log(adminEmployees);
@@ -173,8 +144,9 @@ function AdminEmployees() {
           {adminEmployees !== 0 &&
             adminEmployees.map((employee) => {
               return (
-                <div className="admin__employee__container" key={employee.id}>
+                <div>
                   <AdminSingleEmployee
+                    key={employee.id}
                     employee={employee}
                   ></AdminSingleEmployee>
                 </div>
@@ -187,21 +159,27 @@ function AdminEmployees() {
 }
 
 function AdminSingleEmployee({ employee }) {
+  const dispatch = useDispatch();
+  const [emp, setEmp] = useState(employee);
+  const [message, setMessage] = useState();
   // for edit
   const [editEmployee, setEditEmployee] = useState(false);
   const showEditEmployee = () => {
+    dispatch(adminEditEmployeeClean());
     setEditEmployee(true);
   };
 
   // for change password
   const [changePassword, setChangePassword] = useState(false);
   const showChangePassword = () => {
+    dispatch(adminChangeEmployeePasswordActionCleanError());
     setChangePassword(true);
   };
 
   // for free employee
   const [freeEmployee, setFreeEmployee] = useState(false);
   const showFreeEmployee = () => {
+    dispatch(adminDeleteEmployeeClean());
     setFreeEmployee(true);
   };
 
@@ -210,65 +188,119 @@ function AdminSingleEmployee({ employee }) {
   const showRevealUPass = () => {
     setRevealUPass(true);
   };
+
+  // useSelectors
+  const { editedEmployee } = useSelector(
+    (state) => state.adminEditEmployeeReducer
+  );
+  const { changedPassword } = useSelector(
+    (state) => state.adminChangeEmployeePasswordReducer
+  );
+  const { deletedEmployee } = useSelector(
+    (state) => state.adminDeleteEmployeeReducer
+  );
+  const { loading: loadingEmployeeById, admineEployeeById } = useSelector(
+    (state) => state.adminFetchEmployeeByIdReducer
+  );
+
+  // useEffects
+  useEffect(() => {
+    console.log("i ran 1000 times");
+    if (admineEployeeById) {
+      if (
+        editedEmployee === "success" &&
+        admineEployeeById.id === employee.id
+      ) {
+        console.log("I should run here");
+        console.log(admineEployeeById);
+        setEmp(admineEployeeById);
+      }
+      if (
+        changedPassword === "success" &&
+        admineEployeeById.id === employee.id
+      ) {
+        setEmp(admineEployeeById);
+      }
+      if (
+        deletedEmployee === "success" &&
+        admineEployeeById.id === employee.id
+      ) {
+        setEmp(admineEployeeById);
+      }
+    }
+  }, [
+    editedEmployee,
+    dispatch,
+    admineEployeeById,
+    loadingEmployeeById,
+    changedPassword,
+  ]);
+
   return (
     <div>
       {editEmployee && (
         <EditEmployee
           setEditEmployee={setEditEmployee}
-          employee={employee}
+          employee={emp}
         ></EditEmployee>
       )}
       {changePassword && (
         <ChangeEmployeePassword
           setChangePassword={setChangePassword}
-          employee={employee}
+          employee={emp}
         ></ChangeEmployeePassword>
       )}
       {freeEmployee && (
         <FreeEmployee
           setFreeEmployee={setFreeEmployee}
-          employee={employee}
+          employee={emp}
         ></FreeEmployee>
       )}
       {revealUPass && (
         <RevealUsernameAndPassword
           setRevealUPass={setRevealUPass}
-          employee={employee}
+          employee={emp}
         ></RevealUsernameAndPassword>
       )}
-      <div className="employee__container">
-        <div className="employee_details">
-          <div className="employee__details__inner"></div>
-          <div className="employee__name__post">
-            <div className="employee__name">{employee.name}</div>
-            <div className="employee__post">{employee.designation}</div>
+      {message && <Message>{message}</Message>}
+      <div className="admin__employee__container">
+        <div className="employee__container">
+          <div className="employee_details">
+            <div className="employee__details__inner"></div>
+            <div className="employee__name__post">
+              <div className="employee__name">{emp.name}</div>
+              <div className="employee__post">{emp.designation}</div>
+            </div>
           </div>
-        </div>
-        <div className="">
-          <button className="edit_employee__button" onClick={showEditEmployee}>
-            Edit Details
-          </button>
-        </div>
-        <div className="">
-          <button
-            className="edit_employee__button"
-            onClick={showChangePassword}
-          >
-            Change Password
-          </button>
-        </div>
-        <div className="">
-          <button className="edit_employee__button" onClick={showRevealUPass}>
-            Reveal username,password, <br /> email,emailPassword
-          </button>
-        </div>
-        <div>
-          <button
-            className="delete__employee__button"
-            onClick={showFreeEmployee}
-          >
-            Free Employee
-          </button>
+          <div className="">
+            <button
+              className="edit_employee__button"
+              onClick={showEditEmployee}
+            >
+              Edit Details
+            </button>
+          </div>
+          <div className="">
+            <button
+              className="edit_employee__button"
+              onClick={showChangePassword}
+            >
+              Change Password
+            </button>
+          </div>
+          <div className="">
+            <button className="edit_employee__button" onClick={showRevealUPass}>
+              Reveal username,password, <br /> email,emailPassword
+            </button>
+          </div>
+          <div>
+            <button
+              className="delete__employee__button"
+              onClick={showFreeEmployee}
+            >
+              Free Employee
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 import {
   adminChangeEmployeePasswordAction,
   adminChangeEmployeePasswordActionCleanError,
+  adminFetchEmployeeByIdAction,
 } from "../../actions/adminActions";
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
-import HomeAdminLogin from "../Home/HomeAdminLogin";
 // import "../../styles/screens/Admin.css";
 function ChangeEmployeePassword({ setChangePassword, employee }) {
   const navigate = useNavigate();
@@ -20,6 +20,8 @@ function ChangeEmployeePassword({ setChangePassword, employee }) {
   // states
   const [oldPassword, setOldPassword] = useState();
   const [newPassword, setNewPassword] = useState();
+
+  const [buttonDisable, setButtonDisable] = useState(false);
 
   // changePasswordHandler
   const changePasswordHandler = (e) => {
@@ -43,7 +45,12 @@ function ChangeEmployeePassword({ setChangePassword, employee }) {
     if (changedPassword === "notLoggedIn") {
       navigate("/auth/adminNotLoggedIn/false");
     }
-  }, [navigate, changedPassword]);
+    if (changedPassword === "success") {
+      dispatch(adminFetchEmployeeByIdAction(employee.id));
+      // setMessage("Employee Edited Successfully");
+      setButtonDisable(true);
+    }
+  }, [navigate, changedPassword, dispatch]);
 
   return (
     <>
@@ -53,7 +60,9 @@ function ChangeEmployeePassword({ setChangePassword, employee }) {
             <div className="title__and__close">
               <div className="admin__login__title">Change Password</div>
               <div className="close__icon">
-                <CloseIcon onClick={closeChangePassword}></CloseIcon>
+                {!loading && (
+                  <CloseIcon onClick={closeChangePassword}></CloseIcon>
+                )}
               </div>
             </div>
 
@@ -69,6 +78,7 @@ function ChangeEmployeePassword({ setChangePassword, employee }) {
                 onChange={(e) => {
                   setOldPassword(e.target.value);
                 }}
+                disabled={buttonDisable}
               />
             </div>
             <div>
@@ -83,22 +93,28 @@ function ChangeEmployeePassword({ setChangePassword, employee }) {
                 onChange={(e) => {
                   setNewPassword(e.target.value);
                 }}
+                disabled={buttonDisable}
               />
             </div>
 
             {!loading && (
               <div>
-                <button
-                  className="login__employee__button"
-                  onClick={changePasswordHandler}
-                >
-                  Change Password
-                </button>
+                {!buttonDisable && (
+                  <button
+                    className="login__employee__button"
+                    onClick={changePasswordHandler}
+                  >
+                    Change Password
+                  </button>
+                )}
               </div>
             )}
             {loading && <Loader></Loader>}
 
             {error && <Message variant="danger">{error}</Message>}
+            {changedPassword === "success" && (
+              <Message>{"Password Changed successfully. "}</Message>
+            )}
           </div>
         </div>
       </div>

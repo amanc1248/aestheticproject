@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   adminEditEmployeeAction,
   adminEditEmployeeClean,
-  adminFetchEmployeeAction,
+  adminFetchEmployeeByIdAction,
 } from "../../actions/adminActions";
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
@@ -23,6 +23,8 @@ function EditEmployee({ setEditEmployee, employee }) {
   const [email, setEmail] = useState(employee.email);
   const [emailPassword, setEmailPassword] = useState(employee.email_password);
   const [designation, setDesignation] = useState(employee.designation);
+
+  const [buttonDisable, setButtonDisable] = useState(false);
   // edit employee handler
   const editEmployeeHandler = (e) => {
     e.preventDefault();
@@ -52,7 +54,13 @@ function EditEmployee({ setEditEmployee, employee }) {
     if (editedEmployee === "notLoggedIn") {
       navigate("/auth/adminNotLoggedIn/false");
     }
+    if (editedEmployee === "success") {
+      dispatch(adminFetchEmployeeByIdAction(employee.id));
+      // setMessage("Employee Edited Successfully");
+      setButtonDisable(true);
+    }
   }, [navigate, editedEmployee]);
+
   return (
     <div>
       <div>
@@ -61,7 +69,9 @@ function EditEmployee({ setEditEmployee, employee }) {
             <div className="title__and__close">
               <div className="admin__login__title">Edit Employee Details</div>
               <div className="close__icon">
-                <CloseIcon onClick={closeEditEmployee}></CloseIcon>
+                {!loading && (
+                  <CloseIcon onClick={closeEditEmployee}></CloseIcon>
+                )}
               </div>
             </div>
 
@@ -78,6 +88,7 @@ function EditEmployee({ setEditEmployee, employee }) {
                 onChange={(e) => {
                   setName(e.target.value);
                 }}
+                disabled={buttonDisable}
               />
             </div>
             <div>
@@ -93,6 +104,7 @@ function EditEmployee({ setEditEmployee, employee }) {
                 onChange={(e) => {
                   setHost(e.target.value);
                 }}
+                disabled={buttonDisable}
               />
             </div>
             <div>
@@ -108,6 +120,7 @@ function EditEmployee({ setEditEmployee, employee }) {
                 onChange={(e) => {
                   setEmail(e.target.value);
                 }}
+                disabled={buttonDisable}
               />
             </div>
             <div>
@@ -123,6 +136,7 @@ function EditEmployee({ setEditEmployee, employee }) {
                 onChange={(e) => {
                   setEmailPassword(e.target.value);
                 }}
+                disabled={buttonDisable}
               />
             </div>
 
@@ -139,16 +153,19 @@ function EditEmployee({ setEditEmployee, employee }) {
                 onChange={(e) => {
                   setDesignation(e.target.value);
                 }}
+                disabled={buttonDisable}
               />
             </div>
             {!loading && (
               <div>
-                <button
-                  className="login__employee__button"
-                  onClick={editEmployeeHandler}
-                >
-                  Save Changes
-                </button>
+                {!buttonDisable && (
+                  <button
+                    className="login__employee__button"
+                    onClick={editEmployeeHandler}
+                  >
+                    Save Changes
+                  </button>
+                )}
               </div>
             )}
             {loading && <Loader></Loader>}
@@ -156,6 +173,9 @@ function EditEmployee({ setEditEmployee, employee }) {
               <Message variant="danger">
                 {"Invalid host, email or email password."}
               </Message>
+            )}
+            {editedEmployee === "success" && (
+              <Message>{"Employee Edited successfully. "}</Message>
             )}
           </div>
         </div>
