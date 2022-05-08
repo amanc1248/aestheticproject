@@ -40,7 +40,7 @@ const adminSession = session({
 
 // const employeeSession
 const employeeSession = session({
-  secret: "employeeSession",
+  secret: process.env.EMPLOYEE_SECRET,
   resave: false,
   saveUninitialized: false,
   store: sessionStore,
