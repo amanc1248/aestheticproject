@@ -97,6 +97,24 @@ const adminFetchEmployeeController = asyncHandler(async (req, res) => {
   });
 });
 
+//fetch employee by Id
+const adminEmployeeByIdController = asyncHandler(async (req, res) => {
+  const username = req.params.id;
+  console.log("here is the usernaem: ", username);
+  let sql = "SELECT * from employee where username=?;";
+  db.query(sql, [username], (err, result) => {
+    if (err) throw err;
+    else {
+      console.log(result);
+      if (result.length === 0) {
+        res.send("no employee");
+      } else {
+        res.send(result[0]);
+      }
+    }
+  });
+});
+
 const adminEditEmployeeController = asyncHandler(async (req, res) => {
   const { id, name, host, email, emailPassword, designation } = req.body;
   let sql = `UPDATE EMPLOYEE
@@ -188,4 +206,5 @@ module.exports = {
   adminDeleteEmployeeController,
   adminLogoutController,
   checkAdminLoginStatus,
+  adminEmployeeByIdController,
 };

@@ -8,6 +8,7 @@ const {
   adminDeleteEmployeeController,
   adminLogoutController,
   checkAdminLoginStatus,
+  adminEmployeeByIdController,
 } = require("../controllers/adminControllers.js");
 const {
   ensureAdminAuthentication,
@@ -23,6 +24,9 @@ router
 router
   .route("/fetchEmployee")
   .get(ensureAdminAuthentication, adminFetchEmployeeController);
+router
+  .route("/fetchEmployeeById/:id")
+  .get(ensureAdminAuthentication, adminEmployeeByIdController);
 router
   .route("/editEmployee")
   .put(ensureAdminAuthentication, smtpVerify, adminEditEmployeeController);

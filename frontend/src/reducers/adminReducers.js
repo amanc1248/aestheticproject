@@ -15,13 +15,14 @@ import {
   ADMIN_EDIT_EMPLOYEE_CLEAN,
   ADMIN_EDIT_EMPLOYEE_FAILURE,
   ADMIN_EDIT_EMPLOYEE_SUCCESS,
-  ADMIN_ENSURE_LOGIN,
-  ADMIN_ENSURE_LOGIN_FAIL,
-  ADMIN_ENSURE_LOGIN_SUCCESS,
   ADMIN_FETCH_EMPLOYEES,
   ADMIN_FETCH_EMPLOYEES_CLEAN,
   ADMIN_FETCH_EMPLOYEES_FAILURE,
   ADMIN_FETCH_EMPLOYEES_SUCCESS,
+  ADMIN_FETCH_EMPLOYEE_BY_ID,
+  ADMIN_FETCH_EMPLOYEE_BY_ID_CLEAN,
+  ADMIN_FETCH_EMPLOYEE_BY_ID_FAILURE,
+  ADMIN_FETCH_EMPLOYEE_BY_ID_SUCCESS,
   ADMIN_LOGIN,
   ADMIN_LOGIN_CLEAN,
   ADMIN_LOGIN_FAIL,
@@ -34,7 +35,6 @@ import {
   CHECK_ADMIN_LOGIN_STATUS_CLEAN,
   CHECK_ADMIN_LOGIN_STATUS_FAIL,
   CHECK_ADMIN_LOGIN_STATUS_SUCCESS,
-  CLEAN_ERROR,
 } from "../constants/adminConstants";
 
 export const adminLoginReducer = (state = {}, action) => {
@@ -155,6 +155,22 @@ export const adminLogoutReducer = (state = {}, action) => {
       return { loading: false, error: action.payload };
     case ADMIN_LOGOUT_CLEAN:
       return { adminLogout: null, error: null };
+    default:
+      return state;
+  }
+};
+
+export const adminFetchEmployeeByIdReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ADMIN_FETCH_EMPLOYEE_BY_ID:
+      return { loading: true };
+    case ADMIN_FETCH_EMPLOYEE_BY_ID_SUCCESS:
+      return { loading: false, admineEployeeById: action.payload };
+    case ADMIN_FETCH_EMPLOYEE_BY_ID_FAILURE:
+      return { loading: false, error: action.payload };
+    case ADMIN_FETCH_EMPLOYEE_BY_ID_CLEAN:
+      return { admineEployeeById: null };
+
     default:
       return state;
   }
