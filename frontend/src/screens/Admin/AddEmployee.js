@@ -90,7 +90,10 @@ function AddEmployee({ setAddEmployee }) {
             </div>
             <div>
               <label htmlFor="host" className="admin__login__label">
-                Host<span style={{ color: "red" }}>*</span>
+                Host<span style={{ color: "red" }}>*</span>{" "}
+                <span style={{ color: "grey", fontSize: "10px" }}>
+                  Your host, may be aesthetic.com
+                </span>
               </label>
               <br />
               <input
@@ -106,6 +109,10 @@ function AddEmployee({ setAddEmployee }) {
             <div>
               <label htmlFor="email" className="admin__login__label">
                 Email<span style={{ color: "red" }}>*</span>
+                <span style={{ color: "grey", fontSize: "10px" }}>
+                  Email of your employee associated with host. May be
+                  app@aesthetic.com
+                </span>
               </label>
               <br />
               <input
@@ -121,6 +128,9 @@ function AddEmployee({ setAddEmployee }) {
             <div>
               <label htmlFor="email_password" className="admin__login__label">
                 Email Password<span style={{ color: "red" }}>*</span>
+                <span style={{ color: "grey", fontSize: "10px" }}>
+                  Something like Password of app@aesthetic.com
+                </span>
               </label>
               <br />
               <input
@@ -173,17 +183,27 @@ function AddEmployee({ setAddEmployee }) {
             {!loading && (
               <div>
                 {!addEmployee && (
-                  <button
-                    className="login__employee__button"
-                    type="submit"
-                    onClick={addEmployeeHandler}
-                    disabled={addEmployee === "success" && true}
-                  >
-                    Add Employee
-                  </button>
+                  <>
+                    <button
+                      className="login__employee__button"
+                      type="submit"
+                      onClick={addEmployeeHandler}
+                      disabled={addEmployee === "success" && true}
+                    >
+                      Add Employee
+                    </button>
+                    <br />
+                    <span style={{ color: "grey", fontSize: "10px" }}>
+                      We will verify your provided host, email, & email
+                      password. Then add it to the employee list. If not
+                      correct, you will see a dialog telling credentials are
+                      invalid
+                    </span>
+                  </>
                 )}
               </div>
             )}
+
             {loading && <Loader></Loader>}
             {addEmployee === "success" && (
               <Message>

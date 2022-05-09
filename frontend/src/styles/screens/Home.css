@@ -83,3 +83,18 @@ align-items: center;
 font-size: 35px;
 font-weight: 800;
 }
+
+/* steps */
+.steps__div{
+    margin-top: 50px;
+    display: flex;
+    text-align: left;
+    justify-content: space-between;
+}
+@media screen and (max-width:700px) {
+    .steps__div{
+        display: block;
+        text-align: center;
+    }
+    
+}
