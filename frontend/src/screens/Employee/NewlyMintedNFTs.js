@@ -165,7 +165,11 @@ function NFTsContainer({ assets, emailHeader }) {
                   <div class="nft_div">
                     <div>
                       <img
-                        src={asset.image_url}
+                        src={
+                          asset.image_url
+                            ? asset.image_url
+                            : asset.collection.image_url
+                        }
                         alt={asset.id}
                         height="300px"
                         style={{ borderRadius: "10px" }}

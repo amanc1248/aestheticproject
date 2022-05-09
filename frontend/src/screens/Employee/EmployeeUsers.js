@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  employeeFetchNewlyMintedNFTsClean,
   employeeFetchUsersAction,
   employeeFetchUsersClean,
 } from "../../actions/employeeActions";
@@ -24,9 +25,12 @@ function EmployeeUsers() {
     setRecentlySold(true);
   };
   const showNewlyMinted = () => {
+    dispatch(employeeFetchNewlyMintedNFTsClean());
+
     setNewMinted(true);
   };
   const showOldestNFTs = () => {
+    dispatch(employeeFetchNewlyMintedNFTsClean());
     setOldestNFTs(true);
   };
 
