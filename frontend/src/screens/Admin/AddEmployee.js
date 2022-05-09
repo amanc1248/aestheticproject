@@ -31,7 +31,6 @@ function AddEmployee({ setAddEmployee }) {
   const addEmployeeHandler = (e) => {
     e.preventDefault();
     if (name && email && emailPassword && password && designation) {
-      console.log("addEmployeeHandler ran");
       dispatch(
         adminAddEmployeeAction({
           name,

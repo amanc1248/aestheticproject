@@ -41,7 +41,6 @@ const axios = require("axios");
 
 // admin login
 export const adminLoginAction = (pass) => async (dispatch) => {
-  console.log("admin pass: ", pass);
   try {
     dispatch({
       type: ADMIN_LOGIN,
@@ -113,7 +112,6 @@ export const checkAdminLoginStatusClean = () => async (dispatch) => {
 
 // admin ADD EMPLOYEE
 export const adminAddEmployeeAction = (employee) => async (dispatch) => {
-  console.log(employee);
   try {
     dispatch({
       type: ADMIN_ADD_EMPLOYEE,
@@ -152,7 +150,6 @@ export const adminAddEmployeeClear = () => async (dispatch) => {
 
 // admin FETCH EMPLOYEE
 export const adminFetchEmployeeAction = () => async (dispatch) => {
-  console.log("adminFetchEmployeeAction Ran...");
   try {
     dispatch({
       type: ADMIN_FETCH_EMPLOYEES,
@@ -187,7 +184,6 @@ export const adminFetchEmployeeCleanAction = () => async (dispatch) => {
 
 // admin EDIT EMPLOYEE
 export const adminEditEmployeeAction = (employee) => async (dispatch) => {
-  console.log("adminFetchEmployeeAction Ran...");
   try {
     dispatch({
       type: ADMIN_EDIT_EMPLOYEE,
@@ -226,7 +222,6 @@ export const adminEditEmployeeClean = () => async (dispatch) => {
 
 // admin ADMIN_FETCH_EMPLOYEE_BY_ID
 export const adminFetchEmployeeByIdAction = (id) => async (dispatch) => {
-  console.log("adminFetchEmployeeAction Ran...");
   try {
     dispatch({
       type: ADMIN_FETCH_EMPLOYEE_BY_ID,
@@ -265,7 +260,6 @@ export const adminFetchEmployeeByIdClean = () => async (dispatch) => {
 // admin CHANGE EMPLOYEE PASSWORD
 export const adminChangeEmployeePasswordAction =
   (employeeId, oldPassword, newPassword) => async (dispatch) => {
-    console.log("adminChangeEmployeePasswordAction Ran...");
     try {
       dispatch({
         type: ADMIN_CHANGE_EMPLOYEE_PASSWORD,
@@ -356,7 +350,6 @@ export const adminLogoutAction = () => async (dispatch) => {
       type: AMDIN_LOGOUT_SUCCESS,
       payload: data,
     });
-    console.log("Logout action data: ", data);
   } catch (error) {
     dispatch({
       type: ADMIN_LOGOUT_FAILURE,

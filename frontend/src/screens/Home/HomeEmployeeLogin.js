@@ -47,12 +47,9 @@ function HomeEmployeeLogin({ setAdminLogin, employeeError }) {
     }
   }, [employeeLogin, navigate, dispatch]);
   useEffect(() => {
-    console.log("checkEmployeeLoginStatusClean ran");
     dispatch(checkEmployeeLoginStatusClean());
     dispatch(employeeFetchUsersClean());
   }, []);
-
-  console.log("I am employee login");
 
   return (
     <>

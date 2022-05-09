@@ -28,12 +28,10 @@ function EmployeeHeader() {
   // useEffect
   useEffect(() => {
     dispatch(employeeByIdAction());
-    console.log("here is the employeeByID mystery");
   }, [dispatch]);
 
   useEffect(() => {
     if (employeeById === "unAuthorized") {
-      console.log("employeeById === unauthorized i ran");
       navigate("/auth/false/notLoggedIn");
     }
   }, []);

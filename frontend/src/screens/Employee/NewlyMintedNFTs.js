@@ -40,7 +40,6 @@ function NewlyMintedNFTs({ closeFnc, user, type }) {
   );
   // handlers
   const closeDiv = () => {
-    console.log("I ran......");
     dispatch(employeeFetchNewlyMintedNFTsClean());
     dispatch(employeeSendEmailClean());
     closeFnc(false);

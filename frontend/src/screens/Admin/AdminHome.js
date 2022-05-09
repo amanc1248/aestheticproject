@@ -35,12 +35,9 @@ function AdminHome() {
 
   useEffect(() => {
     if (checkAdminLoginStatus === "expired") {
-      console.log("adminLoginClean ran");
       navigate("/auth/adminLoginExpired/false");
     }
     if (checkAdminLoginStatus === "notLoggedIn") {
-      console.log("adminLoginClean ran");
-
       navigate("/auth/adminNotLoggedIn/false");
     }
   }, [navigate, checkAdminLoginStatus, dispatch]);
@@ -121,9 +118,6 @@ function AdminEmployees() {
     }
   }, [addEmployee, dispatch, deletedEmployee]);
 
-  console.log("Here i am running infinie loop");
-  console.log(adminEmployees);
-
   return (
     <>
       {message && <Message>{message}</Message>}
@@ -144,9 +138,8 @@ function AdminEmployees() {
           {adminEmployees !== 0 &&
             adminEmployees.map((employee) => {
               return (
-                <div>
+                <div key={employee.id}>
                   <AdminSingleEmployee
-                    key={employee.id}
                     employee={employee}
                   ></AdminSingleEmployee>
                 </div>
@@ -205,14 +198,11 @@ function AdminSingleEmployee({ employee }) {
 
   // useEffects
   useEffect(() => {
-    console.log("i ran 1000 times");
     if (admineEployeeById) {
       if (
         editedEmployee === "success" &&
         admineEployeeById.id === employee.id
       ) {
-        console.log("I should run here");
-        console.log(admineEployeeById);
         setEmp(admineEployeeById);
       }
       if (

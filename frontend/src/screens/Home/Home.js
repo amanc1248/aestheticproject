@@ -27,7 +27,6 @@ function Home() {
     employeeError === "employeeLoginExpired" || employeeError === "notLoggedIn"
       ? true
       : false;
-  console.log(adminError, "  ", employeeError);
   const [adminLogin, setAdminLogin] = useState(adminErrorBool);
   const showAdminLogin = () => {
     setAdminLogin(true);

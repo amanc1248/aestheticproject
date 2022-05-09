@@ -20,7 +20,6 @@ const employeeLoginController = asyncHandler(async (req, res) => {
         req.session.employeeAuthenticated = true;
         req.session.username = username;
         res.send("Success");
-        console.log(req.session);
       }
     }
   });
@@ -29,7 +28,6 @@ const employeeLoginController = asyncHandler(async (req, res) => {
 // employee check login status
 const checkEmployeeLoginStatus = asyncHandler(async (req, res, next) => {
   console.log("Inside ensureEmployeeAuthentication");
-  console.log(req.session);
   if (req.session.employeeAuthenticated) {
     res.send("success");
   } else {
@@ -41,7 +39,6 @@ const checkEmployeeLoginStatus = asyncHandler(async (req, res, next) => {
 //fetch employee by Id
 const employeeByIdController = asyncHandler(async (req, res) => {
   const username = req.session.username;
-  console.log("here is the usernaem: ", username);
   let sql = "SELECT * from employee where username=?;";
   db.query(sql, [username], (err, result) => {
     if (err) throw err;
@@ -61,7 +58,6 @@ const employeeFetchUsersController = asyncHandler(async (req, res) => {
   db.query(sql, (err, result) => {
     if (err) throw err;
     else {
-      console.log(result);
       if (result.length === 0) {
         res.send("no users");
       } else {
@@ -83,20 +79,14 @@ const employeeLogoutController = asyncHandler(async (req, res) => {
 const employeeSendEmailController = asyncHandler(async (req, res) => {
   const { employeeEmail, password, host, assets, subject, userEmail, title } =
     req.body;
-  console.log(employeeEmail, password, host, subject, userEmail, title);
-  // if (process.env.NODE_ENV === "deveslopment") {
-  //   hostName = "proudposhak.com";
-  // } else {
-  //   hostName = "https://aestheticportal.herokuapp.com";
-  // }
-  // create reusable transporter object using the default SMTP transport
+
   let transporter = nodemailer.createTransport({
     host: host,
     port: 587,
-    secure: false, // true for 465, false for other ports
+    secure: false,
     auth: {
-      user: employeeEmail, // generated ethereal user
-      pass: password, // generated ethereal password
+      user: employeeEmail,
+      pass: password,
     },
     tls: {
       rejectUnauthorized: false,
@@ -189,11 +179,8 @@ const employeeSendEmailController = asyncHandler(async (req, res) => {
   });
 
   console.log("Message sent: %s", info.messageId);
-  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
-  // Preview only available when sending through an Ethereal account
   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-  // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
   if (info.messageId) {
     res.send("success");
   }

@@ -37,7 +37,6 @@ function ChangeEmployeePassword({ setChangePassword, employee }) {
   const { loading, changedPassword, error } = useSelector(
     (state) => state.adminChangeEmployeePasswordReducer
   );
-  console.log("Change employee password error: ", error);
   useEffect(() => {
     if (changedPassword === "expired") {
       navigate("/auth/adminLoginExpired/false");

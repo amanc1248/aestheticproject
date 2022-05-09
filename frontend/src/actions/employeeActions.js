@@ -73,7 +73,6 @@ export const employeeLoginClean = () => async (dispatch) => {
 
 // check employee login status
 export const checkEmployeeLoginStatusAction = () => async (dispatch) => {
-  console.log("I am the last oe to run");
   try {
     dispatch({
       type: CHECK_EMPLOYEE_LOGIN_STATUS,
@@ -192,7 +191,6 @@ export const employeeLogoutAction = () => async (dispatch) => {
       type: EMPLOYEE_LOGOUT_SUCCESS,
       payload: data,
     });
-    console.log("Logout action data: ", data);
   } catch (error) {
     dispatch({
       type: EMPLOYEE_LOGOUT_FAIL,
@@ -281,7 +279,6 @@ export const employeeFetchNewlyMintedNFTsClean = () => async (dispatch) => {
 };
 
 export const employeeSendEmailAction = (emailData) => async (dispatch) => {
-  console.log("underaction: ", emailData);
   try {
     dispatch({
       type: SEND_EMAIL,

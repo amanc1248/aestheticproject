@@ -5,7 +5,11 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
 import CloseIcon from "@mui/icons-material/Close";
-import { adminLoginAction } from "../../actions/adminActions";
+import {
+  adminLoginAction,
+  adminLoginClean,
+  checkAdminLoginStatusClean,
+} from "../../actions/adminActions";
 function HomeAdminLogin({ setAdminLogin, adminError }) {
   const navigate = useNavigate();
   const closeLogin = () => {
@@ -16,7 +20,6 @@ function HomeAdminLogin({ setAdminLogin, adminError }) {
   const [adminPass, setAdminPass] = useState();
   const saveAdminPass = (value) => {
     setAdminPass(value);
-    console.log(adminPass);
   };
 
   // USE
@@ -29,9 +32,10 @@ function HomeAdminLogin({ setAdminLogin, adminError }) {
   const adminLoginHandler = (e) => {
     e.preventDefault();
     if (adminPass) {
+      dispatch(adminLoginClean());
+      dispatch(checkAdminLoginStatusClean());
       dispatch(adminLoginAction(adminPass));
     }
-    console.log("navigate is not working ");
   };
 
   // useeffect
@@ -41,7 +45,6 @@ function HomeAdminLogin({ setAdminLogin, adminError }) {
     }
   }, [adminLogin, navigate, dispatch]);
 
-  console.log("AdminLogin: ", adminLogin);
   return (
     <div className="home__admin__login">
       <form action="">

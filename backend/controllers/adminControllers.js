@@ -2,15 +2,11 @@ const { db } = require("../../database/db.js");
 const asyncHandler = require("express-async-handler");
 const dotenv = require("dotenv");
 const uniqid = require("uniqid");
-// const session = require("express-session");
 dotenv.config();
 
 // admin login
 const adminLoginController = asyncHandler(async (req, res) => {
-  console.log("I ran");
   const { pass } = req.body;
-  console.log("pass:>>", pass, "<<");
-  console.log("From env:>>", process.env.ADMIN_PASS, "<<");
   let sql = `
   update admin
   set previous_loggedIn='true'
@@ -28,12 +24,10 @@ const adminLoginController = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(401).send({ message: "Login Failed" });
-    console.log("failure");
   }
 });
 
 const checkAdminLoginStatus = (req, res) => {
-  console.log(req.session);
   let sql = "select previous_loggedIn from admin where id=1;";
   db.query(sql, (err, result) => {
     if (err) throw err;
@@ -53,8 +47,6 @@ const checkAdminLoginStatus = (req, res) => {
   });
 };
 const adminAddEmployeeController = asyncHandler(async (req, res) => {
-  console.log("I ran");
-  console.log(req.body);
   const { name, email, host, emailPassword, password, designation } = req.body;
   const employeeId = uniqid();
   let sql = "INSERT INTO employee values (?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP())";
@@ -100,7 +92,6 @@ const adminFetchEmployeeController = asyncHandler(async (req, res) => {
 //fetch employee by Id
 const adminEmployeeByIdController = asyncHandler(async (req, res) => {
   const username = req.params.id;
-  console.log("here is the usernaem: ", username);
   let sql = "SELECT * from employee where username=?;";
   db.query(sql, [username], (err, result) => {
     if (err) throw err;
@@ -133,7 +124,6 @@ const adminEditEmployeeController = asyncHandler(async (req, res) => {
       if (err) throw err;
       else {
         res.send("success");
-        console.log(result);
       }
     }
   );
@@ -172,7 +162,6 @@ const adminChangeEmployeePasswordController = asyncHandler(async (req, res) => {
 
 const adminDeleteEmployeeController = asyncHandler(async (req, res) => {
   const employeeId = req.params.employeeId;
-  console.log(req.body);
   let deleteSql = `DELETE FROM employee WHERE id=?;`;
   db.query(deleteSql, [employeeId], (err, result) => {
     if (err) throw err;
@@ -182,7 +171,6 @@ const adminDeleteEmployeeController = asyncHandler(async (req, res) => {
       } else {
         res.send("success");
         console.log("deleted success");
-        console.log(result);
       }
     }
   });

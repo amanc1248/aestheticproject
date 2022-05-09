@@ -46,7 +46,6 @@ function EditEmployee({ setEditEmployee, employee }) {
   const { loading, editedEmployee, error } = useSelector(
     (state) => state.adminEditEmployeeReducer
   );
-  console.log("adminEditEMployReducer error: ", error);
   useEffect(() => {
     if (editedEmployee === "expired") {
       navigate("/auth/adminLoginExpired/false");
