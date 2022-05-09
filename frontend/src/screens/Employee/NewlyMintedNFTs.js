@@ -161,7 +161,7 @@ function NFTsContainer({ assets, emailHeader }) {
             <div class="two_div_nft_container">
               {assets &&
                 assets.map((asset) => (
-                  <div class="nft_div">
+                  <div class="nft_div" key={asset.id}>
                     <div>
                       <img
                         src={
