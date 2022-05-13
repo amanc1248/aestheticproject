@@ -15,7 +15,7 @@ function AdminHeader() {
       )}
       <Navbar expand="lg" bg="white" className="the__navbar">
         <div>
-          <Navbar.Brand href="/">
+          <Navbar.Brand href="/admin">
             <div className="admin__brand__container">
               <div className="admin__brand">A</div>
               <div className="admin__brand__name">admin</div>
