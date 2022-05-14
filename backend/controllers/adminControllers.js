@@ -2,7 +2,43 @@ const { db } = require("../../database/db.js");
 const asyncHandler = require("express-async-handler");
 const dotenv = require("dotenv");
 const uniqid = require("uniqid");
+const crypto = require("crypto");
 dotenv.config();
+const secret = process.env.CRYPTO_SECRET;
+
+// encrypt
+const encrypt = (password) => {
+  const iv = Buffer.from(crypto.randomBytes(16));
+  const cipher = crypto.createCipheriv("aes-256-ctr", Buffer.from(secret), iv);
+
+  const encryptedPassword = Buffer.concat([
+    cipher.update(password),
+    cipher.final(),
+  ]);
+
+  return {
+    iv: iv.toString("hex"),
+    password: encryptedPassword.toString("hex"),
+  };
+};
+
+// decrypt
+
+const decrypt = (encryption) => {
+  const decipher = crypto.createDecipheriv(
+    "aes-256-ctr",
+    Buffer.from(secret),
+    Buffer.from(encryption.iv, "hex")
+  );
+
+  const decryptedPassword = Buffer.concat([
+    decipher.update(Buffer.from(encryption.password, "hex")),
+    decipher.final(),
+  ]);
+
+  console.log(decryptedPassword.toString());
+  return decryptedPassword.toString();
+};
 
 // admin login
 const adminLoginController = asyncHandler(async (req, res) => {
@@ -48,6 +84,7 @@ const checkAdminLoginStatus = (req, res) => {
 };
 const adminAddEmployeeController = asyncHandler(async (req, res) => {
   const { name, email, host, emailPassword, password, designation } = req.body;
+  const userPassword = encrypt(password).password;
   const employeeId = uniqid();
   let sql = "INSERT INTO employee values (?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP())";
 
@@ -61,7 +98,7 @@ const adminAddEmployeeController = asyncHandler(async (req, res) => {
       emailPassword,
       designation,
       employeeId,
-      password,
+      userPassword,
     ],
     (err, result) => {
       if (err) throw err;
