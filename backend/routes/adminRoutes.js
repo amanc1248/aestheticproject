@@ -2,7 +2,7 @@ const express = require("express");
 const {
   adminLoginController,
   adminAddEmployeeController,
-  adminFetchEmployeeController,
+  adminFetchAllEmployeeController,
   adminEditEmployeeController,
   adminChangeEmployeePasswordController,
   adminDeleteEmployeeController,
@@ -23,7 +23,7 @@ router
   .post(ensureAdminAuthentication, smtpVerify, adminAddEmployeeController);
 router
   .route("/fetchEmployee")
-  .get(ensureAdminAuthentication, adminFetchEmployeeController);
+  .get(ensureAdminAuthentication, adminFetchAllEmployeeController);
 router
   .route("/fetchEmployeeById/:id")
   .get(ensureAdminAuthentication, adminEmployeeByIdController);

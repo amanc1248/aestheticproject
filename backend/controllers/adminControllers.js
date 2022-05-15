@@ -122,7 +122,7 @@ const adminAddEmployeeController = asyncHandler(async (req, res) => {
   );
 });
 
-const adminFetchEmployeeController = asyncHandler(async (req, res) => {
+const adminFetchAllEmployeeController = asyncHandler(async (req, res) => {
   console.log("adminFetchEmployeeController ran");
   let sql = "select * from employee order by date_time DESC";
 
@@ -236,7 +236,7 @@ const adminLogoutController = asyncHandler(async (req, res) => {
 module.exports = {
   adminLoginController,
   adminAddEmployeeController,
-  adminFetchEmployeeController,
+  adminFetchAllEmployeeController,
   adminEditEmployeeController,
   adminChangeEmployeePasswordController,
   adminDeleteEmployeeController,
