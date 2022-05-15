@@ -24,15 +24,15 @@ const encrypt = (password) => {
 
 // decrypt
 
-const decrypt = (encryption) => {
+const decrypt = (password, iv) => {
   const decipher = crypto.createDecipheriv(
     "aes-256-ctr",
     Buffer.from(secret),
-    Buffer.from(encryption.iv, "hex")
+    Buffer.from(iv, "hex")
   );
 
   const decryptedPassword = Buffer.concat([
-    decipher.update(Buffer.from(encryption.password, "hex")),
+    decipher.update(Buffer.from(password, "hex")),
     decipher.final(),
   ]);
 
@@ -83,10 +83,21 @@ const checkAdminLoginStatus = (req, res) => {
   });
 };
 const adminAddEmployeeController = asyncHandler(async (req, res) => {
-  const { name, email, host, emailPassword, password, designation } = req.body;
-  const userPassword = encrypt(password).password;
+  const {
+    name,
+    email,
+    host,
+    emailPassword,
+    password: userPassword,
+    designation,
+  } = req.body;
+  const { password, iv } = encrypt(userPassword);
+  console.log("**********************");
+  console.log(password);
+  console.log(iv);
   const employeeId = uniqid();
-  let sql = "INSERT INTO employee values (?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP())";
+  let sql =
+    "INSERT INTO employee values (?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP())";
 
   db.query(
     sql,
@@ -98,7 +109,8 @@ const adminAddEmployeeController = asyncHandler(async (req, res) => {
       emailPassword,
       designation,
       employeeId,
-      userPassword,
+      password,
+      iv,
     ],
     (err, result) => {
       if (err) throw err;
@@ -169,8 +181,8 @@ const adminEditEmployeeController = asyncHandler(async (req, res) => {
 const adminChangeEmployeePasswordController = asyncHandler(async (req, res) => {
   const { employeeId, oldPassword, newPassword } = req.body;
   console.log(req.body);
-  let sqlSelect = `SELECT password from employee WHERE id=?`;
-  let updateSql = `UPDATE employee set password=? where id=?;`;
+  let sqlSelect = `SELECT password,iv from employee WHERE id=?`;
+  let updateSql = `UPDATE employee set password=?, iv=? where id=?;`;
   db.query(sqlSelect, [employeeId], (err, result) => {
     if (err) throw err;
     else {
@@ -178,9 +190,9 @@ const adminChangeEmployeePasswordController = asyncHandler(async (req, res) => {
         console.log(11111);
         res.status(401).send({ message: "Old Password did not match" });
       } else {
-        if (result[0].password === oldPassword) {
-          console.log(22222);
-          db.query(updateSql, [newPassword, employeeId], (err, result) => {
+        if (decrypt(result[0].password, result[0].iv) === oldPassword) {
+          const { password, iv } = encrypt(newPassword);
+          db.query(updateSql, [password, iv, employeeId], (err, result) => {
             if (err) throw err;
             else {
               res.send("success");
@@ -188,7 +200,6 @@ const adminChangeEmployeePasswordController = asyncHandler(async (req, res) => {
             }
           });
         } else {
-          console.log(33333);
           res.status(401).send({ message: "Old Password did not match" });
           console.log("old password did not match");
         }
