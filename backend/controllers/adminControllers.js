@@ -124,7 +124,8 @@ const adminAddEmployeeController = asyncHandler(async (req, res) => {
 
 const adminFetchAllEmployeeController = asyncHandler(async (req, res) => {
   console.log("adminFetchEmployeeController ran");
-  let sql = "select * from employee order by date_time DESC";
+  let sql =
+    "select id, name, designation from employee order by date_time DESC";
 
   db.query(sql, (err, result) => {
     if (err) throw err;
@@ -133,6 +134,8 @@ const adminFetchAllEmployeeController = asyncHandler(async (req, res) => {
         res.send("no employees");
       } else {
         res.send(result);
+        console.log("all emplyees");
+        console.log(result);
       }
     }
   });
