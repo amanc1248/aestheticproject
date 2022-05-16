@@ -160,6 +160,30 @@ const adminEmployeeByIdController = asyncHandler(async (req, res) => {
     }
   });
 });
+//fetch employee by Id all details
+const adminEmployeeByIdAllDetailsController = asyncHandler(async (req, res) => {
+  console.log("adminEmployeeByIdController rannn...");
+  const username = req.params.id;
+  let sql = "SELECT * from employee where username=?;";
+  db.query(sql, [username], (err, result) => {
+    if (err) throw err;
+    else {
+      if (result.length === 0) {
+        res.send("no employee");
+      } else {
+        console.log("Employee By Id controller: ");
+        console.log(result);
+
+        res.json({
+          username: result[0].username,
+          email: result[0].email,
+          password: decrypt(result[0].password, result[0].iv),
+          email_password: result[0].email_password,
+        });
+      }
+    }
+  });
+});
 
 const adminEditEmployeeController = asyncHandler(async (req, res) => {
   const { id, name, host, email, emailPassword, designation } = req.body;
@@ -249,4 +273,5 @@ module.exports = {
   adminLogoutController,
   checkAdminLoginStatus,
   adminEmployeeByIdController,
+  adminEmployeeByIdAllDetailsController,
 };

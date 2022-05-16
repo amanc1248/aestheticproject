@@ -1,11 +1,39 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import { useDispatch, useSelector } from "react-redux";
+import { adminFetchEmployeeByIdAllDetailsAction } from "../../actions/adminActions";
+import BoxLoader from "../../components/BoxLoader";
 
-function RevealUsernameAndPassword({ setRevealUPass, employee }) {
+function RevealUsernameAndPassword({ setRevealUPass, employeeId }) {
+  const dispatch = useDispatch();
+
   const closeRevealUPass = () => {
     setRevealUPass(false);
   };
+
   // states
+  const [userName, setUserName] = useState();
+  const [password, setPassword] = useState();
+  const [email, setEmail] = useState();
+  const [email_password, setEmail_password] = useState();
+
+  // useSelectors
+  const { admineEployeeByIdAllDetails, loading, error } = useSelector(
+    (state) => state.adminFetchEmployeeByIdAllDetailsReducer
+  );
+
+  // useEffects
+  useEffect(() => {
+    dispatch(adminFetchEmployeeByIdAllDetailsAction(employeeId));
+  }, [dispatch]);
+  useEffect(() => {
+    if (admineEployeeByIdAllDetails) {
+      setUserName(admineEployeeByIdAllDetails.username);
+      setPassword(admineEployeeByIdAllDetails.password);
+      setEmail(admineEployeeByIdAllDetails.email);
+      setEmail_password(admineEployeeByIdAllDetails.email_password);
+    }
+  }, [admineEployeeByIdAllDetails]);
 
   return (
     <>
@@ -19,12 +47,16 @@ function RevealUsernameAndPassword({ setRevealUPass, employee }) {
               </div>
             </div>
 
-            <div>
-              <b>USERNAME: </b> {employee.username} <br />
-              <b>PASSWORD: </b> {employee.password} <br />
-              <b>EMAIL: </b> {employee.email} <br />
-              <b>EMAIL PASSWORD: </b> {employee.email_password} <br />
-            </div>
+            {loading ? (
+              <BoxLoader></BoxLoader>
+            ) : (
+              <div>
+                <b>USERNAME: </b> {userName} <br />
+                <b>PASSWORD: </b> {password} <br />
+                <b>EMAIL: </b> {email} <br />
+                <b>EMAIL PASSWORD: </b> {email_password} <br />
+              </div>
+            )}
           </div>
         </div>
       </div>

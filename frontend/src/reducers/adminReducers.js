@@ -20,6 +20,10 @@ import {
   ADMIN_FETCH_EMPLOYEES_FAILURE,
   ADMIN_FETCH_EMPLOYEES_SUCCESS,
   ADMIN_FETCH_EMPLOYEE_BY_ID,
+  ADMIN_FETCH_EMPLOYEE_BY_ID_ALL_DETAILS,
+  ADMIN_FETCH_EMPLOYEE_BY_ID_ALL_DETAILS_CLEAN,
+  ADMIN_FETCH_EMPLOYEE_BY_ID_ALL_DETAILS_FAILURE,
+  ADMIN_FETCH_EMPLOYEE_BY_ID_ALL_DETAILS_SUCCESS,
   ADMIN_FETCH_EMPLOYEE_BY_ID_CLEAN,
   ADMIN_FETCH_EMPLOYEE_BY_ID_FAILURE,
   ADMIN_FETCH_EMPLOYEE_BY_ID_SUCCESS,
@@ -170,6 +174,22 @@ export const adminFetchEmployeeByIdReducer = (state = {}, action) => {
       return { loading: false, error: action.payload };
     case ADMIN_FETCH_EMPLOYEE_BY_ID_CLEAN:
       return { admineEployeeById: null };
+
+    default:
+      return state;
+  }
+};
+
+export const adminFetchEmployeeByIdAllDetailsReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ADMIN_FETCH_EMPLOYEE_BY_ID_ALL_DETAILS:
+      return { loading: true };
+    case ADMIN_FETCH_EMPLOYEE_BY_ID_ALL_DETAILS_SUCCESS:
+      return { loading: false, admineEployeeByIdAllDetails: action.payload };
+    case ADMIN_FETCH_EMPLOYEE_BY_ID_ALL_DETAILS_FAILURE:
+      return { loading: false, error: action.payload };
+    case ADMIN_FETCH_EMPLOYEE_BY_ID_ALL_DETAILS_CLEAN:
+      return { admineEployeeByIdAllDetails: null };
 
     default:
       return state;

@@ -7,6 +7,7 @@ import {
   adminChangeEmployeePasswordReducer,
   adminDeleteEmployeeReducer,
   adminEditEmployeeReducer,
+  adminFetchEmployeeByIdAllDetailsReducer,
   adminFetchEmployeeByIdReducer,
   adminFetchEmployeeReducer,
   adminLoginReducer,
@@ -32,6 +33,8 @@ const reducer = combineReducers({
   adminEditEmployeeReducer: adminEditEmployeeReducer,
   adminFetchEmployeeReducer: adminFetchEmployeeReducer,
   adminFetchEmployeeByIdReducer: adminFetchEmployeeByIdReducer,
+  adminFetchEmployeeByIdAllDetailsReducer:
+    adminFetchEmployeeByIdAllDetailsReducer,
   adminChangeEmployeePasswordReducer: adminChangeEmployeePasswordReducer,
   adminDeleteEmployeeReducer: adminDeleteEmployeeReducer,
   employeeLoginReducer: employeeLoginReducer,

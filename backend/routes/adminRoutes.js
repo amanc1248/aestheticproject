@@ -9,6 +9,7 @@ const {
   adminLogoutController,
   checkAdminLoginStatus,
   adminEmployeeByIdController,
+  adminEmployeeByIdAllDetailsController,
 } = require("../controllers/adminControllers.js");
 const {
   ensureAdminAuthentication,
@@ -27,6 +28,9 @@ router
 router
   .route("/fetchEmployeeById/:id")
   .get(ensureAdminAuthentication, adminEmployeeByIdController);
+router
+  .route("/fetchEmployeeByIdAllDetails/:id")
+  .get(ensureAdminAuthentication, adminEmployeeByIdAllDetailsController);
 router
   .route("/editEmployee")
   .put(ensureAdminAuthentication, smtpVerify, adminEditEmployeeController);

@@ -20,6 +20,10 @@ import {
   ADMIN_FETCH_EMPLOYEES_FAILURE,
   ADMIN_FETCH_EMPLOYEES_SUCCESS,
   ADMIN_FETCH_EMPLOYEE_BY_ID,
+  ADMIN_FETCH_EMPLOYEE_BY_ID_ALL_DETAILS,
+  ADMIN_FETCH_EMPLOYEE_BY_ID_ALL_DETAILS_CLEAN,
+  ADMIN_FETCH_EMPLOYEE_BY_ID_ALL_DETAILS_FAILURE,
+  ADMIN_FETCH_EMPLOYEE_BY_ID_ALL_DETAILS_SUCCESS,
   ADMIN_FETCH_EMPLOYEE_BY_ID_CLEAN,
   ADMIN_FETCH_EMPLOYEE_BY_ID_FAILURE,
   ADMIN_FETCH_EMPLOYEE_BY_ID_SUCCESS,
@@ -365,5 +369,43 @@ export const adminLogoutAction = () => async (dispatch) => {
 export const adminLogoutClean = () => async (dispatch) => {
   dispatch({
     type: ADMIN_LOGOUT_CLEAN,
+  });
+};
+
+// admin ADMIN_FETCH_EMPLOYEE_BY_ID_ALL_DETAILS
+export const adminFetchEmployeeByIdAllDetailsAction =
+  (id) => async (dispatch) => {
+    try {
+      dispatch({
+        type: ADMIN_FETCH_EMPLOYEE_BY_ID_ALL_DETAILS,
+      });
+      const config = {
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axios.get(
+        `/api/admin/fetchEmployeeByIdAllDetails/${id}`,
+        config
+      );
+      dispatch({
+        type: ADMIN_FETCH_EMPLOYEE_BY_ID_ALL_DETAILS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ADMIN_FETCH_EMPLOYEE_BY_ID_ALL_DETAILS_FAILURE,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+// admin ADMIN_FETCH_EMPLOYEE_BY_ID_ALL_DETAILS_CLEAN
+export const adminFetchEmployeeByIdAllDetailsClean = () => async (dispatch) => {
+  dispatch({
+    type: ADMIN_FETCH_EMPLOYEE_BY_ID_ALL_DETAILS_CLEAN,
   });
 };
