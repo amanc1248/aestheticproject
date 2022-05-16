@@ -143,15 +143,18 @@ const adminFetchAllEmployeeController = asyncHandler(async (req, res) => {
 
 //fetch employee by Id
 const adminEmployeeByIdController = asyncHandler(async (req, res) => {
+  console.log("adminEmployeeByIdController rannn...");
   const username = req.params.id;
-  let sql = "SELECT * from employee where username=?;";
+  let sql =
+    "SELECT id, name, host, email, email_password, designation from employee where username=?;";
   db.query(sql, [username], (err, result) => {
     if (err) throw err;
     else {
-      console.log(result);
       if (result.length === 0) {
         res.send("no employee");
       } else {
+        console.log("Employee By Id controller: ");
+        console.log(result);
         res.send(result[0]);
       }
     }
