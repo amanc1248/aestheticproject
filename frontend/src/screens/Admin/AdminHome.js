@@ -231,25 +231,25 @@ function AdminSingleEmployee({ employee }) {
       {editEmployee && (
         <EditEmployee
           setEditEmployee={setEditEmployee}
-          employee={emp}
+          employeeId={emp.id}
         ></EditEmployee>
       )}
       {changePassword && (
         <ChangeEmployeePassword
           setChangePassword={setChangePassword}
-          employee={emp}
+          employeeId={emp.id}
         ></ChangeEmployeePassword>
       )}
       {freeEmployee && (
         <FreeEmployee
           setFreeEmployee={setFreeEmployee}
-          employee={emp}
+          employeeId={emp.id}
         ></FreeEmployee>
       )}
       {revealUPass && (
         <RevealUsernameAndPassword
           setRevealUPass={setRevealUPass}
-          employee={emp}
+          employeeId={emp.id}
         ></RevealUsernameAndPassword>
       )}
       {message && <Message>{message}</Message>}
