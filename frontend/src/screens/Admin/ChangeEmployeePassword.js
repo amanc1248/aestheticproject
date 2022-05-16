@@ -10,7 +10,7 @@ import {
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
 // import "../../styles/screens/Admin.css";
-function ChangeEmployeePassword({ setChangePassword, employee }) {
+function ChangeEmployeePassword({ setChangePassword, employeeId }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const closeChangePassword = () => {
@@ -28,7 +28,7 @@ function ChangeEmployeePassword({ setChangePassword, employee }) {
     e.preventDefault();
     if (oldPassword && newPassword) {
       dispatch(
-        adminChangeEmployeePasswordAction(employee.id, oldPassword, newPassword)
+        adminChangeEmployeePasswordAction(employeeId, oldPassword, newPassword)
       );
     }
   };
@@ -45,7 +45,7 @@ function ChangeEmployeePassword({ setChangePassword, employee }) {
       navigate("/auth/adminNotLoggedIn/false");
     }
     if (changedPassword === "success") {
-      dispatch(adminFetchEmployeeByIdAction(employee.id));
+      dispatch(adminFetchEmployeeByIdAction(employeeId));
       // setMessage("Employee Edited Successfully");
       setButtonDisable(true);
     }
