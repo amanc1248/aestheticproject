@@ -5,24 +5,49 @@ import {
   adminEditEmployeeAction,
   adminEditEmployeeClean,
   adminFetchEmployeeByIdAction,
+  adminFetchEmployeeByIdClean,
 } from "../../actions/adminActions";
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
 import { useNavigate } from "react-router-dom";
-function EditEmployee({ setEditEmployee, employee }) {
+import BoxLoader from "../../components/BoxLoader";
+function EditEmployee({ setEditEmployee, employeeId }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const closeEditEmployee = () => {
     dispatch(adminEditEmployeeClean());
+    dispatch(adminFetchEmployeeByIdClean());
     setEditEmployee(false);
   };
 
+  //useEffects
+  useEffect(() => {
+    console.log("use effect ran this time");
+    dispatch(adminFetchEmployeeByIdAction(employeeId));
+  }, []);
+
+  // useSelectors
+  const { admineEployeeById, loading: employeeDetailsLoading } = useSelector(
+    (state) => state.adminFetchEmployeeByIdReducer
+  );
+
+  useEffect(() => {
+    console.log("I ran.....", admineEployeeById);
+    if (admineEployeeById) {
+      setName(admineEployeeById.name);
+      setHost(admineEployeeById.host);
+      setEmail(admineEployeeById.email);
+      setEmailPassword(admineEployeeById.email_password);
+      setDesignation(admineEployeeById.designation);
+    }
+  }, [admineEployeeById]);
+
   // employee details states
-  const [name, setName] = useState(employee.name);
-  const [host, setHost] = useState(employee.host);
-  const [email, setEmail] = useState(employee.email);
-  const [emailPassword, setEmailPassword] = useState(employee.email_password);
-  const [designation, setDesignation] = useState(employee.designation);
+  const [name, setName] = useState();
+  const [host, setHost] = useState();
+  const [email, setEmail] = useState();
+  const [emailPassword, setEmailPassword] = useState();
+  const [designation, setDesignation] = useState();
 
   const [buttonDisable, setButtonDisable] = useState(false);
   // edit employee handler
@@ -31,7 +56,7 @@ function EditEmployee({ setEditEmployee, employee }) {
     if (name && email && emailPassword && designation) {
       dispatch(
         adminEditEmployeeAction({
-          id: employee.id,
+          id: employeeId,
           name,
           host,
           email,
@@ -54,12 +79,13 @@ function EditEmployee({ setEditEmployee, employee }) {
       navigate("/auth/adminNotLoggedIn/false");
     }
     if (editedEmployee === "success") {
-      dispatch(adminFetchEmployeeByIdAction(employee.id));
+      dispatch(adminFetchEmployeeByIdAction(employeeId));
       // setMessage("Employee Edited Successfully");
       setButtonDisable(true);
     }
   }, [navigate, editedEmployee]);
 
+  console.log("Employee By ID: ");
   return (
     <div>
       <div>
@@ -73,108 +99,116 @@ function EditEmployee({ setEditEmployee, employee }) {
                 )}
               </div>
             </div>
-
-            <div>
-              <label htmlFor="name" className="admin__login__label">
-                Name<span style={{ color: "red" }}>*</span>
-              </label>
-              <br />
-              <input
-                type="text"
-                id="name"
-                required
-                value={name}
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
-                disabled={buttonDisable}
-              />
-            </div>
-            <div>
-              <label htmlFor="host" className="admin__login__label">
-                Host<span style={{ color: "red" }}>*</span>
-              </label>
-              <br />
-              <input
-                type="text"
-                id="host"
-                required
-                value={host}
-                onChange={(e) => {
-                  setHost(e.target.value);
-                }}
-                disabled={buttonDisable}
-              />
-            </div>
-            <div>
-              <label htmlFor="email" className="admin__login__label">
-                Email<span style={{ color: "red" }}>*</span>
-              </label>
-              <br />
-              <input
-                type="email"
-                id="email"
-                required
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-                disabled={buttonDisable}
-              />
-            </div>
-            <div>
-              <label htmlFor="email_password" className="admin__login__label">
-                Email Password<span style={{ color: "red" }}>*</span>
-              </label>
-              <br />
-              <input
-                type="password"
-                id="email_password"
-                required
-                value={emailPassword}
-                onChange={(e) => {
-                  setEmailPassword(e.target.value);
-                }}
-                disabled={buttonDisable}
-              />
-            </div>
-
-            <div>
-              <label htmlFor="designation" className="admin__login__label">
-                designation<span style={{ color: "red" }}>*</span>
-              </label>
-              <br />
-              <input
-                type="text"
-                id="designation"
-                required
-                value={designation}
-                onChange={(e) => {
-                  setDesignation(e.target.value);
-                }}
-                disabled={buttonDisable}
-              />
-            </div>
-            {!loading && (
-              <div>
-                {!buttonDisable && (
-                  <button
-                    className="login__employee__button"
-                    onClick={editEmployeeHandler}
+            {employeeDetailsLoading ? (
+              <BoxLoader></BoxLoader>
+            ) : (
+              <>
+                <div>
+                  <label htmlFor="name" className="admin__login__label">
+                    Name<span style={{ color: "red" }}>*</span>
+                  </label>
+                  <br />
+                  <input
+                    type="text"
+                    id="name"
+                    required
+                    defaultValue={name}
+                    onChange={(e) => {
+                      setName(e.target.value);
+                    }}
+                    disabled={buttonDisable}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="host" className="admin__login__label">
+                    Host<span style={{ color: "red" }}>*</span>
+                  </label>
+                  <br />
+                  <input
+                    type="text"
+                    id="host"
+                    required
+                    defaultValue={host}
+                    onChange={(e) => {
+                      setHost(e.target.value);
+                    }}
+                    disabled={buttonDisable}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className="admin__login__label">
+                    Email<span style={{ color: "red" }}>*</span>
+                  </label>
+                  <br />
+                  <input
+                    type="email"
+                    id="email"
+                    required
+                    defaultValue={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
+                    disabled={buttonDisable}
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="email_password"
+                    className="admin__login__label"
                   >
-                    Save Changes
-                  </button>
+                    Email Password<span style={{ color: "red" }}>*</span>
+                  </label>
+                  <br />
+                  <input
+                    type="password"
+                    id="email_password"
+                    required
+                    defaultValue={emailPassword}
+                    onChange={(e) => {
+                      setEmailPassword(e.target.value);
+                    }}
+                    disabled={buttonDisable}
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="designation" className="admin__login__label">
+                    designation<span style={{ color: "red" }}>*</span>
+                  </label>
+                  <br />
+                  <input
+                    type="text"
+                    id="designation"
+                    required
+                    defaultValue={designation}
+                    onChange={(e) => {
+                      setDesignation(e.target.value);
+                    }}
+                    disabled={buttonDisable}
+                  />
+                </div>
+                {!loading && (
+                  <div>
+                    {!buttonDisable && (
+                      <button
+                        className="login__employee__button"
+                        onClick={editEmployeeHandler}
+                      >
+                        Save Changes
+                      </button>
+                    )}
+                  </div>
                 )}
-              </div>
-            )}
-            {loading && <Loader></Loader>}
-            {editedEmployee === "invalid" && (
-              <Message variant="danger">
-                {"Invalid host, email or email password."}
-              </Message>
-            )}
-            {editedEmployee === "success" && (
-              <Message>{"Employee Edited successfully. "}</Message>
+                {loading && <Loader></Loader>}
+                {editedEmployee === "invalid" && (
+                  <Message variant="danger">
+                    {"Invalid host, email or email password."}
+                  </Message>
+                )}
+                {editedEmployee === "success" && (
+                  <Message>{"Employee Edited successfully. "}</Message>
+                )}
+              </>
             )}
           </div>
         </div>
