@@ -8,6 +8,7 @@ import AdminHome from "./screens/Admin/AdminHome";
 import AdminHeader from "./screens/Admin/AdminHeader";
 import EmployeeHome from "./screens/Employee/EmployeeHome";
 import EmployeeHeader from "./screens/Employee/EmployeeHeader";
+import TestFile from "./screens/testfile";
 function App() {
   return (
     <div className="App">
@@ -27,6 +28,14 @@ function App() {
             <>
               <AdminHeader></AdminHeader>
               <AdminHome></AdminHome>
+            </>
+          }
+        ></Route>
+        <Route
+          path="/test"
+          element={
+            <>
+              <TestFile></TestFile>
             </>
           }
         ></Route>
