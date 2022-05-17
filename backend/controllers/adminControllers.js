@@ -146,7 +146,7 @@ const adminEmployeeByIdController = asyncHandler(async (req, res) => {
   console.log("adminEmployeeByIdController rannn...");
   const username = req.params.id;
   let sql =
-    "SELECT id, name, host, email, email_password, designation from employee where username=?;";
+    "SELECT id, name, host, email, email_password,username, designation from employee where username=?;";
   db.query(sql, [username], (err, result) => {
     if (err) throw err;
     else {
