@@ -4,6 +4,7 @@ const path = require("path");
 const { db } = require("../../database/db.js");
 const asyncHandler = require("express-async-handler");
 const nodemailer = require("nodemailer");
+const { redirect } = require("express/lib/response");
 
 const notFound = (req, res, next) => {
   const error = new Error(`Not Found -${req.originalUrl}`);
@@ -47,6 +48,7 @@ const ensureEmployeeAuthentication = (req, res, next) => {
   console.log(req.session);
   if (req.session.employeeAuthenticated) {
     return next();
+    // res.redirect("http://localhost:3000/auth/false/notLoggedIn");
   } else {
     res.send("unAuthorized");
     console.log("You're not authorized as an Employee");

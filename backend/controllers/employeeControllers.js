@@ -2,11 +2,32 @@ const { db } = require("../../database/db.js");
 const asyncHandler = require("express-async-handler");
 const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
+const crypto = require("crypto");
 dotenv.config();
+const secret = process.env.CRYPTO_SECRET;
+
+// decrypt
+
+const decrypt = (password, iv) => {
+  const decipher = crypto.createDecipheriv(
+    "aes-256-ctr",
+    Buffer.from(secret),
+    Buffer.from(iv, "hex")
+  );
+
+  const decryptedPassword = Buffer.concat([
+    decipher.update(Buffer.from(password, "hex")),
+    decipher.final(),
+  ]);
+
+  console.log(decryptedPassword.toString());
+  return decryptedPassword.toString();
+};
+
 // employee LOGIN
 const employeeLoginController = asyncHandler(async (req, res) => {
   const { username, password } = req.body;
-  let sqlIfExists = "Select password from employee where username=?";
+  let sqlIfExists = "Select password,iv from employee where username=?";
   db.query(sqlIfExists, [username], (err, result) => {
     console.log("employeeLoginController ran....");
     if (err) throw err;
@@ -14,7 +35,7 @@ const employeeLoginController = asyncHandler(async (req, res) => {
       if (result.length === 0) {
         console.log("invalid username");
         res.status(401).send({ message: "Invalid username" });
-      } else if (result[0].password !== password) {
+      } else if (decrypt(result[0].password, result[0].iv) !== password) {
         res.status(401).send({ message: "Invalid Password" });
       } else {
         req.session.employeeAuthenticated = true;
