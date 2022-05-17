@@ -106,13 +106,15 @@
   .edit_employee__button{
       border: none;
       background-color: transparent;
-      font-weight: bold;
+      font-weight: 600;
+      font-size: 14px;
       color: #237CCE;
   }
   .delete__employee__button{
     border: none;
     background-color: transparent;
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 14px;
     color:red;
   }
 
