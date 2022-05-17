@@ -6,11 +6,13 @@ import Loader from "../../components/Loader";
 import {
   adminDeleteEmployeeAction,
   adminDeleteEmployeeClean,
+  adminFetchEmployeeByIdAction,
 } from "../../actions/adminActions";
 import Message from "../../components/Message";
 import { useNavigate } from "react-router-dom";
+import BoxLoader from "../../components/BoxLoader";
 
-function FreeEmployee({ setFreeEmployee, employee }) {
+function FreeEmployee({ setFreeEmployee, employeeId }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const closeDeleteEmployee = () => {
@@ -19,24 +21,33 @@ function FreeEmployee({ setFreeEmployee, employee }) {
   };
 
   // states
+
   const [buttonDisable, setButtonDisable] = useState(false);
 
   //  handlers
 
   const freeEmployeeHandler = () => {
-    dispatch(adminDeleteEmployeeAction(employee.id));
+    dispatch(adminDeleteEmployeeAction(employeeId));
     // dispatch(adminLoginClean());
   };
 
   // use selector
-
   const {
     loading: deleteLoading,
     deletedEmployee,
     error: deleteEmployeeError,
   } = useSelector((state) => state.adminDeleteEmployeeReducer);
 
+  const { admineEployeeById, loading: employeeDetailsLoading } = useSelector(
+    (state) => state.adminFetchEmployeeByIdReducer
+  );
+
   // useEffect
+  useEffect(() => {
+    console.log("use effect ran this time");
+    dispatch(adminFetchEmployeeByIdAction(employeeId));
+  }, []);
+
   useEffect(() => {
     if (deletedEmployee === "expired") {
       navigate("/auth/adminLoginExpired/false");
@@ -62,49 +73,57 @@ function FreeEmployee({ setFreeEmployee, employee }) {
                 )}
               </div>
             </div>
-            <div>
-              <label htmlFor="name" className="admin__login__label">
-                <b>NAME</b>: {employee.name}
-              </label>
-              <br />
-            </div>
-            <div>
-              <label htmlFor="email" className="admin__login__label">
-                <b>EMAIL</b>: {employee.email}
-              </label>
-              <br />
-            </div>
-            <div>
-              <label htmlFor="username" className="admin__login__label">
-                <b>USERNAME</b>: {employee.username}
-              </label>
-              <br />
-            </div>
-            <div>
-              <label htmlFor="designation" className="admin__login__label">
-                <b>DESIGNATION</b> : {employee.designation}
-              </label>
-              <br />
-            </div>
+            {employeeDetailsLoading ? (
+              <BoxLoader></BoxLoader>
+            ) : (
+              <>
+                <div>
+                  <label htmlFor="name" className="admin__login__label">
+                    <b>NAME</b>: {admineEployeeById && admineEployeeById.name}
+                  </label>
+                  <br />
+                </div>
+                <div>
+                  <label htmlFor="email" className="admin__login__label">
+                    <b>EMAIL</b>: {admineEployeeById && admineEployeeById.email}
+                  </label>
+                  <br />
+                </div>
+                <div>
+                  <label htmlFor="username" className="admin__login__label">
+                    <b>USERNAME</b>:{" "}
+                    {admineEployeeById && admineEployeeById.username}
+                  </label>
+                  <br />
+                </div>
+                <div>
+                  <label htmlFor="designation" className="admin__login__label">
+                    <b>DESIGNATION</b> :{" "}
+                    {admineEployeeById && admineEployeeById.designation}
+                  </label>
+                  <br />
+                </div>
 
-            <div>
-              {!deleteLoading && (
-                <>
-                  {!buttonDisable && (
-                    <button
-                      className="login__employee__button"
-                      onClick={freeEmployeeHandler}
-                    >
-                      Delete Employee
-                    </button>
+                <div>
+                  {!deleteLoading && (
+                    <>
+                      {!buttonDisable && (
+                        <button
+                          className="login__employee__button"
+                          onClick={freeEmployeeHandler}
+                        >
+                          Delete Employee
+                        </button>
+                      )}
+                    </>
                   )}
-                </>
-              )}
-            </div>
-            {/* )} */}
-            {deleteLoading && <Loader></Loader>}
-            {deleteEmployeeError && (
-              <Message variant="danger">{deleteEmployeeError}</Message>
+                </div>
+                {/* )} */}
+                {deleteLoading && <Loader></Loader>}
+                {deleteEmployeeError && (
+                  <Message variant="danger">{deleteEmployeeError}</Message>
+                )}
+              </>
             )}
           </div>
         </div>
