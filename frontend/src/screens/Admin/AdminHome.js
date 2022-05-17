@@ -16,6 +16,7 @@ import RevealUsernameAndPassword from "./RevealUsernameAndPassword";
 import { useNavigate } from "react-router-dom";
 import Message from "../../components/Message";
 import LoaderMain from "../../components/LoaderMain";
+import UserLoader from "../../components/UserLoader";
 
 function AdminHome() {
   const dispatch = useDispatch();
@@ -122,7 +123,7 @@ function AdminEmployees() {
     <>
       {message && <Message>{message}</Message>}
       {loading ? (
-        <Loader></Loader>
+        <UserLoader></UserLoader>
       ) : adminEmployees === "no employees" ? (
         <h1>No Employees</h1>
       ) : adminEmployees === "expired" ? (
