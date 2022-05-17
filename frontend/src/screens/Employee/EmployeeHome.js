@@ -17,7 +17,10 @@ function EmployeeHome() {
     dispatch(checkEmployeeLoginStatusAction());
   }, [dispatch]);
   useEffect(() => {
-    if (checkEmployeeLoginStatus === "unAuthorized") {
+    if (
+      checkEmployeeLoginStatus === "unAuthorized" ||
+      checkEmployeeLoginStatus === "no employee"
+    ) {
       navigate("/auth/false/notLoggedIn");
     }
   }, [checkEmployeeLoginStatus, navigate]);

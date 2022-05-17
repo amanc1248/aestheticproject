@@ -48,9 +48,23 @@ const employeeLoginController = asyncHandler(async (req, res) => {
 
 // employee check login status
 const checkEmployeeLoginStatus = asyncHandler(async (req, res, next) => {
-  console.log("Inside ensureEmployeeAuthentication");
+  console.log("Inside checkEmployeeLoginStatus");
   if (req.session.employeeAuthenticated) {
-    res.send("success");
+    // res.send("success");
+    const username = req.session.username;
+    let sql = "SELECT * from employee where username=?;";
+    db.query(sql, [username], (err, result) => {
+      if (err) throw err;
+      else {
+        console.log("I am inside the sql");
+        console.log(result);
+        if (result.length === 0) {
+          res.send("no employee");
+        } else {
+          res.send("success");
+        }
+      }
+    });
   } else {
     res.send("unAuthorized");
     console.log("You're not authorized as an Employee");
