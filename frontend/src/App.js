@@ -8,7 +8,7 @@ import AdminHome from "./screens/Admin/AdminHome";
 import AdminHeader from "./screens/Admin/AdminHeader";
 import EmployeeHome from "./screens/Employee/EmployeeHome";
 import EmployeeHeader from "./screens/Employee/EmployeeHeader";
-import TestFile from "./screens/testfile";
+import UserLoader from "./components/UserLoader";
 function App() {
   return (
     <div className="App">
@@ -35,7 +35,7 @@ function App() {
           path="/test"
           element={
             <>
-              <TestFile></TestFile>
+              <UserLoader></UserLoader>
             </>
           }
         ></Route>
